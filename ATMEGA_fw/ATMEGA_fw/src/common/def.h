@@ -15,8 +15,13 @@
 #define _DEF_OUTPUT		1
 
 
-#define  _DEF_UART0		0
-#define  _DEF_UART1		1
+#define _DEF_UART0		0
+#define _DEF_UART1		1
+
+#define	_DEF_TIM0		0
+#define _DEF_TIM1		1
+#define _DEF_TIM2		2
+#define _DEF_TIM3		3
 
 
 #endif /* DEF_H_ */

@@ -25,8 +25,9 @@ src/ap/ap.d src/ap/ap.o: ../src/ap/ap.c ../src/ap/ap.h ../src/hw/hw.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_uart.h \
+ ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
  ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
- ../src/common/hw/include/uart.h
+ ../src/common/hw/include/uart.h ../src/common/hw/include/timer.h
 
 ../src/ap/ap.h:
 
@@ -90,8 +91,12 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../src/lib/Drivers/Inc/atmega128_DRV_uart.h:
 
+../src/lib/Drivers/Inc/atmega128_DRV_timer.h:
+
 ../src/common/hw/include/gpio.h:
 
 ../src/hw/hw_def.h:
 
 ../src/common/hw/include/uart.h:
+
+../src/common/hw/include/timer.h:

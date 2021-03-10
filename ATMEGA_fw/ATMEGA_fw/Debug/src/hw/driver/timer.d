@@ -1,5 +1,5 @@
-src/hw/hw.d src/hw/hw.o: ../src/hw/hw.c ../src/hw/hw.h ../src/hw/hw_def.h \
- ../src/common/def.h \
+src/hw/driver/timer.d src/hw/driver/timer.o: ../src/hw/driver/timer.c \
+ ../src/common/hw/include/timer.h ../src/hw/hw_def.h ../src/common/def.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
@@ -26,10 +26,9 @@ src/hw/hw.d src/hw/hw.o: ../src/hw/hw.c ../src/hw/hw.h ../src/hw/hw_def.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_uart.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
- ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
- ../src/common/hw/include/uart.h ../src/common/hw/include/timer.h
+ ../src/common/hw/include/gpio.h
 
-../src/hw/hw.h:
+../src/common/hw/include/timer.h:
 
 ../src/hw/hw_def.h:
 
@@ -92,9 +91,3 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/lib/Drivers/Inc/atmega128_DRV_timer.h:
 
 ../src/common/hw/include/gpio.h:
-
-../src/hw/hw_def.h:
-
-../src/common/hw/include/uart.h:
-
-../src/common/hw/include/timer.h:

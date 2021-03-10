@@ -26,8 +26,10 @@ src/bsp/atmega128_it.d src/bsp/atmega128_it.o: ../src/bsp/atmega128_it.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_uart.h \
+ ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
  ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
- ../src/common/hw/include/uart.h ../src/bsp/atmega128_it.h
+ ../src/common/hw/include/uart.h ../src/common/hw/include/timer.h \
+ ../src/bsp/atmega128_it.h
 
 ../src/main.h:
 
@@ -93,10 +95,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../src/lib/Drivers/Inc/atmega128_DRV_uart.h:
 
+../src/lib/Drivers/Inc/atmega128_DRV_timer.h:
+
 ../src/common/hw/include/gpio.h:
 
 ../src/hw/hw_def.h:
 
 ../src/common/hw/include/uart.h:
+
+../src/common/hw/include/timer.h:
 
 ../src/bsp/atmega128_it.h:

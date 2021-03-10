@@ -4,6 +4,7 @@
 #include "hw_def.h"
 #include "gpio.h"
 #include "uart.h"
+#include "timer.h"
 
 void hwInit(void);
 

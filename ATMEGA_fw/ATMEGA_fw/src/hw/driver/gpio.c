@@ -14,6 +14,10 @@ typedef struct
 gpio_tbl_t gpio_tbl[GPIO_MAX_CH] = 
 {
 	{GPIOA, PIN0, _DEF_OUTPUT, PIN_SET, PIN_RESET},
+	{GPIOA, PIN1, _DEF_OUTPUT, PIN_SET, PIN_RESET},
+	{GPIOB, PIN4, _DEF_OUTPUT, PIN_SET, PIN_RESET},
+	{GPIOB, PIN7, _DEF_OUTPUT, PIN_SET, PIN_RESET},
+	{GPIOB, PIN5, _DEF_OUTPUT, PIN_SET, PIN_RESET},
 };
 
 bool gpioPinMode(uint8_t ch, uint8_t mode);
