@@ -128,9 +128,11 @@ void TIM2_OC_IRQHandler(TIM_HandleTypeDef *htim);
 void TIM1_OCA_IRQHandler(TIM_HandleTypeDef *htim);
 void TIM1_OCB_IRQHandler(TIM_HandleTypeDef *htim);
 void TIM1_OCC_IRQHandler(TIM_HandleTypeDef *htim);
+void TIM1_CAPT_IRQHandler(TIM_HandleTypeDef *htim);
 void TIM3_OCA_IRQHandler(TIM_HandleTypeDef *htim);
 void TIM3_OCB_IRQHandler(TIM_HandleTypeDef *htim);
 void TIM3_OCC_IRQHandler(TIM_HandleTypeDef *htim);
+void TIM3_CAPT_IRQHandler(TIM_HandleTypeDef *htim);
 
 void TIM0_OVF_ElapsedCallback(TIM_HandleTypeDef *htim);
 void TIM1_OVF_ElapsedCallback(TIM_HandleTypeDef *htim);
@@ -142,7 +144,9 @@ void TIM2_OC_ElapsedCallback(TIM_HandleTypeDef *htim);
 void TIM1_OCA_ElapsedCallback(TIM_HandleTypeDef *htim);
 void TIM1_OCB_ElapsedCallback(TIM_HandleTypeDef *htim);
 void TIM1_OCC_ElapsedCallback(TIM_HandleTypeDef *htim);
+void TIM1_CAPT_CpltCallback(TIM_HandleTypeDef *htim);
 void TIM3_OCA_ElapsedCallback(TIM_HandleTypeDef *htim);
 void TIM3_OCB_ElapsedCallback(TIM_HandleTypeDef *htim);
 void TIM3_OCC_ElapsedCallback(TIM_HandleTypeDef *htim);
+void TIM3_CAPT_CpltCallback(TIM_HandleTypeDef *htim);
 #endif /* ATMEGA128_DRV_TIMER_H_ */

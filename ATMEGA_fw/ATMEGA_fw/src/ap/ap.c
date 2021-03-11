@@ -4,9 +4,10 @@
 void apInit(void)
 {
 	//uartOpen(_DEF_UART0, 115200);
-	timerStart(_DEF_TIM0, 0, 255, 0);
-	timerStart(_DEF_TIM1, 0, 1, 0);
+	//timerStart(_DEF_TIM0, 0, 124, 0);
+	//timerStart(_DEF_TIM1, 0, 1, 0);
 	timerStart(_DEF_TIM2, 0, 250, 5000);
+	//a4988Start(_DEF_A4988_0, _DEF_CW, 124);
 	sei();
 }
 
@@ -20,11 +21,15 @@ void apMain(void)
 	
 	while(true)
 	{
-		timerSetOcr(_DEF_TIM0, 1);
-		timerSetOcr(_DEF_TIM2, 250);
+		//timerSetOcr(_DEF_TIM0, 1);
+		//timerSetOcr(_DEF_TIM2, 250);
+		//a4988SetSpeed(_DEF_A4988_0, 30);
 		_delay_ms(500);
-		timerSetOcr(_DEF_TIM0, 255);
-		timerSetOcr(_DEF_TIM2, 500);
+		//a4988SetSpeed(_DEF_A4988_0, 124);
+		_delay_ms(500);
+		//timerSetOcr(_DEF_TIM0, 255);
+		//timerSetOcr(_DEF_TIM2, 500);
+		//a4988SetSpeed(_DEF_A4988_0, 255);
 		_delay_ms(500);
 		/*
 		gpioPinToggle(_DEF_GPIO0);

@@ -10,6 +10,10 @@ src\bsp\bsp.c
 
 src\common\core\qbuffer.c
 
+src\hw\driver\drivemotor.c
+
+src\hw\driver\drivemotor\a4988.c
+
 src\hw\driver\gpio.c
 
 src\hw\driver\timer.c

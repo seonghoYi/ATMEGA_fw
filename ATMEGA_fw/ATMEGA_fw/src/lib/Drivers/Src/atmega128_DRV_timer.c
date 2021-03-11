@@ -168,7 +168,7 @@ StatusTypeDef TIM8_Init(TIM_HandleTypeDef *htim)
 		case TIM_MOD_CTC_FORCE:
 		SETB(*(tim->TCCRn), 7);
 		CLRB(*(tim->TCCRn), 6);
-		CLRB(*(tim->TCCRn), 3);
+		SETB(*(tim->TCCRn), 3);
 		break;
 		default:
 		break;
@@ -957,6 +957,10 @@ void TIM1_OCC_IRQHandler(TIM_HandleTypeDef *htim)
 {
 	TIM1_OCC_ElapsedCallback(htim);
 }
+void TIM1_CAPT_IRQHandler(TIM_HandleTypeDef *htim)
+{
+	TIM1_CAPT_CpltCallback(htim);
+}
 
 void TIM3_OCA_IRQHandler(TIM_HandleTypeDef *htim)
 {
@@ -969,6 +973,10 @@ void TIM3_OCB_IRQHandler(TIM_HandleTypeDef *htim)
 void TIM3_OCC_IRQHandler(TIM_HandleTypeDef *htim)
 {
 	TIM3_OCC_ElapsedCallback(htim);
+}
+void TIM3_CAPT_IRQHandler(TIM_HandleTypeDef *htim)
+{
+	TIM3_CAPT_CpltCallback(htim);
 }
 
 __attribute__((weak)) void TIM0_OVF_ElapsedCallback(TIM_HandleTypeDef *htim)
@@ -1011,6 +1019,10 @@ __attribute__((weak)) void TIM1_OCC_ElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	return;
 }
+__attribute__((weak)) void TIM1_CAPT_CpltCallback(TIM_HandleTypeDef *htim)
+{
+	return;
+}
 
 __attribute__((weak)) void TIM3_OCA_ElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -1024,5 +1036,10 @@ __attribute__((weak)) void TIM3_OCC_ElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	return;
 }
+__attribute__((weak)) void TIM3_CAPT_CpltCallback(TIM_HandleTypeDef *htim)
+{
+	return;
+}
+
 
 #endif

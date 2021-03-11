@@ -5,6 +5,7 @@
 #include "gpio.h"
 #include "uart.h"
 #include "timer.h"
+#include "drivemotor/a4988.h"
 
 void hwInit(void);
 

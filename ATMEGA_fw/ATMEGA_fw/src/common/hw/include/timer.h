@@ -10,6 +10,9 @@
 bool timerInit(void);
 bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr);
 bool timerStop(uint8_t ch);
+void timerAttachOVFInterrupt(uint8_t ch, void (*func)());
+void timerAttachOCInterrupt(uint8_t ch, void (*func)());
+void timerAttachICInterrupt(uint8_t ch, void (*func)());
 
 uint16_t timerGetTcnt(uint8_t ch);
 bool timerSetTcnt(uint8_t ch, uint16_t tcnt);

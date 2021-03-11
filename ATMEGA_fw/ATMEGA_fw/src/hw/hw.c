@@ -6,4 +6,5 @@ void hwInit(void)
 	gpioInit();
 	uartInit();
 	timerInit();
+	a4988Init();
 }

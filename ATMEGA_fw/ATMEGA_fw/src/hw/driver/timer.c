@@ -4,7 +4,22 @@
 #ifdef _USE_HW_TIM
 
 
-bool is_open[TIM_MAX_CH];
+
+typedef struct
+{
+	bool is_open;
+	
+	void (*func_ovf)(void);
+	void (*func_oc)(void);
+	void (*func_ic)(void);
+	TIM_HandleTypeDef *h_tim;
+	
+} tim_t;
+
+
+tim_t tim_tbl[TIM_MAX_CH];
+
+
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
@@ -18,24 +33,32 @@ bool timerInit(void)
 	
 	for (int i = 0; i < TIM_MAX_CH; i++)
 	{
-		is_open[i] = false;
+		tim_tbl[i].is_open	= false;
+		tim_tbl[i].func_ovf = NULL;
+		tim_tbl[i].func_oc	= NULL;
+		tim_tbl[i].func_ic	= NULL;
+		tim_tbl[i].h_tim	= NULL;
 	}
+	
 	return ret;
 }
 
 bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 {
 	bool ret = false;
+	tim_t *p_tim = &tim_tbl[ch];
 	
 	switch(ch)
 	{
 		case _DEF_TIM0:
+		p_tim->h_tim = &htim1;
+		
 		htim1.TIMn = TIM0;
 		htim1.Init.Prescaler	= TIM_CLK_PRESCALER_256;
 		htim1.Init.Source		= TIM_INTCLK_SOURCE;
-		htim1.Init.CountMode	= TIM_MOD_FASTPWM;
+		htim1.Init.CountMode	= TIM_MOD_CTC_FORCE;
 		htim1.Init.InputCapture = TIM_IC_DISABLE;
-		htim1.Init.Output		= TIM_PORT_OC_NONINV;
+		htim1.Init.Output		= TIM_PORT_TGL_OC;
 		htim1.Init.Channel		= TIM_CH_NONE;
 		htim1.Init.Tcnt			= tcnt;
 		htim1.Init.Ocr			= ocr;
@@ -48,7 +71,7 @@ bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 		else
 		{
 			ret = true;
-			is_open[_DEF_TIM0] = true;
+			p_tim->is_open = true;
 			/*
 			if (TIM_Start(&htim1) != OK || TIM_Start_Normal_IT(&htim1) != OK)
 			{
@@ -62,12 +85,14 @@ bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 		}
 		break;
 		case _DEF_TIM1:
+		p_tim->h_tim = &htim2;
+		
 		htim2.TIMn = TIM2;
 		htim2.Init.Prescaler	= TIM_CLK_PRESCALER_256;
 		htim2.Init.Source		= TIM_INTCLK_SOURCE;
-		htim2.Init.CountMode	= TIM_MOD_FASTPWM;
+		htim2.Init.CountMode	= TIM_MOD_CTC_FORCE;
 		htim2.Init.InputCapture = TIM_IC_DISABLE;
-		htim2.Init.Output		= TIM_PORT_OC_NONINV;
+		htim2.Init.Output		= TIM_PORT_TGL_OC;
 		htim2.Init.Channel		= TIM_CH_NONE;
 		htim2.Init.Tcnt			= tcnt;
 		htim2.Init.Ocr			= ocr;
@@ -80,7 +105,7 @@ bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 		else
 		{
 			ret = true;
-			is_open[_DEF_TIM1] = true;
+			p_tim->is_open = true;
 			/*
 			if (TIM_Start(&htim2) != OK || TIM_Start_Normal_IT(&htim2) != OK)
 			{
@@ -94,6 +119,8 @@ bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 		}
 		break;
 		case _DEF_TIM2:
+		p_tim->h_tim = &htim3;
+		
 		htim3.TIMn = TIM1;
 		htim3.Init.Prescaler	= TIM_CLK_PRESCALER_64;
 		htim3.Init.Source		= TIM_INTCLK_SOURCE;
@@ -111,7 +138,7 @@ bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 		else
 		{
 			ret = true;
-			is_open[_DEF_TIM2] = true;
+			p_tim->is_open = true;
 			/*
 			if (TIM_Start(&htim2) != OK || TIM_Start_Normal_IT(&htim2) != OK)
 			{
@@ -126,6 +153,8 @@ bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 		
 		break;
 		case _DEF_TIM3:
+		p_tim->h_tim = &htim4;
+		
 		htim4.TIMn = TIM3;
 		break;
 	}
@@ -140,67 +169,55 @@ bool timerStart(uint8_t ch, uint16_t tcnt, uint16_t ocr, uint16_t icr)
 bool timerStop(uint8_t ch)
 {
 	bool ret = true;
+	tim_t *p_tim = &tim_tbl[ch];
 	
-	switch(ch)
-	{
-		case _DEF_TIM0:
-		TIM_Stop(&htim1);
-		TIM_Stop_Normal_IT(&htim1);
-		TIM_Stop_OC_IT(&htim1);
-		TIM_Stop_IC_IT(&htim1);
-		break;
-	}
+	TIM_Stop(p_tim->h_tim);
+	TIM_Stop_Normal_IT(p_tim->h_tim);
+	TIM_Stop_OC_IT(p_tim->h_tim);
+	TIM_Stop_IC_IT(p_tim->h_tim);
+
 	
 	
 	return ret;
 }
 
 
+void timerAttachOVFInterrupt(uint8_t ch, void (*func)())
+{
+	tim_t *p_tim = &tim_tbl[ch];
+	p_tim->func_ovf = func;
+}
+
+void timerAttachOCInterrupt(uint8_t ch, void (*func)())
+{
+	tim_t *p_tim = &tim_tbl[ch];
+	p_tim->func_oc = func;
+}
+
+void timerAttachICInterrupt(uint8_t ch, void (*func)())
+{
+	tim_t *p_tim = &tim_tbl[ch];
+	p_tim->func_ic = func;
+}
+
+
+
+
 uint16_t timerGetTcnt(uint8_t ch)
 {
 	uint16_t ret;
-	switch(ch)
-	{
-		case _DEF_TIM0:
-		ret = htim1.Init.Tcnt;
-		break;
-		case _DEF_TIM1:
-		ret = htim2.Init.Tcnt;
-		break;
-		case _DEF_TIM2:
-		ret = htim3.Init.Tcnt;
-		break;
-		case _DEF_TIM3:
-		ret = htim4.Init.Tcnt;
-		break;
-		default:
-		ret = 0;
-		break;
-	}
+	tim_t *p_tim = &tim_tbl[ch];
+	
+	ret = p_tim->h_tim->Init.Tcnt;
+	
 	return ret;
 }
 
 bool timerSetTcnt(uint8_t ch, uint16_t tcnt)
 {
 	bool ret = false;
-	switch(ch)
-	{
-		case _DEF_TIM0:
-		ret = timerStart(ch, tcnt, htim1.Init.Ocr, htim1.Init.Icr);
-		break;
-		case _DEF_TIM1:
-		ret = timerStart(ch, tcnt, htim2.Init.Ocr, htim2.Init.Icr);
-		break;
-		case _DEF_TIM2:
-		ret = timerStart(ch, tcnt, htim3.Init.Ocr, htim3.Init.Icr);
-		break;
-		case _DEF_TIM3:
-		ret = timerStart(ch, tcnt, htim4.Init.Ocr, htim4.Init.Icr);
-		break;
-		default:
-		break;
-	}
-	
+	tim_t *p_tim = &tim_tbl[ch];
+	ret = timerStart(ch, tcnt, p_tim->h_tim->Init.Ocr, p_tim->h_tim->Init.Icr);
 	
 	return ret;
 }
@@ -208,94 +225,36 @@ bool timerSetTcnt(uint8_t ch, uint16_t tcnt)
 uint16_t timerGetOcr(uint8_t ch)
 {
 	uint16_t ret;
-	switch(ch)
-	{
-		case _DEF_TIM0:
-		ret = htim1.Init.Ocr;
-		break;
-		case _DEF_TIM1:
-		ret = htim2.Init.Ocr;
-		break;
-		case _DEF_TIM2:
-		ret = htim3.Init.Ocr;
-		break;
-		case _DEF_TIM3:
-		ret = htim4.Init.Ocr;
-		break;
-		default:
-		ret = 0;
-		break;
-	}
+	tim_t *p_tim = &tim_tbl[ch];
+	ret = p_tim->h_tim->Init.Ocr;
+
 	return ret;
 }
 
 bool timerSetOcr(uint8_t ch, uint16_t ocr)
 {
 	bool ret = false;
-	switch(ch)
-	{
-		case _DEF_TIM0:
-		ret = timerStart(ch, htim1.Init.Tcnt, ocr, htim1.Init.Icr);
-		break;
-		case _DEF_TIM1:
-		ret = timerStart(ch, htim2.Init.Tcnt, ocr, htim2.Init.Icr);
-		break;
-		case _DEF_TIM2:
-		ret = timerStart(ch, htim3.Init.Tcnt, ocr, htim3.Init.Icr);
-		break;
-		case _DEF_TIM3:
-		ret = timerStart(ch, htim4.Init.Tcnt, ocr, htim4.Init.Icr);
-		break;
-		default:
-		break;
-	}
+	tim_t *p_tim = &tim_tbl[ch];
+	ret = timerStart(ch, p_tim->h_tim->Init.Tcnt, ocr, p_tim->h_tim->Init.Icr);
+
 	return ret;
 }
 
 uint16_t timerGetIcr(uint8_t ch)
 {
 	uint16_t ret;
-	switch(ch)
-	{
-		case _DEF_TIM0:
-		ret = htim1.Init.Icr;
-		break;
-		case _DEF_TIM1:
-		ret = htim2.Init.Icr;
-		break;
-		case _DEF_TIM2:
-		ret = htim3.Init.Icr;
-		break;
-		case _DEF_TIM3:
-		ret = htim4.Init.Icr;
-		break;
-		default:
-		ret = 0;
-		break;
-	}
+	tim_t *p_tim = &tim_tbl[ch];
+	ret = p_tim->h_tim->Init.Icr;
+	
 	return ret;
 }
 
 bool timerSetIcr(uint8_t ch, uint16_t icr)
 {
 	bool ret = false;
-	switch(ch)
-	{
-		case _DEF_TIM0:
-		ret = timerStart(ch, htim1.Init.Tcnt, htim1.Init.Ocr, icr);
-		break;
-		case _DEF_TIM1:
-		ret = timerStart(ch, htim2.Init.Tcnt, htim2.Init.Ocr, icr);
-		break;
-		case _DEF_TIM2:
-		ret = timerStart(ch, htim3.Init.Tcnt, htim3.Init.Ocr, icr);
-		break;
-		case _DEF_TIM3:
-		ret = timerStart(ch, htim4.Init.Tcnt, htim4.Init.Ocr, icr);
-		break;
-		default:
-		break;
-	}
+	tim_t *p_tim = &tim_tbl[ch];
+	ret = timerStart(ch, p_tim->h_tim->Init.Tcnt, p_tim->h_tim->Init.Ocr, icr);
+
 	return ret;
 }
 

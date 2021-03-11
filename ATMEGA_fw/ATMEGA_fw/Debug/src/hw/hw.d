@@ -27,7 +27,9 @@ src/hw/hw.d src/hw/hw.o: ../src/hw/hw.c ../src/hw/hw.h ../src/hw/hw_def.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_uart.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
  ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
- ../src/common/hw/include/uart.h ../src/common/hw/include/timer.h
+ ../src/common/hw/include/uart.h ../src/common/hw/include/timer.h \
+ ../src/common/hw/include/drivemotor/a4988.h \
+ ../src/common/hw/include/drivemotor.h
 
 ../src/hw/hw.h:
 
@@ -98,3 +100,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/common/hw/include/uart.h:
 
 ../src/common/hw/include/timer.h:
+
+../src/common/hw/include/drivemotor/a4988.h:
+
+../src/common/hw/include/drivemotor.h:
