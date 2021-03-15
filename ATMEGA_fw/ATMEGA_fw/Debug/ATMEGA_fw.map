@@ -26,6 +26,8 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o) (__fp_split3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_zero.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o) (__fp_zero)
+c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+                              src/hw/driver/drivemotor.o (__divmodhi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
                               src/common/core/qbuffer.o (__udivmodsi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
@@ -33,9 +35,11 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
                               src/lib/Drivers/Src/atmega128_DRV_timer.o (__tablejump2__)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
-                              src/hw/driver/gpio.o (__do_copy_data)
+                              src/ap/ap.o (__do_copy_data)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
-                              src/hw/driver/drivemotor/a4988.o (__do_clear_bss)
+                              src/hw/driver/ctc.o (__do_clear_bss)
+c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+                              c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o) (__udivmodhi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
                               src/hw/driver/uart.o (vsnprintf)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
@@ -52,15 +56,25 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 Allocating common symbols
 Common symbol       size              file
 
-tim_tbl             0x1b              src/hw/driver/timer.o
-htim4               0xe               src/hw/driver/timer.o
+pwm_tbl             0x24              src/hw/driver/pwm.o
+htim3_pwm           0x8               src/hw/driver/pwm.o
+htim4               0x9               src/hw/driver/ctc.o
+htim1_oc            0x5               src/hw/driver/ctc.o
 h_a4988_1           0x6               src/hw/driver/drivemotor/a4988.o
-htim3               0xe               src/hw/driver/timer.o
+htim3               0x9               src/hw/driver/ctc.o
+htim4_pwm           0x8               src/hw/driver/pwm.o
+htim3_oc            0x9               src/hw/driver/ctc.o
 huart1              0x17              src/hw/driver/uart.o
+htim2_pwm           0x4               src/hw/driver/pwm.o
 h_a4988_2           0x6               src/hw/driver/drivemotor/a4988.o
-htim1               0xe               src/hw/driver/timer.o
-htim2               0xe               src/hw/driver/timer.o
+htim1               0x7               src/hw/driver/ctc.o
+ctc_tbl             0x54              src/hw/driver/ctc.o
+htim4_oc            0x9               src/hw/driver/ctc.o
+htim1_pwm           0x4               src/hw/driver/pwm.o
+htim2               0x7               src/hw/driver/ctc.o
 a4988_tbl           0xa               src/hw/driver/drivemotor/a4988.o
+huart2              0x17              src/hw/driver/uart.o
+htim2_oc            0x5               src/hw/driver/ctc.o
 
 Discarded input sections
 
@@ -80,88 +94,93 @@ Discarded input sections
  .bss           0x00000000        0x0 src/common/core/qbuffer.o
  .text.qbufferInit
                 0x00000000        0x2 src/common/core/qbuffer.o
- .text.qbufferCreate
-                0x00000000       0x22 src/common/core/qbuffer.o
  .text.qbufferRead
                 0x00000000       0xc8 src/common/core/qbuffer.o
  .text.qbufferAvailable
                 0x00000000       0x34 src/common/core/qbuffer.o
  .text.qbufferFlush
                 0x00000000       0x14 src/common/core/qbuffer.o
+ .text          0x00000000        0x0 src/hw/driver/ctc.o
+ .data          0x00000000        0x0 src/hw/driver/ctc.o
+ .bss           0x00000000        0x0 src/hw/driver/ctc.o
+ .text.ctcIsOpen
+                0x00000000       0x12 src/hw/driver/ctc.o
+ .text.ctc16ChannelConfig
+                0x00000000      0x10e src/hw/driver/ctc.o
+ .text.ctcGetOcr
+                0x00000000       0xca src/hw/driver/ctc.o
+ .text.ctcSetIcr
+                0x00000000       0x88 src/hw/driver/ctc.o
+ .text.ctcGetIcr
+                0x00000000       0x74 src/hw/driver/ctc.o
+ .text.ctcAttachInterrupt
+                0x00000000        0x2 src/hw/driver/ctc.o
  .text          0x00000000        0x0 src/hw/driver/drivemotor.o
  .data          0x00000000        0x0 src/hw/driver/drivemotor.o
  .bss           0x00000000        0x0 src/hw/driver/drivemotor.o
- .debug_info    0x00000000       0x64 src/hw/driver/drivemotor.o
- .debug_abbrev  0x00000000       0x26 src/hw/driver/drivemotor.o
- .debug_aranges
-                0x00000000       0x18 src/hw/driver/drivemotor.o
- .debug_line    0x00000000       0x1a src/hw/driver/drivemotor.o
- .debug_str     0x00000000      0x17c src/hw/driver/drivemotor.o
- .comment       0x00000000       0x31 src/hw/driver/drivemotor.o
+ .text.motorIsInit
+                0x00000000        0x6 src/hw/driver/drivemotor.o
+ .text.motorRun
+                0x00000000       0x1e src/hw/driver/drivemotor.o
+ .text.motorStop
+                0x00000000       0x1e src/hw/driver/drivemotor.o
+ .text.motorGetSpeed
+                0x00000000       0x50 src/hw/driver/drivemotor.o
+ .text.motorGetMotionState
+                0x00000000       0x96 src/hw/driver/drivemotor.o
+ .text.motorAdvance
+                0x00000000        0xc src/hw/driver/drivemotor.o
+ .text.motorGoBackward
+                0x00000000        0xc src/hw/driver/drivemotor.o
+ .text.motorSpin
+                0x00000000       0x14 src/hw/driver/drivemotor.o
+ .text.motorSteering
+                0x00000000      0x252 src/hw/driver/drivemotor.o
+ .bss.power_.2661
+                0x00000000        0x2 src/hw/driver/drivemotor.o
  .text          0x00000000        0x0 src/hw/driver/drivemotor/a4988.o
  .data          0x00000000        0x0 src/hw/driver/drivemotor/a4988.o
  .bss           0x00000000        0x0 src/hw/driver/drivemotor/a4988.o
- .text.a4988DriverInit
-                0x00000000        0xe src/hw/driver/drivemotor/a4988.o
- .text.a4988Start
-                0x00000000       0xb4 src/hw/driver/drivemotor/a4988.o
- .text.a4988Reset
-                0x00000000        0x2 src/hw/driver/drivemotor/a4988.o
- .text.a4988Enable
-                0x00000000        0x2 src/hw/driver/drivemotor/a4988.o
- .text.a4988Disable
-                0x00000000        0x2 src/hw/driver/drivemotor/a4988.o
- .text.a4988SetDirection
-                0x00000000        0x2 src/hw/driver/drivemotor/a4988.o
- .text.a4988SetSpeed
-                0x00000000       0x32 src/hw/driver/drivemotor/a4988.o
  .text          0x00000000        0x0 src/hw/driver/gpio.o
  .data          0x00000000        0x0 src/hw/driver/gpio.o
  .bss           0x00000000        0x0 src/hw/driver/gpio.o
- .text.gpioPinWrite
-                0x00000000       0x4a src/hw/driver/gpio.o
  .text.gpioPinRead
                 0x00000000       0x3a src/hw/driver/gpio.o
- .text          0x00000000        0x0 src/hw/driver/timer.o
- .data          0x00000000        0x0 src/hw/driver/timer.o
- .bss           0x00000000        0x0 src/hw/driver/timer.o
- .text.timerStop
-                0x00000000       0x46 src/hw/driver/timer.o
- .text.timerAttachOVFInterrupt
-                0x00000000       0x20 src/hw/driver/timer.o
- .text.timerAttachOCInterrupt
-                0x00000000       0x20 src/hw/driver/timer.o
- .text.timerAttachICInterrupt
-                0x00000000       0x20 src/hw/driver/timer.o
- .text.timerGetTcnt
-                0x00000000       0x26 src/hw/driver/timer.o
- .text.timerSetTcnt
-                0x00000000       0x30 src/hw/driver/timer.o
- .text.timerGetOcr
-                0x00000000       0x26 src/hw/driver/timer.o
- .text.timerSetOcr
-                0x00000000       0x32 src/hw/driver/timer.o
- .text.timerGetIcr
-                0x00000000       0x26 src/hw/driver/timer.o
- .text.timerSetIcr
-                0x00000000       0x32 src/hw/driver/timer.o
+ .text.gpioPinToggle
+                0x00000000       0x22 src/hw/driver/gpio.o
+ .text          0x00000000        0x0 src/hw/driver/pwm.o
+ .data          0x00000000        0x0 src/hw/driver/pwm.o
+ .bss           0x00000000        0x0 src/hw/driver/pwm.o
+ .text.pwmBegin
+                0x00000000      0x226 src/hw/driver/pwm.o
+ .text.pwmIsOpen
+                0x00000000       0x1e src/hw/driver/pwm.o
+ .text.pwmStart
+                0x00000000       0xc6 src/hw/driver/pwm.o
+ .text.pwmStop  0x00000000       0xc6 src/hw/driver/pwm.o
+ .text.pwm16ChannelConfig
+                0x00000000      0x126 src/hw/driver/pwm.o
+ .text.pwmSetTcnt
+                0x00000000       0xfc src/hw/driver/pwm.o
+ .text.pwmGetTcnt
+                0x00000000       0xec src/hw/driver/pwm.o
+ .text.pwmSetOcr
+                0x00000000       0xf6 src/hw/driver/pwm.o
+ .text.pwmGetOcr
+                0x00000000       0xe6 src/hw/driver/pwm.o
+ .text.pwmSetIcr
+                0x00000000       0x98 src/hw/driver/pwm.o
+ .text.pwmGetIcr
+                0x00000000       0x84 src/hw/driver/pwm.o
  .text          0x00000000        0x0 src/hw/driver/uart.o
  .data          0x00000000        0x0 src/hw/driver/uart.o
  .bss           0x00000000        0x0 src/hw/driver/uart.o
- .text.uartOpen
-                0x00000000       0x62 src/hw/driver/uart.o
  .text.uartAvailable
-                0x00000000       0x16 src/hw/driver/uart.o
+                0x00000000       0x26 src/hw/driver/uart.o
  .text.uartRead
-                0x00000000       0x38 src/hw/driver/uart.o
- .text.uartWrite
-                0x00000000       0x4c src/hw/driver/uart.o
- .text.uartPrintf
-                0x00000000       0x60 src/hw/driver/uart.o
+                0x00000000       0x5e src/hw/driver/uart.o
  .text.uartGetBaud
-                0x00000000       0x1e src/hw/driver/uart.o
- .bss.rx_data   0x00000000        0x1 src/hw/driver/uart.o
- .bss.rx_buf    0x00000000      0x100 src/hw/driver/uart.o
+                0x00000000       0x36 src/hw/driver/uart.o
  .text          0x00000000        0x0 src/hw/hw.o
  .data          0x00000000        0x0 src/hw/hw.o
  .bss           0x00000000        0x0 src/hw/hw.o
@@ -180,33 +199,67 @@ Discarded input sections
  .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_gpio.o
  .text.GPIO_ReadPin
                 0x00000000       0x2e src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .text.GPIO_WritePin
-                0x00000000       0x68 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .text.GPIO_TogglePin
+                0x00000000       0x30 src/lib/Drivers/Src/atmega128_DRV_gpio.o
  .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_timer.o
  .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_timer.o
  .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM_Stop
-                0x00000000       0x56 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM_Start_Normal_IT
-                0x00000000       0x3a src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM_Stop_Normal_IT
-                0x00000000       0x3a src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM_Start_OC_IT
-                0x00000000       0x82 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM_Stop_OC_IT
-                0x00000000       0x82 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM_Start_IC_IT
+ .text.TIM8_Base_Stop
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM8_PWM_Init
+                0x00000000       0xde src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM8_PWM_Stop
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM8_Base_Stop_IT
                 0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM_Stop_IC_IT
+ .text.TIM8_OC_Stop_IT
                 0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM0_OVF_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_Base_Init
+                0x00000000       0x90 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_Base_Stop
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_OC_Init
+                0x00000000      0x370 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_PWM_Init
+                0x00000000      0x3d2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .progmem.gcc_sw_table.TIM16_PWM_Init
+                0x00000000       0x18 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_PWM_Stop
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_IC_Init
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_IC_Start
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_IC_Stop
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_Base_Stop_IT
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_OC_Stop_IT
+                0x00000000       0x7e src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_IC_Start_IT
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_IC_Stop_IT
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM8_Base_Start
+                0x00000000       0x4c src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM8_Base_Start_IT
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM8_OC_Start_IT
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM8_PWM_Start
+                0x00000000       0x26 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_Base_Start
+                0x00000000       0x62 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_Base_Start_IT
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_OC_Start_IT
+                0x00000000       0x7e src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .text.TIM16_PWM_Start
+                0x00000000       0x26 src/lib/Drivers/Src/atmega128_DRV_timer.o
  .text.TIM1_OVF_ElapsedCallback
                 0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
  .text.TIM1_OVF_IRQHandler
                 0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text.TIM2_OVF_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
  .text.TIM3_OVF_ElapsedCallback
                 0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
  .text.TIM3_OVF_IRQHandler
@@ -246,13 +299,7 @@ Discarded input sections
  .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_uart.o
  .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_uart.o
  .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .text.UART_Init
-                0x00000000      0x40a src/lib/Drivers/Src/atmega128_DRV_uart.o
- .text.UART_Transmit
-                0x00000000       0xcc src/lib/Drivers/Src/atmega128_DRV_uart.o
  .text.UART_Transmit_IT
-                0x00000000       0x38 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .text.UART_Receive_IT
                 0x00000000       0x38 src/lib/Drivers/Src/atmega128_DRV_uart.o
  .text.UART_TxCpltCallback
                 0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_uart.o
@@ -264,68 +311,56 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
- .text.avr-libc.fplib
-                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o)
- .text.avr-libc.fplib
-                0x00000000       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3.o)
- .text.avr-libc.fplib
-                0x00000000        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3x.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3x.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3x.o)
- .text.avr-libc.fplib
-                0x00000000       0xdc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3x.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
- .text.avr-libc.fplib
-                0x00000000       0x5e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(floatsisf.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(floatsisf.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(floatsisf.o)
- .text.avr-libc.fplib
-                0x00000000       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(floatsisf.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_inf.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_inf.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_inf.o)
- .text.avr-libc.fplib
-                0x00000000        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_inf.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_nan.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_nan.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_nan.o)
- .text.avr-libc.fplib
-                0x00000000        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_nan.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
- .text.avr-libc.fplib
-                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
- .text.avr-libc.fplib
-                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_round.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_round.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_round.o)
- .text.avr-libc.fplib
-                0x00000000       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_round.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_split3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_split3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_split3.o)
- .text.avr-libc.fplib
-                0x00000000       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_split3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_zero.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_zero.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_zero.o)
- .text.avr-libc.fplib
-                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_zero.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .text.libgcc.mul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
@@ -403,39 +438,38 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.mul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
- .text.avr-libc
-                0x00000000       0x72 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
- .comment       0x00000000       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
- .text.avr-libc
-                0x00000000      0x414 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
- .comment       0x00000000       0x2d c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen_P.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen_P.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen_P.o)
- .text.avr-libc
-                0x00000000       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen_P.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen.o)
- .text.avr-libc
-                0x00000000       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(fputc.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(fputc.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(fputc.o)
- .text.avr-libc
-                0x00000000       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(fputc.o)
- .comment       0x00000000       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(fputc.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(ultoa_invert.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(ultoa_invert.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(ultoa_invert.o)
- .text.avr-libc
-                0x00000000       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(ultoa_invert.o)
 
 Memory Configuration
 
@@ -457,10 +491,11 @@ LOAD src/ap/ap.o
 LOAD src/bsp/atmega128_it.o
 LOAD src/bsp/bsp.o
 LOAD src/common/core/qbuffer.o
+LOAD src/hw/driver/ctc.o
 LOAD src/hw/driver/drivemotor.o
 LOAD src/hw/driver/drivemotor/a4988.o
 LOAD src/hw/driver/gpio.o
-LOAD src/hw/driver/timer.o
+LOAD src/hw/driver/pwm.o
 LOAD src/hw/driver/uart.o
 LOAD src/hw/hw.o
 LOAD src/lib/Drivers/Src/atmega128_DRV.o
@@ -577,57 +612,53 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1c96
+.text           0x00000000     0x294a
  *(.vectors)
  .vectors       0x00000000       0x8c C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
                 0x00000000                __vector_default
                 0x00000000                __vectors
  *(.vectors)
  *(.progmem.gcc*)
- .progmem.gcc_sw_table.TIM8_Init
+ .progmem.gcc_sw_table.TIM0_CLK_Configuration
                 0x0000008c        0xe src/lib/Drivers/Src/atmega128_DRV_timer.o
- .progmem.gcc_sw_table.TIM16_Init
-                0x0000009a       0x48 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .progmem.gcc_sw_table.TIM_Start
-                0x000000e2        0xe src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x000000f0                . = ALIGN (0x2)
-                0x000000f0                __trampolines_start = .
+                0x0000009a                . = ALIGN (0x2)
+                0x0000009a                __trampolines_start = .
  *(.trampolines)
- .trampolines   0x000000f0        0x0 linker stubs
+ .trampolines   0x0000009a        0x0 linker stubs
  *(.trampolines*)
-                0x000000f0                __trampolines_end = .
+                0x0000009a                __trampolines_end = .
  *libprintf_flt.a:*(.progmem.data)
  *libc.a:*(.progmem.data)
  *(.progmem*)
-                0x000000f0                . = ALIGN (0x2)
+                0x0000009a                . = ALIGN (0x2)
  *(.jumptables)
  *(.jumptables*)
  *(.lowtext)
  *(.lowtext*)
-                0x000000f0                __ctors_start = .
+                0x0000009a                __ctors_start = .
  *(.ctors)
-                0x000000f0                __ctors_end = .
-                0x000000f0                __dtors_start = .
+                0x0000009a                __ctors_end = .
+                0x0000009a                __dtors_start = .
  *(.dtors)
-                0x000000f0                __dtors_end = .
+                0x0000009a                __dtors_end = .
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x000000f0        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
-                0x000000f0                __init
+ .init0         0x0000009a        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
+                0x0000009a                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x000000f0        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
+ .init2         0x0000009a        0xc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x000000fc       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
-                0x000000fc                __do_copy_data
- .init4         0x00000116       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
-                0x00000116                __do_clear_bss
+ .init4         0x000000a6       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
+                0x000000a6                __do_copy_data
+ .init4         0x000000c0       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
+                0x000000c0                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -638,180 +669,348 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x00000126        0x8 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
+ .init9         0x000000d0        0x8 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
  *(.init9)
  *(.text)
- .text          0x0000012e        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
-                0x0000012e                __vector_22
-                0x0000012e                __vector_1
-                0x0000012e                __vector_32
-                0x0000012e                __vector_34
-                0x0000012e                __bad_interrupt
-                0x0000012e                __vector_6
-                0x0000012e                __vector_31
-                0x0000012e                __vector_3
-                0x0000012e                __vector_23
-                0x0000012e                __vector_30
-                0x0000012e                __vector_17
-                0x0000012e                __vector_19
-                0x0000012e                __vector_7
-                0x0000012e                __vector_5
-                0x0000012e                __vector_33
-                0x0000012e                __vector_4
-                0x0000012e                __vector_2
-                0x0000012e                __vector_21
-                0x0000012e                __vector_8
-                0x00000130                . = ALIGN (0x2)
+ .text          0x000000d8        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
+                0x000000d8                __vector_22
+                0x000000d8                __vector_1
+                0x000000d8                __vector_32
+                0x000000d8                __vector_34
+                0x000000d8                __bad_interrupt
+                0x000000d8                __vector_6
+                0x000000d8                __vector_31
+                0x000000d8                __vector_3
+                0x000000d8                __vector_23
+                0x000000d8                __vector_30
+                0x000000d8                __vector_17
+                0x000000d8                __vector_19
+                0x000000d8                __vector_7
+                0x000000d8                __vector_5
+                0x000000d8                __vector_33
+                0x000000d8                __vector_4
+                0x000000d8                __vector_2
+                0x000000d8                __vector_21
+                0x000000d8                __vector_8
+                0x000000da                . = ALIGN (0x2)
  *(.text.*)
- .text.apInit   0x00000130       0x14 src/ap/ap.o
-                0x00000130                apInit
- .text.apMain   0x00000144       0x38 src/ap/ap.o
-                0x00000144                apMain
+ .text.apInit   0x000000da       0x22 src/ap/ap.o
+                0x000000da                apInit
+ .text.apMain   0x000000fc       0xc6 src/ap/ap.o
+                0x000000fc                apMain
  .text.__vector_18
-                0x0000017c       0x54 src/bsp/atmega128_it.o
-                0x0000017c                __vector_18
+                0x000001c2       0x54 src/bsp/atmega128_it.o
+                0x000001c2                __vector_18
  .text.__vector_20
-                0x000001d0       0x54 src/bsp/atmega128_it.o
-                0x000001d0                __vector_20
+                0x00000216       0x54 src/bsp/atmega128_it.o
+                0x00000216                __vector_20
  .text.__vector_16
-                0x00000224       0x54 src/bsp/atmega128_it.o
-                0x00000224                __vector_16
+                0x0000026a       0x54 src/bsp/atmega128_it.o
+                0x0000026a                __vector_16
  .text.__vector_15
-                0x00000278       0x54 src/bsp/atmega128_it.o
-                0x00000278                __vector_15
+                0x000002be       0x54 src/bsp/atmega128_it.o
+                0x000002be                __vector_15
  .text.__vector_14
-                0x000002cc       0x14 src/bsp/atmega128_it.o
-                0x000002cc                __vector_14
+                0x00000312       0x14 src/bsp/atmega128_it.o
+                0x00000312                __vector_14
  .text.__vector_12
-                0x000002e0       0x14 src/bsp/atmega128_it.o
-                0x000002e0                __vector_12
+                0x00000326       0x14 src/bsp/atmega128_it.o
+                0x00000326                __vector_12
  .text.__vector_13
-                0x000002f4       0x14 src/bsp/atmega128_it.o
-                0x000002f4                __vector_13
+                0x0000033a       0x14 src/bsp/atmega128_it.o
+                0x0000033a                __vector_13
  .text.__vector_24
-                0x00000308       0x14 src/bsp/atmega128_it.o
-                0x00000308                __vector_24
+                0x0000034e       0x14 src/bsp/atmega128_it.o
+                0x0000034e                __vector_24
  .text.__vector_11
-                0x0000031c       0x14 src/bsp/atmega128_it.o
-                0x0000031c                __vector_11
+                0x00000362       0x14 src/bsp/atmega128_it.o
+                0x00000362                __vector_11
  .text.__vector_10
-                0x00000330       0x54 src/bsp/atmega128_it.o
-                0x00000330                __vector_10
+                0x00000376       0x54 src/bsp/atmega128_it.o
+                0x00000376                __vector_10
  .text.__vector_9
-                0x00000384       0x54 src/bsp/atmega128_it.o
-                0x00000384                __vector_9
+                0x000003ca       0x54 src/bsp/atmega128_it.o
+                0x000003ca                __vector_9
  .text.__vector_29
-                0x000003d8       0x14 src/bsp/atmega128_it.o
-                0x000003d8                __vector_29
+                0x0000041e       0x14 src/bsp/atmega128_it.o
+                0x0000041e                __vector_29
  .text.__vector_26
-                0x000003ec       0x14 src/bsp/atmega128_it.o
-                0x000003ec                __vector_26
+                0x00000432       0x14 src/bsp/atmega128_it.o
+                0x00000432                __vector_26
  .text.__vector_27
-                0x00000400       0x14 src/bsp/atmega128_it.o
-                0x00000400                __vector_27
+                0x00000446       0x14 src/bsp/atmega128_it.o
+                0x00000446                __vector_27
  .text.__vector_28
-                0x00000414       0x14 src/bsp/atmega128_it.o
-                0x00000414                __vector_28
+                0x0000045a       0x14 src/bsp/atmega128_it.o
+                0x0000045a                __vector_28
  .text.__vector_25
-                0x00000428       0x14 src/bsp/atmega128_it.o
-                0x00000428                __vector_25
- .text.bspInit  0x0000043c        0x2 src/bsp/bsp.o
-                0x0000043c                bspInit
+                0x0000046e       0x14 src/bsp/atmega128_it.o
+                0x0000046e                __vector_25
+ .text.bspInit  0x00000482        0x2 src/bsp/bsp.o
+                0x00000482                bspInit
+ .text.qbufferCreate
+                0x00000484       0x22 src/common/core/qbuffer.o
+                0x00000484                qbufferCreate
  .text.qbufferWrite
-                0x0000043e      0x14c src/common/core/qbuffer.o
-                0x0000043e                qbufferWrite
+                0x000004a6      0x14c src/common/core/qbuffer.o
+                0x000004a6                qbufferWrite
+ .text.ctcInit  0x000005f2       0x3e src/hw/driver/ctc.o
+                0x000005f2                ctcInit
+ .text.ctcBegin
+                0x00000630      0x1fa src/hw/driver/ctc.o
+                0x00000630                ctcBegin
+ .text.ctcStart
+                0x0000082a       0x9e src/hw/driver/ctc.o
+                0x0000082a                ctcStart
+ .text.ctcStop  0x000008c8       0x9a src/hw/driver/ctc.o
+                0x000008c8                ctcStop
+ .text.ctcSetTcnt
+                0x00000962       0xdc src/hw/driver/ctc.o
+                0x00000962                ctcSetTcnt
+ .text.ctcGetTcnt
+                0x00000a3e       0xcc src/hw/driver/ctc.o
+                0x00000a3e                ctcGetTcnt
+ .text.ctcSetOcr
+                0x00000b0a       0xda src/hw/driver/ctc.o
+                0x00000b0a                ctcSetOcr
+ .text.motorBreak
+                0x00000be4       0x1e src/hw/driver/drivemotor.o
+                0x00000be4                motorBreak
+ .text.motorSetSpeed
+                0x00000c02       0x3a src/hw/driver/drivemotor.o
+                0x00000c02                motorSetSpeed
+ .text.motorSetMotionState
+                0x00000c3c       0x80 src/hw/driver/drivemotor.o
+                0x00000c3c                motorSetMotionState
+ .text.motorInit
+                0x00000cbc       0x4c src/hw/driver/drivemotor.o
+                0x00000cbc                motorInit
+ .text.a4988GetDirection
+                0x00000d08       0x50 src/hw/driver/drivemotor/a4988.o
+                0x00000d08                a4988GetDirection
+ .text.a4988GetSpeed
+                0x00000d58       0x20 src/hw/driver/drivemotor/a4988.o
+                0x00000d58                a4988GetSpeed
+ .text.a4988SetCallBack
+                0x00000d78        0x2 src/hw/driver/drivemotor/a4988.o
+                0x00000d78                a4988SetCallBack
  .text.a4988Init
-                0x0000058a       0x14 src/hw/driver/drivemotor/a4988.o
-                0x0000058a                a4988Init
+                0x00000d7a       0xc2 src/hw/driver/drivemotor/a4988.o
+                0x00000d7a                a4988Init
+ .text.a4988SetDirection
+                0x00000e3c       0x86 src/hw/driver/drivemotor/a4988.o
+                0x00000e3c                a4988SetDirection
+ .text.a4988SetSpeed
+                0x00000ec2       0x58 src/hw/driver/drivemotor/a4988.o
+                0x00000ec2                a4988SetSpeed
+ .text.a4988DriverInit
+                0x00000f1a       0x4e src/hw/driver/drivemotor/a4988.o
+                0x00000f1a                a4988DriverInit
+ .text.a4988Enable
+                0x00000f68        0xa src/hw/driver/drivemotor/a4988.o
+                0x00000f68                a4988Enable
+ .text.a4988Start
+                0x00000f72       0x2c src/hw/driver/drivemotor/a4988.o
+                0x00000f72                a4988Start
+ .text.a4988Disable
+                0x00000f9e        0xa src/hw/driver/drivemotor/a4988.o
+                0x00000f9e                a4988Disable
+ .text.a4988Stop
+                0x00000fa8       0x38 src/hw/driver/drivemotor/a4988.o
+                0x00000fa8                a4988Stop
+ .text.a4988Hold
+                0x00000fe0        0x6 src/hw/driver/drivemotor/a4988.o
+                0x00000fe0                a4988Hold
  .text.gpioPinMode
-                0x0000059e       0x4c src/hw/driver/gpio.o
-                0x0000059e                gpioPinMode
+                0x00000fe6       0x4c src/hw/driver/gpio.o
+                0x00000fe6                gpioPinMode
  .text.gpioInit
-                0x000005ea       0x28 src/hw/driver/gpio.o
-                0x000005ea                gpioInit
- .text.gpioPinToggle
-                0x00000612       0x20 src/hw/driver/gpio.o
-                0x00000612                gpioPinToggle
- .text.timerInit
-                0x00000632       0x26 src/hw/driver/timer.o
-                0x00000632                timerInit
- .text.timerStart
-                0x00000658      0x1c0 src/hw/driver/timer.o
-                0x00000658                timerStart
- .text.TIM0_OVF_ElapsedCallback
-                0x00000818       0x3c src/hw/driver/timer.o
-                0x00000818                TIM0_OVF_ElapsedCallback
- .text.TIM2_OVF_ElapsedCallback
-                0x00000854       0x3c src/hw/driver/timer.o
-                0x00000854                TIM2_OVF_ElapsedCallback
+                0x00001032       0x28 src/hw/driver/gpio.o
+                0x00001032                gpioInit
+ .text.gpioPinWrite
+                0x0000105a       0x46 src/hw/driver/gpio.o
+                0x0000105a                gpioPinWrite
+ .text.pwmInit  0x000010a0       0x26 src/hw/driver/pwm.o
+                0x000010a0                pwmInit
  .text.uartInit
-                0x00000890        0x4 src/hw/driver/uart.o
-                0x00000890                uartInit
+                0x000010c6        0x4 src/hw/driver/uart.o
+                0x000010c6                uartInit
+ .text.uartOpen
+                0x000010ca       0xb6 src/hw/driver/uart.o
+                0x000010ca                uartOpen
+ .text.uartWrite
+                0x00001180       0x6e src/hw/driver/uart.o
+                0x00001180                uartWrite
+ .text.uartPrintf
+                0x000011ee       0x5e src/hw/driver/uart.o
+                0x000011ee                uartPrintf
  .text.UART_TxCpltCallback
-                0x00000894        0x2 src/hw/driver/uart.o
-                0x00000894                UART_TxCpltCallback
+                0x0000124c        0x2 src/hw/driver/uart.o
+                0x0000124c                UART_TxCpltCallback
  .text.UART_RxCpltCallback
-                0x00000896       0x1c src/hw/driver/uart.o
-                0x00000896                UART_RxCpltCallback
- .text.hwInit   0x000008b2        0xc src/hw/hw.o
-                0x000008b2                hwInit
+                0x0000124e       0x1c src/hw/driver/uart.o
+                0x0000124e                UART_RxCpltCallback
+ .text.hwInit   0x0000126a        0xe src/hw/hw.o
+                0x0000126a                hwInit
  .text.GPIO_Init
-                0x000008be       0x76 src/lib/Drivers/Src/atmega128_DRV_gpio.o
-                0x000008be                GPIO_Init
- .text.GPIO_TogglePin
-                0x00000934       0x30 src/lib/Drivers/Src/atmega128_DRV_gpio.o
-                0x00000934                GPIO_TogglePin
- .text.TIM8_Init
-                0x00000964      0x46a src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00000964                TIM8_Init
- .text.TIM16_Init
-                0x00000dce      0x970 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00000dce                TIM16_Init
- .text.TIM_Init
-                0x0000173e       0x1a src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x0000173e                TIM_Init
- .text.TIM_Start
-                0x00001758      0x3aa src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00001758                TIM_Start
+                0x00001278       0x76 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x00001278                GPIO_Init
+ .text.GPIO_WritePin
+                0x000012ee       0x68 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x000012ee                GPIO_WritePin
+ .text.TIM8_Base_Init
+                0x00001356       0xa6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001356                TIM8_Base_Init
+ .text.TIM8_OC_Init
+                0x000013fc      0x132 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000013fc                TIM8_OC_Init
+ .text.TIM8_OC_Stop
+                0x0000152e       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000152e                TIM8_OC_Stop
+ .text.TIM16_OC_Stop
+                0x00001558       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001558                TIM16_OC_Stop
+ .text.TIM0_CLK_Configuration
+                0x00001582      0x124 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001582                TIM0_CLK_Configuration
+ .text.TIM2_CLK_Configuration
+                0x000016a6       0xd8 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000016a6                TIM2_CLK_Configuration
+ .text.TIM8_OC_Start
+                0x0000177e       0x48 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000177e                TIM8_OC_Start
+ .text.TIM1_CLK_Configuration
+                0x000017c6       0xd8 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000017c6                TIM1_CLK_Configuration
+ .text.TIM3_CLK_Configuration
+                0x0000189e       0xd8 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000189e                TIM3_CLK_Configuration
+ .text.TIM16_OC_Start
+                0x00001976       0x22 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001976                TIM16_OC_Start
+ .text.TIM0_OVF_ElapsedCallback
+                0x00001998        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001998                TIM0_OVF_ElapsedCallback
  .text.TIM0_OVF_IRQHandler
-                0x00001b02        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00001b02                TIM0_OVF_IRQHandler
+                0x0000199a        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000199a                TIM0_OVF_IRQHandler
+ .text.TIM2_OVF_ElapsedCallback
+                0x0000199e        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000199e                TIM2_OVF_ElapsedCallback
  .text.TIM2_OVF_IRQHandler
-                0x00001b08        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00001b08                TIM2_OVF_IRQHandler
+                0x000019a0        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000019a0                TIM2_OVF_IRQHandler
  .text.TIM0_OC_ElapsedCallback
-                0x00001b0e        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00001b0e                TIM0_OC_ElapsedCallback
+                0x000019a4        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000019a4                TIM0_OC_ElapsedCallback
  .text.TIM0_OC_IRQHandler
-                0x00001b10        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00001b10                TIM0_OC_IRQHandler
+                0x000019a6        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000019a6                TIM0_OC_IRQHandler
  .text.TIM2_OC_ElapsedCallback
-                0x00001b14        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00001b14                TIM2_OC_ElapsedCallback
+                0x000019aa        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000019aa                TIM2_OC_ElapsedCallback
  .text.TIM2_OC_IRQHandler
-                0x00001b16        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                0x00001b16                TIM2_OC_IRQHandler
+                0x000019ac        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000019ac                TIM2_OC_IRQHandler
+ .text.UART_Init
+                0x000019b0      0x3fa src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x000019b0                UART_Init
+ .text.UART_Transmit
+                0x00001daa       0xcc src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00001daa                UART_Transmit
  .text.UART_Receive
-                0x00001b1a       0xde src/lib/Drivers/Src/atmega128_DRV_uart.o
-                0x00001b1a                UART_Receive
+                0x00001e76       0xde src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00001e76                UART_Receive
+ .text.UART_Receive_IT
+                0x00001f54       0x38 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00001f54                UART_Receive_IT
  .text.UART_TxIRQHandler
-                0x00001bf8        0x6 src/lib/Drivers/Src/atmega128_DRV_uart.o
-                0x00001bf8                UART_TxIRQHandler
+                0x00001f8c        0x4 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00001f8c                UART_TxIRQHandler
  .text.UART_RxIRQHandler
-                0x00001bfe       0x2c src/lib/Drivers/Src/atmega128_DRV_uart.o
-                0x00001bfe                UART_RxIRQHandler
- .text.main     0x00001c2a       0x12 src/main.o
-                0x00001c2a                main
+                0x00001f90       0x2a src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00001f90                UART_RxIRQHandler
+ .text.main     0x00001fba       0x10 src/main.o
+                0x00001fba                main
+ .text.avr-libc.fplib
+                0x00001fca        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
+                0x00001fca                __subsf3
+                0x00001fcc                __addsf3
+ .text.avr-libc.fplib
+                0x00001fd4       0xc0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o)
+                0x00001fee                __addsf3x
+ .text.avr-libc.fplib
+                0x00002094        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3.o)
+                0x00002094                __divsf3
+ .text.avr-libc.fplib
+                0x00002098       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3x.o)
+                0x000020ae                __divsf3x
+                0x000020b2                __divsf3_pse
+ .text.avr-libc.fplib
+                0x00002164       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
+                0x00002164                __fixunssfsi
+ .text.avr-libc.fplib
+                0x000021bc       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(floatsisf.o)
+                0x000021bc                __floatunsisf
+                0x000021c0                __floatsisf
+ .text.avr-libc.fplib
+                0x00002236        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_inf.o)
+                0x00002236                __fp_inf
+ .text.avr-libc.fplib
+                0x00002242        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_nan.o)
+                0x00002242                __fp_nan
+ .text.avr-libc.fplib
+                0x00002248        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
+                0x00002248                __fp_pscA
+ .text.avr-libc.fplib
+                0x00002256        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
+                0x00002256                __fp_pscB
+ .text.avr-libc.fplib
+                0x00002264       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_round.o)
+                0x00002264                __fp_round
+ .text.avr-libc.fplib
+                0x00002286       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_split3.o)
+                0x00002286                __fp_split3
+                0x00002296                __fp_splitA
+ .text.avr-libc.fplib
+                0x000022ca        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_zero.o)
+                0x000022ca                __fp_zero
+                0x000022cc                __fp_szero
  .text.libgcc.div
-                0x00001c3c       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
-                0x00001c3c                __udivmodsi4
- .text.libgcc   0x00001c80       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
-                0x00001c80                __tablejump2__
-                0x00001c92                . = ALIGN (0x2)
+                0x000022d8       0x26 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_divmodhi4.o)
+                0x000022d8                _div
+                0x000022d8                __divmodhi4
+ .text.libgcc.div
+                0x000022fe       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodsi4.o)
+                0x000022fe                __udivmodsi4
+ .text.libgcc   0x00002342       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+                0x00002342                __tablejump2__
+ .text.libgcc.div
+                0x00002354       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_udivmodhi4.o)
+                0x00002354                __udivmodhi4
+ .text.avr-libc
+                0x0000237c       0x70 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
+                0x0000237c                vsnprintf
+ .text.avr-libc
+                0x000023ec      0x3fa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
+                0x000023ec                vfprintf
+ .text.avr-libc
+                0x000027e6       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen_P.o)
+                0x000027e6                strnlen_P
+ .text.avr-libc
+                0x000027fc       0x16 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(strnlen.o)
+                0x000027fc                strnlen
+ .text.avr-libc
+                0x00002812       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(fputc.o)
+                0x00002812                fputc
+ .text.avr-libc
+                0x0000288a       0xbc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(ultoa_invert.o)
+                0x0000288a                __ultoa_invert
+                0x00002946                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001c92        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
-                0x00001c92                _exit
-                0x00001c92                exit
+ .fini9         0x00002946        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+                0x00002946                _exit
+                0x00002946                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -830,11 +1029,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001c92        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+ .fini0         0x00002946        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001c96                _etext = .
+                0x0000294a                _etext = .
 
-.data           0x00800100       0x98 load address 0x00001c96
+.data           0x00800100       0xa2 load address 0x0000294a
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -856,43 +1055,56 @@ END GROUP
  *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
+ .rodata.str1.1
+                0x00800197        0xa src/ap/ap.o
  *(.gnu.linkonce.r*)
-                0x00800198                . = ALIGN (0x2)
- *fill*         0x00800197        0x1 
-                0x00800198                _edata = .
-                0x00800198                PROVIDE (__data_end, .)
+                0x008001a2                . = ALIGN (0x2)
+ *fill*         0x008001a1        0x1 
+                0x008001a2                _edata = .
+                0x008001a2                PROVIDE (__data_end, .)
 
-.bss            0x00800198       0x92
-                0x00800198                PROVIDE (__bss_start, .)
+.bss            0x008001a2      0x241
+                0x008001a2                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.j         0x00800198        0x2 src/hw/driver/timer.o
-                0x00800198                j
- .bss.i         0x0080019a        0x2 src/hw/driver/timer.o
-                0x0080019a                i
- .bss.qbuffer   0x0080019c        0xe src/hw/driver/uart.o
+ .bss.is_init   0x008001a2        0x1 src/hw/driver/drivemotor.o
+ .bss.motor     0x008001a3       0x12 src/hw/driver/drivemotor.o
+ .bss.rx_data   0x008001b5        0x2 src/hw/driver/uart.o
+ .bss.rx_buf    0x008001b7      0x100 src/hw/driver/uart.o
+ .bss.qbuffer   0x008002b7       0x1c src/hw/driver/uart.o
  *(COMMON)
- COMMON         0x008001aa       0x16 src/hw/driver/drivemotor/a4988.o
-                0x008001aa                h_a4988_1
-                0x008001b0                h_a4988_2
-                0x008001b6                a4988_tbl
- COMMON         0x008001c0       0x53 src/hw/driver/timer.o
-                0x008001c0                tim_tbl
-                0x008001db                htim4
-                0x008001e9                htim3
-                0x008001f7                htim1
-                0x00800205                htim2
- COMMON         0x00800213       0x17 src/hw/driver/uart.o
-                0x00800213                huart1
-                0x0080022a                PROVIDE (__bss_end, .)
-                0x00001c96                __data_load_start = LOADADDR (.data)
-                0x00001d2e                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008002d3       0x90 src/hw/driver/ctc.o
+                0x008002d3                htim4
+                0x008002dc                htim1_oc
+                0x008002e1                htim3
+                0x008002ea                htim3_oc
+                0x008002f3                htim1
+                0x008002fa                ctc_tbl
+                0x0080034e                htim4_oc
+                0x00800357                htim2
+                0x0080035e                htim2_oc
+ COMMON         0x00800363       0x16 src/hw/driver/drivemotor/a4988.o
+                0x00800363                h_a4988_1
+                0x00800369                h_a4988_2
+                0x0080036f                a4988_tbl
+ COMMON         0x00800379       0x3c src/hw/driver/pwm.o
+                0x00800379                pwm_tbl
+                0x0080039d                htim3_pwm
+                0x008003a5                htim4_pwm
+                0x008003ad                htim2_pwm
+                0x008003b1                htim1_pwm
+ COMMON         0x008003b5       0x2e src/hw/driver/uart.o
+                0x008003b5                huart1
+                0x008003cc                huart2
+                0x008003e3                PROVIDE (__bss_end, .)
+                0x0000294a                __data_load_start = LOADADDR (.data)
+                0x000029ec                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080022a        0x0
+.noinit         0x008003e3        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x0080022a                _end = .
+                0x008003e3                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -932,22 +1144,28 @@ END GROUP
 .stab.indexstr
  *(.stab.indexstr)
 
-.comment        0x00000000       0x30
+.comment        0x00000000       0x5c
  *(.comment)
  .comment       0x00000000       0x30 src/ap/ap.o
                                  0x31 (size before relaxing)
  .comment       0x00000030       0x31 src/bsp/atmega128_it.o
  .comment       0x00000030       0x31 src/bsp/bsp.o
  .comment       0x00000030       0x31 src/common/core/qbuffer.o
+ .comment       0x00000030       0x31 src/hw/driver/ctc.o
+ .comment       0x00000030       0x31 src/hw/driver/drivemotor.o
  .comment       0x00000030       0x31 src/hw/driver/drivemotor/a4988.o
  .comment       0x00000030       0x31 src/hw/driver/gpio.o
- .comment       0x00000030       0x31 src/hw/driver/timer.o
+ .comment       0x00000030       0x31 src/hw/driver/pwm.o
  .comment       0x00000030       0x31 src/hw/driver/uart.o
  .comment       0x00000030       0x31 src/hw/hw.o
  .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_DRV_gpio.o
  .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_DRV_timer.o
  .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_DRV_uart.o
  .comment       0x00000030       0x31 src/main.o
+ .comment       0x00000030       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vsnprintf.o)
+ .comment       0x00000030       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(vfprintf_std.o)
+                                 0x2d (size before relaxing)
+ .comment       0x0000005c       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libc.a(fputc.o)
 
 .note.gnu.avr.deviceinfo
                 0x00000000       0x3c
@@ -969,7 +1187,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x4d0
+.debug_aranges  0x00000000      0x6a0
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x28 src/ap/ap.o
@@ -980,136 +1198,154 @@ END GROUP
  .debug_aranges
                 0x000000e0       0x48 src/common/core/qbuffer.o
  .debug_aranges
-                0x00000128       0x58 src/hw/driver/drivemotor/a4988.o
+                0x00000128       0x80 src/hw/driver/ctc.o
  .debug_aranges
-                0x00000180       0x40 src/hw/driver/gpio.o
+                0x000001a8       0x80 src/hw/driver/drivemotor.o
  .debug_aranges
-                0x000001c0       0x88 src/hw/driver/timer.o
+                0x00000228       0x78 src/hw/driver/drivemotor/a4988.o
  .debug_aranges
-                0x00000248       0x60 src/hw/driver/uart.o
+                0x000002a0       0x40 src/hw/driver/gpio.o
  .debug_aranges
-                0x000002a8       0x20 src/hw/hw.o
+                0x000002e0       0x78 src/hw/driver/pwm.o
  .debug_aranges
-                0x000002c8       0x38 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x00000358       0x60 src/hw/driver/uart.o
  .debug_aranges
-                0x00000300      0x150 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x000003b8       0x20 src/hw/hw.o
  .debug_aranges
-                0x00000450       0x60 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x000003d8       0x38 src/lib/Drivers/Src/atmega128_DRV_gpio.o
  .debug_aranges
-                0x000004b0       0x20 src/main.o
+                0x00000410      0x210 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_aranges
+                0x00000620       0x60 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_aranges
+                0x00000680       0x20 src/main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x3ee2
+.debug_info     0x00000000     0x5f5a
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x780 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_info    0x00000780      0x1e3 src/ap/ap.o
- .debug_info    0x00000963      0x48a src/bsp/atmega128_it.o
- .debug_info    0x00000ded       0x7f src/bsp/bsp.o
- .debug_info    0x00000e6c      0x2a9 src/common/core/qbuffer.o
- .debug_info    0x00001115      0x510 src/hw/driver/drivemotor/a4988.o
- .debug_info    0x00001625      0x304 src/hw/driver/gpio.o
- .debug_info    0x00001929      0x87e src/hw/driver/timer.o
- .debug_info    0x000021a7      0x71f src/hw/driver/uart.o
- .debug_info    0x000028c6       0xf9 src/hw/hw.o
- .debug_info    0x000029bf      0x27c src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_info    0x00002c3b      0xc11 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_info    0x0000384c      0x5c5 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .debug_info    0x00003e11       0xd1 src/main.o
+ .debug_info    0x00000780      0x22a src/ap/ap.o
+ .debug_info    0x000009aa      0x4a1 src/bsp/atmega128_it.o
+ .debug_info    0x00000e4b       0x7f src/bsp/bsp.o
+ .debug_info    0x00000eca      0x2a9 src/common/core/qbuffer.o
+ .debug_info    0x00001173      0xa9d src/hw/driver/ctc.o
+ .debug_info    0x00001c10      0x78b src/hw/driver/drivemotor.o
+ .debug_info    0x0000239b      0x78e src/hw/driver/drivemotor/a4988.o
+ .debug_info    0x00002b29      0x304 src/hw/driver/gpio.o
+ .debug_info    0x00002e2d      0x991 src/hw/driver/pwm.o
+ .debug_info    0x000037be      0x83c src/hw/driver/uart.o
+ .debug_info    0x00003ffa      0x10f src/hw/hw.o
+ .debug_info    0x00004109      0x27c src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_info    0x00004385     0x153f src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_info    0x000058c4      0x5c5 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_info    0x00005e89       0xd1 src/main.o
 
-.debug_abbrev   0x00000000     0x16f6
+.debug_abbrev   0x00000000     0x1b5e
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x718 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_abbrev  0x00000718      0x12b src/ap/ap.o
- .debug_abbrev  0x00000843       0xcd src/bsp/atmega128_it.o
- .debug_abbrev  0x00000910       0x44 src/bsp/bsp.o
- .debug_abbrev  0x00000954      0x130 src/common/core/qbuffer.o
- .debug_abbrev  0x00000a84      0x177 src/hw/driver/drivemotor/a4988.o
- .debug_abbrev  0x00000bfb      0x15d src/hw/driver/gpio.o
- .debug_abbrev  0x00000d58      0x1fb src/hw/driver/timer.o
- .debug_abbrev  0x00000f53      0x1f8 src/hw/driver/uart.o
- .debug_abbrev  0x0000114b       0x63 src/hw/hw.o
- .debug_abbrev  0x000011ae      0x130 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_abbrev  0x000012de      0x1d2 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_abbrev  0x000014b0      0x1e1 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .debug_abbrev  0x00001691       0x65 src/main.o
+ .debug_abbrev  0x00000718      0x119 src/ap/ap.o
+ .debug_abbrev  0x00000831       0xc5 src/bsp/atmega128_it.o
+ .debug_abbrev  0x000008f6       0x44 src/bsp/bsp.o
+ .debug_abbrev  0x0000093a      0x130 src/common/core/qbuffer.o
+ .debug_abbrev  0x00000a6a      0x23c src/hw/driver/ctc.o
+ .debug_abbrev  0x00000ca6      0x1b2 src/hw/driver/drivemotor.o
+ .debug_abbrev  0x00000e58      0x234 src/hw/driver/drivemotor/a4988.o
+ .debug_abbrev  0x0000108c      0x15d src/hw/driver/gpio.o
+ .debug_abbrev  0x000011e9      0x1d9 src/hw/driver/pwm.o
+ .debug_abbrev  0x000013c2      0x1f8 src/hw/driver/uart.o
+ .debug_abbrev  0x000015ba       0x63 src/hw/hw.o
+ .debug_abbrev  0x0000161d      0x130 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_abbrev  0x0000174d      0x1cb src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_abbrev  0x00001918      0x1e1 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_abbrev  0x00001af9       0x65 src/main.o
 
-.debug_line     0x00000000     0x2a70
+.debug_line     0x00000000     0x3c37
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x169 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_line    0x00000169      0x14f src/ap/ap.o
- .debug_line    0x000002b8      0x269 src/bsp/atmega128_it.o
- .debug_line    0x00000521       0x3c src/bsp/bsp.o
- .debug_line    0x0000055d      0x1bd src/common/core/qbuffer.o
- .debug_line    0x0000071a      0x28d src/hw/driver/drivemotor/a4988.o
- .debug_line    0x000009a7      0x1ab src/hw/driver/gpio.o
- .debug_line    0x00000b52      0x437 src/hw/driver/timer.o
- .debug_line    0x00000f89      0x2ff src/hw/driver/uart.o
- .debug_line    0x00001288       0xd3 src/hw/hw.o
- .debug_line    0x0000135b      0x193 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_line    0x000014ee     0x109f src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_line    0x0000258d      0x46e src/lib/Drivers/Src/atmega128_DRV_uart.o
- .debug_line    0x000029fb       0x75 src/main.o
+ .debug_line    0x00000169      0x207 src/ap/ap.o
+ .debug_line    0x00000370      0x28e src/bsp/atmega128_it.o
+ .debug_line    0x000005fe       0x3c src/bsp/bsp.o
+ .debug_line    0x0000063a      0x1bd src/common/core/qbuffer.o
+ .debug_line    0x000007f7      0x646 src/hw/driver/ctc.o
+ .debug_line    0x00000e3d      0x3ef src/hw/driver/drivemotor.o
+ .debug_line    0x0000122c      0x412 src/hw/driver/drivemotor/a4988.o
+ .debug_line    0x0000163e      0x1ab src/hw/driver/gpio.o
+ .debug_line    0x000017e9      0x5e1 src/hw/driver/pwm.o
+ .debug_line    0x00001dca      0x371 src/hw/driver/uart.o
+ .debug_line    0x0000213b       0xc1 src/hw/hw.o
+ .debug_line    0x000021fc      0x193 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_line    0x0000238f     0x13c5 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_line    0x00003754      0x46e src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_line    0x00003bc2       0x75 src/main.o
 
-.debug_frame    0x00000000      0xc70
+.debug_frame    0x00000000     0x10f8
  *(.debug_frame)
- .debug_frame   0x00000000       0x34 src/ap/ap.o
- .debug_frame   0x00000034      0x33c src/bsp/atmega128_it.o
- .debug_frame   0x00000370       0x24 src/bsp/bsp.o
- .debug_frame   0x00000394      0x114 src/common/core/qbuffer.o
- .debug_frame   0x000004a8       0xa0 src/hw/driver/drivemotor/a4988.o
- .debug_frame   0x00000548       0x90 src/hw/driver/gpio.o
- .debug_frame   0x000005d8      0x124 src/hw/driver/timer.o
- .debug_frame   0x000006fc       0xe8 src/hw/driver/uart.o
- .debug_frame   0x000007e4       0x24 src/hw/hw.o
- .debug_frame   0x00000808       0x54 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_frame   0x0000085c      0x2a8 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_frame   0x00000b04      0x148 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .debug_frame   0x00000c4c       0x24 src/main.o
+ .debug_frame   0x00000000       0x64 src/ap/ap.o
+ .debug_frame   0x00000064      0x33c src/bsp/atmega128_it.o
+ .debug_frame   0x000003a0       0x24 src/bsp/bsp.o
+ .debug_frame   0x000003c4      0x114 src/common/core/qbuffer.o
+ .debug_frame   0x000004d8       0xfc src/hw/driver/ctc.o
+ .debug_frame   0x000005d4      0x168 src/hw/driver/drivemotor.o
+ .debug_frame   0x0000073c       0xfc src/hw/driver/drivemotor/a4988.o
+ .debug_frame   0x00000838       0x90 src/hw/driver/gpio.o
+ .debug_frame   0x000008c8       0xec src/hw/driver/pwm.o
+ .debug_frame   0x000009b4       0xe8 src/hw/driver/uart.o
+ .debug_frame   0x00000a9c       0x24 src/hw/hw.o
+ .debug_frame   0x00000ac0       0x54 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_frame   0x00000b14      0x478 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_frame   0x00000f8c      0x148 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_frame   0x000010d4       0x24 src/main.o
 
-.debug_str      0x00000000     0x109c
+.debug_str      0x00000000     0x164f
  *(.debug_str)
  .debug_str     0x00000000      0x27d C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_str     0x0000027d      0x19e src/ap/ap.o
-                                0x1d7 (size before relaxing)
- .debug_str     0x0000041b      0x277 src/bsp/atmega128_it.o
-                                0x3ed (size before relaxing)
- .debug_str     0x00000692       0x19 src/bsp/bsp.o
+ .debug_str     0x0000027d      0x1c0 src/ap/ap.o
+                                0x1f9 (size before relaxing)
+ .debug_str     0x0000043d      0x277 src/bsp/atmega128_it.o
+                                0x3f6 (size before relaxing)
+ .debug_str     0x000006b4       0x19 src/bsp/bsp.o
                                 0x171 (size before relaxing)
- .debug_str     0x000006ab       0x9b src/common/core/qbuffer.o
+ .debug_str     0x000006cd       0x9b src/common/core/qbuffer.o
                                 0x20a (size before relaxing)
- .debug_str     0x00000746      0x15e src/hw/driver/drivemotor/a4988.o
-                                0x34a (size before relaxing)
- .debug_str     0x000008a4      0x100 src/hw/driver/gpio.o
+ .debug_str     0x00000768      0x2a6 src/hw/driver/ctc.o
+                                0x4bd (size before relaxing)
+ .debug_str     0x00000a0e      0x1c5 src/hw/driver/drivemotor.o
+                                0x349 (size before relaxing)
+ .debug_str     0x00000bd3      0x171 src/hw/driver/drivemotor/a4988.o
+                                0x3f9 (size before relaxing)
+ .debug_str     0x00000d44       0xf3 src/hw/driver/gpio.o
                                 0x274 (size before relaxing)
- .debug_str     0x000009a4      0x18b src/hw/driver/timer.o
-                                0x3b4 (size before relaxing)
- .debug_str     0x00000b2f      0x119 src/hw/driver/uart.o
-                                0x3ce (size before relaxing)
- .debug_str     0x00000c48       0x16 src/hw/hw.o
-                                0x1a2 (size before relaxing)
- .debug_str     0x00000c5e       0x67 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_str     0x00000e37      0x17f src/hw/driver/pwm.o
+                                0x478 (size before relaxing)
+ .debug_str     0x00000fb6      0x117 src/hw/driver/uart.o
+                                0x3d5 (size before relaxing)
+ .debug_str     0x000010cd       0x16 src/hw/hw.o
+                                0x1a8 (size before relaxing)
+ .debug_str     0x000010e3       0x67 src/lib/Drivers/Src/atmega128_DRV_gpio.o
                                 0x23a (size before relaxing)
- .debug_str     0x00000cc5      0x303 src/lib/Drivers/Src/atmega128_DRV_timer.o
-                                0x5d5 (size before relaxing)
- .debug_str     0x00000fc8       0xc1 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_str     0x0000114a      0x431 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                                0x862 (size before relaxing)
+ .debug_str     0x0000157b       0xc1 src/lib/Drivers/Src/atmega128_DRV_uart.o
                                 0x38b (size before relaxing)
- .debug_str     0x00001089       0x13 src/main.o
+ .debug_str     0x0000163c       0x13 src/main.o
                                 0x186 (size before relaxing)
 
-.debug_loc      0x00000000     0x2da4
+.debug_loc      0x00000000     0x52ab
  *(.debug_loc)
- .debug_loc     0x00000000       0x90 src/ap/ap.o
- .debug_loc     0x00000090      0x698 src/bsp/atmega128_it.o
- .debug_loc     0x00000728      0x4e3 src/common/core/qbuffer.o
- .debug_loc     0x00000c0b      0x211 src/hw/driver/drivemotor/a4988.o
- .debug_loc     0x00000e1c      0x236 src/hw/driver/gpio.o
- .debug_loc     0x00001052      0x959 src/hw/driver/timer.o
- .debug_loc     0x000019ab      0x456 src/hw/driver/uart.o
- .debug_loc     0x00001e01      0x1b2 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_loc     0x00001fb3      0x787 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_loc     0x0000273a      0x66a src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_loc     0x00000000       0xe5 src/ap/ap.o
+ .debug_loc     0x000000e5      0x698 src/bsp/atmega128_it.o
+ .debug_loc     0x0000077d      0x4e3 src/common/core/qbuffer.o
+ .debug_loc     0x00000c60      0x95d src/hw/driver/ctc.o
+ .debug_loc     0x000015bd      0x4bf src/hw/driver/drivemotor.o
+ .debug_loc     0x00001a7c      0x5d5 src/hw/driver/drivemotor/a4988.o
+ .debug_loc     0x00002051      0x236 src/hw/driver/gpio.o
+ .debug_loc     0x00002287      0xbbe src/hw/driver/pwm.o
+ .debug_loc     0x00002e45      0x587 src/hw/driver/uart.o
+ .debug_loc     0x000033cc      0x1b2 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_loc     0x0000357e     0x16c3 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_loc     0x00004c41      0x66a src/lib/Drivers/Src/atmega128_DRV_uart.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1129,21 +1365,23 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x420
+.debug_ranges   0x00000000      0x5d0
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x18 src/ap/ap.o
  .debug_ranges  0x00000018       0x88 src/bsp/atmega128_it.o
  .debug_ranges  0x000000a0       0x10 src/bsp/bsp.o
  .debug_ranges  0x000000b0       0x58 src/common/core/qbuffer.o
- .debug_ranges  0x00000108       0x48 src/hw/driver/drivemotor/a4988.o
- .debug_ranges  0x00000150       0x30 src/hw/driver/gpio.o
- .debug_ranges  0x00000180       0x78 src/hw/driver/timer.o
- .debug_ranges  0x000001f8       0x50 src/hw/driver/uart.o
- .debug_ranges  0x00000248       0x10 src/hw/hw.o
- .debug_ranges  0x00000258       0x28 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_ranges  0x00000280      0x140 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_ranges  0x000003c0       0x50 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .debug_ranges  0x00000410       0x10 src/main.o
+ .debug_ranges  0x00000108       0x70 src/hw/driver/ctc.o
+ .debug_ranges  0x00000178       0x70 src/hw/driver/drivemotor.o
+ .debug_ranges  0x000001e8       0x68 src/hw/driver/drivemotor/a4988.o
+ .debug_ranges  0x00000250       0x30 src/hw/driver/gpio.o
+ .debug_ranges  0x00000280       0x68 src/hw/driver/pwm.o
+ .debug_ranges  0x000002e8       0x50 src/hw/driver/uart.o
+ .debug_ranges  0x00000338       0x10 src/hw/hw.o
+ .debug_ranges  0x00000348       0x28 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_ranges  0x00000370      0x200 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_ranges  0x00000570       0x50 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_ranges  0x000005c0       0x10 src/main.o
 
 .debug_macro
  *(.debug_macro)

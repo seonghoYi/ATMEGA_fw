@@ -5,6 +5,9 @@ void hwInit(void)
 	bspInit();
 	gpioInit();
 	uartInit();
-	timerInit();
-	a4988Init();
+	//timerInit();
+	//a4988Init();
+	ctcInit();
+	pwmInit();
+	motorInit();
 }

@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define _DEF_GPIO0		0
 #define _DEF_GPIO1		1
@@ -26,6 +27,11 @@
 #define _DEF_TIM1		1
 #define _DEF_TIM2		2
 #define _DEF_TIM3		3
+
+#define _DEF_CH_NONE	0
+#define _DEF_CH_A		1
+#define _DEF_CH_B		2
+#define _DEF_CH_C		3
 
 #define _DEF_CW			0
 #define _DEF_CCW		1

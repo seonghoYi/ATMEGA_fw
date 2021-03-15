@@ -1,5 +1,5 @@
-src/hw/driver/timer.d src/hw/driver/timer.o: ../src/hw/driver/timer.c \
- ../src/common/hw/include/timer.h ../src/hw/hw_def.h ../src/common/def.h \
+src/hw/driver/pwm.d src/hw/driver/pwm.o: ../src/hw/driver/pwm.c \
+ ../src/common/hw/include/pwm.h ../src/hw/hw_def.h ../src/common/def.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
@@ -8,6 +8,7 @@ src/hw/driver/timer.d src/hw/driver/timer.o: ../src/hw/driver/timer.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  ../src/bsp/bsp.h ../src/lib/Drivers/Inc/atmega128_DRV.h \
  ../src/bsp/atmega128_conf.h ../src/lib/Drivers/Inc/atmega128_DRV_gpio.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_def.h \
@@ -25,10 +26,9 @@ src/hw/driver/timer.d src/hw/driver/timer.o: ../src/hw/driver/timer.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_uart.h \
- ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
- ../src/common/hw/include/gpio.h
+ ../src/lib/Drivers/Inc/atmega128_DRV_timer.h
 
-../src/common/hw/include/timer.h:
+../src/common/hw/include/pwm.h:
 
 ../src/hw/hw_def.h:
 
@@ -49,6 +49,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 
 ../src/bsp/bsp.h:
 
@@ -89,5 +91,3 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/lib/Drivers/Inc/atmega128_DRV_uart.h:
 
 ../src/lib/Drivers/Inc/atmega128_DRV_timer.h:
-
-../src/common/hw/include/gpio.h:

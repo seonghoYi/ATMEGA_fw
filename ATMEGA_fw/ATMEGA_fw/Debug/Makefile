@@ -58,10 +58,11 @@ C_SRCS +=  \
 ../src/bsp/atmega128_it.c \
 ../src/bsp/bsp.c \
 ../src/common/core/qbuffer.c \
+../src/hw/driver/ctc.c \
 ../src/hw/driver/drivemotor.c \
 ../src/hw/driver/drivemotor/a4988.c \
 ../src/hw/driver/gpio.c \
-../src/hw/driver/timer.c \
+../src/hw/driver/pwm.c \
 ../src/hw/driver/uart.c \
 ../src/hw/hw.c \
 ../src/lib/Drivers/Src/atmega128_DRV.c \
@@ -82,10 +83,11 @@ src/ap/ap.o \
 src/bsp/atmega128_it.o \
 src/bsp/bsp.o \
 src/common/core/qbuffer.o \
+src/hw/driver/ctc.o \
 src/hw/driver/drivemotor.o \
 src/hw/driver/drivemotor/a4988.o \
 src/hw/driver/gpio.o \
-src/hw/driver/timer.o \
+src/hw/driver/pwm.o \
 src/hw/driver/uart.o \
 src/hw/hw.o \
 src/lib/Drivers/Src/atmega128_DRV.o \
@@ -99,10 +101,11 @@ src/ap/ap.o \
 src/bsp/atmega128_it.o \
 src/bsp/bsp.o \
 src/common/core/qbuffer.o \
+src/hw/driver/ctc.o \
 src/hw/driver/drivemotor.o \
 src/hw/driver/drivemotor/a4988.o \
 src/hw/driver/gpio.o \
-src/hw/driver/timer.o \
+src/hw/driver/pwm.o \
 src/hw/driver/uart.o \
 src/hw/hw.o \
 src/lib/Drivers/Src/atmega128_DRV.o \
@@ -116,10 +119,11 @@ src/ap/ap.d \
 src/bsp/atmega128_it.d \
 src/bsp/bsp.d \
 src/common/core/qbuffer.d \
+src/hw/driver/ctc.d \
 src/hw/driver/drivemotor.d \
 src/hw/driver/drivemotor/a4988.d \
 src/hw/driver/gpio.d \
-src/hw/driver/timer.d \
+src/hw/driver/pwm.d \
 src/hw/driver/uart.d \
 src/hw/hw.d \
 src/lib/Drivers/Src/atmega128_DRV.d \
@@ -133,10 +137,11 @@ src/ap/ap.d \
 src/bsp/atmega128_it.d \
 src/bsp/bsp.d \
 src/common/core/qbuffer.d \
+src/hw/driver/ctc.d \
 src/hw/driver/drivemotor.d \
 src/hw/driver/drivemotor/a4988.d \
 src/hw/driver/gpio.d \
-src/hw/driver/timer.d \
+src/hw/driver/pwm.d \
 src/hw/driver/uart.d \
 src/hw/hw.d \
 src/lib/Drivers/Src/atmega128_DRV.d \
@@ -187,6 +192,13 @@ src/common/core/qbuffer.o: ../src/common/core/qbuffer.c
 	@echo Finished building: $<
 	
 
+src/hw/driver/ctc.o: ../src/hw/driver/ctc.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/bsp" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/common/hw/include/steppermotor" -I"../src/hw/driver/steppermotor"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 src/hw/driver/drivemotor.o: ../src/hw/driver/drivemotor.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
@@ -208,7 +220,7 @@ src/hw/driver/gpio.o: ../src/hw/driver/gpio.c
 	@echo Finished building: $<
 	
 
-src/hw/driver/timer.o: ../src/hw/driver/timer.c
+src/hw/driver/pwm.o: ../src/hw/driver/pwm.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/bsp" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/common/hw/include/steppermotor" -I"../src/hw/driver/steppermotor"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

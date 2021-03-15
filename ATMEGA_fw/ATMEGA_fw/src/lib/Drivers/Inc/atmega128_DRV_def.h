@@ -11,7 +11,7 @@ typedef enum
 	TIMEOUT = 0x03
 } StatusTypeDef;
 
-
+#define UNUSED(x) (void)x
 
 
 #endif /* ATMEGA128_DRV_DEF_H_ */

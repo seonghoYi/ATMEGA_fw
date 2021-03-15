@@ -4,8 +4,10 @@
 #include "hw_def.h"
 #include "gpio.h"
 #include "uart.h"
-#include "timer.h"
-#include "drivemotor/a4988.h"
+//#include "drivemotor/a4988.h"
+#include "drivemotor.h"
+#include "ctc.h"
+#include "pwm.h"
 
 void hwInit(void);
 

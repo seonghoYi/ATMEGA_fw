@@ -261,12 +261,12 @@ void UART_RxIRQHandler(UART_HandleTypeDef *huart)
 
 __attribute__((weak)) void UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
-	return;
+	UNUSED(huart);
 }
 
 __attribute__((weak)) void UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	return;
+	UNUSED(huart);
 }
 
 

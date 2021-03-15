@@ -18,14 +18,12 @@ typedef struct
 
 typedef struct
 {
-	a4988_InitTypeDef Init;
-	bool enable;
-	bool direction;
-	uint8_t speed;
-	
-	
-	
+	a4988_InitTypeDef	Init;
+	bool				enable;
+	bool				direction;
+	uint8_t				speed;
 } a4988_HandlerTypeDef;
+
 
 
 #define A4988_FULL_STEP			0
@@ -34,16 +32,20 @@ typedef struct
 #define A4988_EIGHTH_STEP		3
 #define A4988_SIXTEENTH_STEP	4
 
-bool a4988Init(void);
-bool a4988DriverInit(drivemotor_driver_t *p_driver);
-bool a4988Start(uint8_t ch_, bool dir_, uint8_t speed_);
+bool	a4988Init(uint8_t ch_);
+bool	a4988DriverInit(drivemotor_driver_t *p_driver);
+bool	a4988Start(uint8_t ch_);
+bool	a4988Stop(uint8_t ch_);
+bool	a4988Hold(uint8_t ch_);
 
-bool a4988Enable(uint8_t ch_);
-bool a4988Disable(uint8_t ch_);
-bool a4988SetDirection(uint8_t ch_, bool dir_);
-bool a4988SetSpeed(uint8_t ch_, uint8_t speed_);
+bool	a4988Enable(void);
+bool	a4988Disable(void);
+bool	a4988SetDirection(uint8_t ch_, bool dir_);
+bool	a4988GetDirection(uint8_t ch_);
+bool	a4988SetSpeed(uint8_t ch_, uint8_t speed_);
+uint8_t a4988GetSpeed(uint8_t ch_);
 
-bool a4988SetCallBack(void (*p_func)(void));
+void a4988SetCallBack(uint8_t ch_, void (*p_func)(void));
 
 
 #endif

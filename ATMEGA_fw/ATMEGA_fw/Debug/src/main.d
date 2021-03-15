@@ -8,6 +8,7 @@ src/main.d src/main.o: ../src/main.c ../src/main.h ../src/ap/ap.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
  ../src/bsp/bsp.h ../src/lib/Drivers/Inc/atmega128_DRV.h \
  ../src/bsp/atmega128_conf.h ../src/lib/Drivers/Inc/atmega128_DRV_gpio.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_def.h \
@@ -27,9 +28,8 @@ src/main.d src/main.o: ../src/main.c ../src/main.h ../src/ap/ap.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_uart.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
  ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
- ../src/common/hw/include/uart.h ../src/common/hw/include/timer.h \
- ../src/common/hw/include/drivemotor/a4988.h \
- ../src/common/hw/include/drivemotor.h
+ ../src/common/hw/include/uart.h ../src/common/hw/include/drivemotor.h \
+ ../src/common/hw/include/ctc.h ../src/common/hw/include/pwm.h
 
 ../src/main.h:
 
@@ -56,6 +56,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 
 ../src/bsp/bsp.h:
 
@@ -103,8 +105,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../src/common/hw/include/uart.h:
 
-../src/common/hw/include/timer.h:
-
-../src/common/hw/include/drivemotor/a4988.h:
-
 ../src/common/hw/include/drivemotor.h:
+
+../src/common/hw/include/ctc.h:
+
+../src/common/hw/include/pwm.h:

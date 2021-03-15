@@ -17,9 +17,12 @@ ISR(USART0_TX_vect)
 #endif
 
 
-#ifdef _USE_HW_TIM
-extern TIM_HandleTypeDef htim1;
-extern TIM_HandleTypeDef htim2;
+#ifdef _USE_HW_CTC
+extern TIM8_HandleTypeDef htim1;
+extern TIM8_HandleTypeDef htim2;
+extern TIM16_HandleTypeDef htim3;
+extern TIM16_HandleTypeDef htim4;
+
 
 ISR(TIMER0_OVF_vect)
 {
