@@ -220,6 +220,7 @@ bool a4988SetSpeed(uint8_t ch_, uint8_t speed_)
 	bool ret = false;
 
 	a4988_t *p_a4988 = &a4988_tbl[ch_];
+	
 	p_a4988->h_a4988->speed = speed_;
 	
 	ctcSetTcnt(p_a4988->h_a4988->Init.timer, 0);

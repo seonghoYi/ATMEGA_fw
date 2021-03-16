@@ -65,12 +65,17 @@ void motorBreak(void)
 void motorSetSpeed(uint8_t speed_)
 {
 	const uint8_t power_max = 255;
-	uint16_t power_ = (power_max * speed_) / 100;
+	const uint8_t scale_limit = 20;
+	uint16_t power_ = power_max - ((power_max * speed_) / (100 + scale_limit));
 	
 	if (speed_ > 100 || speed_ < 0)
 	{
 		return;
 	}
+	
+	
+	
+	
 	
 #ifdef _USE_HW_A4988
 	motor.setSpeed(_DEF_A4988_0, (uint8_t) power_);
@@ -81,13 +86,15 @@ void motorSetSpeed(uint8_t speed_)
 uint8_t* motorGetSpeed(void)
 {
 	const uint8_t power_max = 255;
+	const uint8_t scale_limit = 20;
 	uint8_t speed_[2] = {0};
 	static uint8_t power_[2] = {0};
+	
 #ifdef _USE_HW_A4988
 	speed_[0] = motor.getSpeed(_DEF_A4988_0);
 	speed_[1] = motor.getSpeed(_DEF_A4988_1);
-	power_[0] = (uint8_t)((speed_[0] / power_max) * 100);
-	power_[1] = (uint8_t)((speed_[1] / power_max) * 100);
+	power_[0] = power_max - (uint8_t)((speed_[0] / power_max) * (100 + scale_limit));
+	power_[1] = power_max - (uint8_t)((speed_[1] / power_max) * (100 + scale_limit));
 	return power_;
 #endif
 }
@@ -176,6 +183,7 @@ void motorSpin(bool spinwise_)
 void motorSteering(int8_t steering_degrees_)
 {
 	const uint8_t power_max = 255;
+	const uint8_t scale_limit = 20;
 	uint8_t steering_bias_proportion = abs(steering_degrees_);
 	uint8_t *power_proportion = NULL;
 		
@@ -190,30 +198,30 @@ void motorSteering(int8_t steering_degrees_)
 	{
 		if (power_proportion[0] >= power_proportion[1])
 		{
-			steering_bias_proportion = (uint8_t)((power_proportion[0] * steering_bias_proportion) / 100);
-			motor.setSpeed(_DEF_A4988_0, (uint8_t)((power_max * steering_bias_proportion) / 100));
-			motor.setSpeed(_DEF_A4988_1, (uint8_t)((power_max * power_proportion[0]) / 100));
+			steering_bias_proportion = (uint8_t)((power_proportion[0] * steering_bias_proportion) / (100 + scale_limit));
+			motor.setSpeed(_DEF_A4988_0, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
+			motor.setSpeed(_DEF_A4988_1, power_max - (uint8_t)((power_max * power_proportion[0]) / (100 + scale_limit)));
 		}
 		else if (power_proportion[0] < power_proportion[1])
 		{
-			steering_bias_proportion = (uint8_t)((power_proportion[1] * steering_bias_proportion) / 100);
-			motor.setSpeed(_DEF_A4988_0, (uint8_t)((power_max * steering_bias_proportion) / 100));
-			motor.setSpeed(_DEF_A4988_1, (uint8_t)((power_max * power_proportion[1]) / 100));
+			steering_bias_proportion = (uint8_t)((power_proportion[1] * steering_bias_proportion) / (100 + scale_limit));
+			motor.setSpeed(_DEF_A4988_0, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
+			motor.setSpeed(_DEF_A4988_1, power_max - (uint8_t)((power_max * power_proportion[1]) / (100 + scale_limit)));
 		}
 	}
 	else if (steering_degrees_ > 0)
 	{
 		if (power_proportion[0] >= power_proportion[1])
 		{
-			steering_bias_proportion = (uint8_t)((power_proportion[0] * steering_bias_proportion) / 100);
-			motor.setSpeed(_DEF_A4988_0, (uint8_t)((power_max * power_proportion[0]) / 100));
-			motor.setSpeed(_DEF_A4988_1, (uint8_t)((power_max * steering_bias_proportion) / 100));
+			steering_bias_proportion = (uint8_t)((power_proportion[0] * steering_bias_proportion) / (100 + scale_limit));
+			motor.setSpeed(_DEF_A4988_0, power_max - (uint8_t)((power_max * power_proportion[0]) / (100 + scale_limit)));
+			motor.setSpeed(_DEF_A4988_1, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
 		}
 		else if (power_proportion[0] < power_proportion[1])
 		{
-			steering_bias_proportion = (uint8_t)((power_proportion[1] * steering_bias_proportion) / 100);
-			motor.setSpeed(_DEF_A4988_0, (uint8_t)((power_max *  power_proportion[1]) / 100));
-			motor.setSpeed(_DEF_A4988_1, (uint8_t)((power_max *steering_bias_proportion) / 100));
+			steering_bias_proportion = (uint8_t)((power_proportion[1] * steering_bias_proportion) / (100 + scale_limit));
+			motor.setSpeed(_DEF_A4988_0, power_max - (uint8_t)((power_max *  power_proportion[1]) / (100 + scale_limit)));
+			motor.setSpeed(_DEF_A4988_1, power_max - (uint8_t)((power_max *steering_bias_proportion) / (100 + scale_limit)));
 		}
 	}
 	else if (steering_degrees_ == 0)
@@ -221,14 +229,14 @@ void motorSteering(int8_t steering_degrees_)
 		if (power_proportion[0] >= power_proportion[1])
 		{
 			steering_bias_proportion = power_proportion[0];
-			motor.setSpeed(_DEF_A4988_0, (uint8_t)((power_max * steering_bias_proportion) / 100));
-			motor.setSpeed(_DEF_A4988_1, (uint8_t)((power_max * steering_bias_proportion) / 100));
+			motor.setSpeed(_DEF_A4988_0, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
+			motor.setSpeed(_DEF_A4988_1, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
 		}
 		else if (power_proportion[0] < power_proportion[1])
 		{
 			steering_bias_proportion = power_proportion[1];
-			motor.setSpeed(_DEF_A4988_0, (uint8_t)((power_max * steering_bias_proportion) / 100));
-			motor.setSpeed(_DEF_A4988_1, (uint8_t)((power_max * steering_bias_proportion) / 100));
+			motor.setSpeed(_DEF_A4988_0, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
+			motor.setSpeed(_DEF_A4988_1, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
 		}
 	}
 #endif
