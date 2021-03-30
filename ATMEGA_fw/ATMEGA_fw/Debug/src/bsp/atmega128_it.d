@@ -31,6 +31,7 @@ src/bsp/atmega128_it.d src/bsp/atmega128_it.o: ../src/bsp/atmega128_it.c \
  ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
  ../src/common/hw/include/uart.h ../src/common/hw/include/drivemotor.h \
  ../src/common/hw/include/ctc.h ../src/common/hw/include/pwm.h \
+ ../src/common/hw/include/ros_server.h ../src/common/hw/include/ros/ros.h \
  ../src/bsp/atmega128_it.h
 
 ../src/main.h:
@@ -112,5 +113,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/common/hw/include/ctc.h:
 
 ../src/common/hw/include/pwm.h:
+
+../src/common/hw/include/ros_server.h:
+
+../src/common/hw/include/ros/ros.h:
 
 ../src/bsp/atmega128_it.h:

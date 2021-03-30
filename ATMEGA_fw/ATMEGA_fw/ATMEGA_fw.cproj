@@ -174,9 +174,11 @@
     <Folder Include="src\common\hw" />
     <Folder Include="src\common\hw\include" />
     <Folder Include="src\common\hw\include\drivemotor" />
+    <Folder Include="src\common\hw\include\ros" />
     <Folder Include="src\hw" />
     <Folder Include="src\hw\driver" />
     <Folder Include="src\hw\driver\drivemotor" />
+    <Folder Include="src\hw\driver\ros" />
     <Folder Include="src\lib" />
     <Folder Include="src\lib\Device" />
     <Folder Include="src\lib\Device\Inc" />
@@ -230,6 +232,15 @@
     <Compile Include="src\common\hw\include\pwm.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\common\hw\include\ros\ros.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\ros\ros_uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\ros_server.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\common\hw\include\uart.h">
       <SubType>compile</SubType>
     </Compile>
@@ -246,6 +257,15 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\ros_server.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\ros\ros.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\ros\ros_uart.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\uart.c">

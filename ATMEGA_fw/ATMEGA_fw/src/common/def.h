@@ -14,6 +14,12 @@
 #define _DEF_GPIO3		3
 #define _DEF_GPIO4		4
 #define _DEF_GPIO5		5
+#define _DEF_GPIO6		6
+#define _DEF_GPIO7		7
+#define _DEF_GPIO8		8
+#define _DEF_GPIO9		9
+#define _DEF_GPIO10		10
+#define _DEF_GPIO11		11
 
 
 #define _DEF_INPUT		0
@@ -44,5 +50,6 @@
 #define _DEF_DRVMTR2	2
 #define _DEF_DRVMTR3	3
 
+#define _DEF_ROS0		0
 
 #endif /* DEF_H_ */

@@ -119,7 +119,7 @@ bool ctcBegin(uint8_t ch_)
 		p_ctc->h_tim8_oc				= &htim2_oc;
 		
 		p_ctc->h_tim8->TIMn				= TIM2;
-		p_ctc->h_tim8->Init.Prescaler	= TIM_CLK_PRESCALER_1;
+		p_ctc->h_tim8->Init.Prescaler	= TIM_CLK_PRESCALER_256;
 		p_ctc->h_tim8->Init.Source		= TIM_INTCLK_SOURCE;
 		
 		if (TIM8_Base_Init(p_ctc->h_tim8) != OK)
@@ -132,9 +132,9 @@ bool ctcBegin(uint8_t ch_)
 			p_ctc->is_open = true;
 		}
 		
-		p_ctc->h_tim8_oc->OCMode		= TIM8_OC_MOD_NORMAL;
-		p_ctc->h_tim8_oc->OCOutput		= TIM8_OC_NORMALOUT;
-		p_ctc->h_tim8_oc->OCWave_COM	= TIM8_OC_COM_NORMAL;
+		p_ctc->h_tim8_oc->OCMode		= TIM8_OC_MOD_CTC;
+		p_ctc->h_tim8_oc->OCOutput		= TIM8_OC_FORCEDOUT;
+		p_ctc->h_tim8_oc->OCWave_COM	= TIM8_OC_COM_TOGGLE;
 		p_ctc->h_tim8_oc->Tcnt			= 0;
 		p_ctc->h_tim8_oc->Ocr			= 0;
 		

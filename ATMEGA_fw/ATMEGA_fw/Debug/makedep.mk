@@ -20,6 +20,12 @@ src\hw\driver\gpio.c
 
 src\hw\driver\pwm.c
 
+src\hw\driver\ros_server.c
+
+src\hw\driver\ros\ros.c
+
+src\hw\driver\ros\ros_uart.c
+
 src\hw\driver\uart.c
 
 src\hw\hw.c

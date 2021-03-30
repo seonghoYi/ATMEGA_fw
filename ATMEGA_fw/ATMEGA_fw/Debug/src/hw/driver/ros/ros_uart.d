@@ -1,4 +1,5 @@
-src/ap/ap.d src/ap/ap.o: ../src/ap/ap.c ../src/ap/ap.h ../src/hw/hw.h \
+src/hw/driver/ros/ros_uart.d src/hw/driver/ros/ros_uart.o: \
+ ../src/hw/driver/ros/ros_uart.c ../src/common/hw/include/ros/ros_uart.h \
  ../src/hw/hw_def.h ../src/common/def.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -27,14 +28,9 @@ src/ap/ap.d src/ap/ap.o: ../src/ap/ap.c ../src/ap/ap.h ../src/hw/hw.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_uart.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
- ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
- ../src/common/hw/include/uart.h ../src/common/hw/include/drivemotor.h \
- ../src/common/hw/include/ctc.h ../src/common/hw/include/pwm.h \
- ../src/common/hw/include/ros_server.h ../src/common/hw/include/ros/ros.h
+ ../src/common/hw/include/ros/ros.h ../src/common/hw/include/uart.h
 
-../src/ap/ap.h:
-
-../src/hw/hw.h:
+../src/common/hw/include/ros/ros_uart.h:
 
 ../src/hw/hw_def.h:
 
@@ -98,18 +94,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../src/lib/Drivers/Inc/atmega128_DRV_timer.h:
 
-../src/common/hw/include/gpio.h:
-
-../src/hw/hw_def.h:
+../src/common/hw/include/ros/ros.h:
 
 ../src/common/hw/include/uart.h:
-
-../src/common/hw/include/drivemotor.h:
-
-../src/common/hw/include/ctc.h:
-
-../src/common/hw/include/pwm.h:
-
-../src/common/hw/include/ros_server.h:
-
-../src/common/hw/include/ros/ros.h:

@@ -8,6 +8,8 @@
 #include "drivemotor.h"
 #include "ctc.h"
 #include "pwm.h"
+//#include "ros/ros.h"
+#include "ros_server.h"
 
 void hwInit(void);
 

@@ -29,7 +29,7 @@ bool motorInit(void)
 	motorSetMotionState(0);
 	motorSetSpeed(0);
 	motorBreak();
-	
+	motorStop();
 	return true;
 }
 
@@ -72,10 +72,7 @@ void motorSetSpeed(uint8_t speed_)
 	{
 		return;
 	}
-	
-	
-	
-	
+
 	
 #ifdef _USE_HW_A4988
 	motor.setSpeed(_DEF_A4988_0, (uint8_t) power_);
@@ -177,6 +174,8 @@ void motorSpin(bool spinwise_)
 	{
 		motorSetMotionState(1);
 	}
+	motorRun();
+	
 #endif
 }
 
@@ -239,6 +238,7 @@ void motorSteering(int8_t steering_degrees_)
 			motor.setSpeed(_DEF_A4988_1, power_max - (uint8_t)((power_max * steering_bias_proportion) / (100 + scale_limit)));
 		}
 	}
+	motorRun();
 #endif
 }
 

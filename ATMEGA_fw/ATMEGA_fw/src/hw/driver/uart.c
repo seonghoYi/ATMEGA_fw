@@ -3,10 +3,12 @@
 
 #ifdef _USE_HW_UART
 
+#define UART_BUF_MAX_SIZE	256
+
 static bool is_open[UART_MAX_CH];
 
 static qbuffer_t qbuffer[UART_MAX_CH];
-static uint8_t rx_buf[256];
+static uint8_t rx_buf[UART_MAX_CH][UART_BUF_MAX_SIZE];
 static uint8_t rx_data[UART_MAX_CH];
 
 UART_HandleTypeDef huart1;
@@ -40,7 +42,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
 		huart1.Init.Mode			= UART_MODE_RX_TX;
 		huart1.Init.OverSampling	= UART_OVERSAMPLING_8;
 
-		qbufferCreate(&qbuffer[_DEF_UART0], &rx_buf[0], 256);
+		qbufferCreate(&qbuffer[_DEF_UART0], (uint8_t *)&rx_buf[_DEF_UART0][0], UART_BUF_MAX_SIZE);
 		
 		
 
@@ -68,7 +70,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
 		huart2.Init.Mode			= UART_MODE_RX_TX;
 		huart2.Init.OverSampling	= UART_OVERSAMPLING_8;
 
-		qbufferCreate(&qbuffer[_DEF_UART1], &rx_buf[0], 256);
+		qbufferCreate(&qbuffer[_DEF_UART1], (uint8_t *)&rx_buf[_DEF_UART1][0], UART_BUF_MAX_SIZE);
 		
 		
 
@@ -110,7 +112,7 @@ uint32_t uartAvailable(uint8_t ch)
 uint8_t uartRead(uint8_t ch)
 {
 	uint8_t ret = 0;
-
+	
 	switch(ch)
 	{
 		case _DEF_UART0:
@@ -126,7 +128,7 @@ uint8_t uartRead(uint8_t ch)
 		}
 		break;
 	}
-
+	//qbufferRead(&qbuffer[ch], &ret, 1);
 	return ret;
 }
 
@@ -185,6 +187,23 @@ uint32_t uartGetBaud(uint8_t ch)
 	return baud;
 }
 
+bool uartFlush(uint8_t ch)
+{
+	bool ret = true;
+	
+	switch(ch)
+	{
+		case _DEF_UART0:
+		qbufferFlush(&qbuffer[_DEF_UART0]);
+		break;
+		case _DEF_UART1:
+		qbufferFlush(&qbuffer[_DEF_UART1]);
+		break;
+	}
+	
+	return ret;
+}
+
 
 void UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
@@ -199,6 +218,13 @@ void UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		qbufferWrite(&qbuffer[_DEF_UART0], huart->pRxBuffPtr, huart->RxXferSize);
 		//uartPrintf(_DEF_UART0, "Rx callback available: %d", uartAvailable(_DEF_UART0));
 		//uartPrintf(_DEF_UART0, "Rx callback called\n");
+		break;
+		case USART1:
+		qbufferWrite(&qbuffer[_DEF_UART1], huart->pRxBuffPtr, huart->RxXferSize);
+		//uartPrintf(_DEF_UART1, "Rx callback available: %d", uartAvailable(_DEF_UART1));
+		//uartPrintf(_DEF_UART0, "Rx callback called\n");
+		break;
+		default:
 		break;
 	}
 }

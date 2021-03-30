@@ -195,9 +195,9 @@ StatusTypeDef UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t S
 		pdata16bits = NULL;
 	}
 
-	for(int i = 0; i < huart->TxXferCount; i++)
+	for(int i = 0; i < huart->RxXferCount; i++)
 	{
-		while (!(*(usart->UCSRnA) & 0x80) && !(*(usart->UCSRnA) & 0x20));
+		while ((*(usart->UCSRnA) & 0x80) && !(*(usart->UCSRnA) & 0x20));
 		if (pdata16bits == NULL)
 		{
 			*(pdata8bits + i) = *(usart->UDRn);

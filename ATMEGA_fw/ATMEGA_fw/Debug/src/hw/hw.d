@@ -29,7 +29,8 @@ src/hw/hw.d src/hw/hw.o: ../src/hw/hw.c ../src/hw/hw.h ../src/hw/hw_def.h \
  ../src/lib/Drivers/Inc/atmega128_DRV_timer.h \
  ../src/common/hw/include/gpio.h ../src/hw/hw_def.h \
  ../src/common/hw/include/uart.h ../src/common/hw/include/drivemotor.h \
- ../src/common/hw/include/ctc.h ../src/common/hw/include/pwm.h
+ ../src/common/hw/include/ctc.h ../src/common/hw/include/pwm.h \
+ ../src/common/hw/include/ros_server.h ../src/common/hw/include/ros/ros.h
 
 ../src/hw/hw.h:
 
@@ -106,3 +107,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/common/hw/include/ctc.h:
 
 ../src/common/hw/include/pwm.h:
+
+../src/common/hw/include/ros_server.h:
+
+../src/common/hw/include/ros/ros.h:

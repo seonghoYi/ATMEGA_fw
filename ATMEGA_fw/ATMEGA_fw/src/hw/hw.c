@@ -10,4 +10,5 @@ void hwInit(void)
 	ctcInit();
 	pwmInit();
 	motorInit();
+	rosServerInit();
 }

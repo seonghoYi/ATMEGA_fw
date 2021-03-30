@@ -4,6 +4,7 @@
 
 #ifdef _USE_HW_UART
 extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
 ISR(USART0_RX_vect)
 {
 	UART_RxIRQHandler(&huart1);
@@ -12,6 +13,16 @@ ISR(USART0_RX_vect)
 ISR(USART0_TX_vect)
 {
 	UART_TxIRQHandler(&huart1);
+}
+
+ISR(USART1_RX_vect)
+{
+	UART_RxIRQHandler(&huart2);
+}
+
+ISR(USART1_TX_vect)
+{
+	UART_TxIRQHandler(&huart2);
 }
 
 #endif

@@ -6,7 +6,7 @@
 #include "bsp.h"
 
 #define _USE_HW_GPIO
-#define		 HW_GPIO_MAX_CH			5
+#define		 HW_GPIO_MAX_CH			6
 
 #define _USE_HW_UART
 #define		 HW_UART_MAX_CH			2
@@ -29,5 +29,11 @@
 #define _PIN_GPIO_A4988_EN			0
 #define _PIN_GPIO_A4988_LDIR		1
 #define _PIN_GPIO_A4988_RDIR		2
+
+#define _USE_HW_ROS
+#define		 HW_ROS_PACKET_BUF_MAX	512
+
+#define _USE_HW_ROS_SERVER
+
 
 #endif /* HW_DEF_H_ */
