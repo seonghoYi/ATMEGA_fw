@@ -50,16 +50,16 @@ void rosServerRun(void)
 {
 	//char *str = "hello";
 	//rosSendInst(&ros_handle, 0x00, 0x00, (uint8_t*)str, 6);
-	
+	uint8_t service_id;
 	if (rosReceivePacket(&ros_handle))
 	{
-		
-		if ((ros_handle.packet.msgs[0] < 0 || ros_handle.packet.msgs[0] >= ROS_MAX_SERVICE) && ros_handle.packet.msg_len <= 0)
+		service_id = ros_handle.packet.inst;
+		if ((service_id < 0 || service_id >= ROS_MAX_SERVICE))
 		{
 			return;
 		}
 		//ros_handle.driver.write(ros_handle.ch, (uint8_t*)&(ros_handle.packet.msgs[0]), 1);
-		rosCallService(&ros_handle, ros_handle.packet.msgs[0], &ros_handle.packet.msgs[1]);
+		rosCallService(&ros_handle, service_id, &ros_handle.packet.msgs[0]);
 	}
 }
 

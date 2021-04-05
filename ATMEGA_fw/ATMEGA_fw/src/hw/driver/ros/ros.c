@@ -260,8 +260,8 @@ bool rosReceivePacket(ros_t *p_ros)
 	}
 	if (ret == true)
 	{
-		p_ros->packet.id = (p_ros->packet_buf[ROS_PKT_ID1] >> 0) & 0xFF;
-		p_ros->packet.id |= (p_ros->packet_buf[ROS_PKT_ID1] >> 8) & 0xFF;
+		p_ros->packet.id = p_ros->packet_buf[ROS_PKT_ID2];
+		p_ros->packet.inst = p_ros->packet_buf[ROS_PKT_ID1];
 	}
 	
 	return ret;

@@ -48,7 +48,8 @@ typedef struct
 	uint8_t		protocol_version;
 	uint16_t	msg_len;
 	uint8_t		msg_len_checksum;
-	uint16_t	id;
+	uint8_t		id;
+	uint8_t		inst;
 	uint8_t		*msgs;
 	uint8_t		checksum;
 } ros_packet_t;
