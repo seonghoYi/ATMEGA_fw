@@ -28,7 +28,11 @@ void		motorRun(void);
 void		motorStop(void);
 void		motorBreak(void);
 void		motorSetSpeed(uint8_t speed_); // 0 ~ 100%
+void		motorSetLeftSpeed(uint8_t speed_);
+void		motorSetRightSpeed(uint8_t speed_);
 uint8_t*	motorGetSpeed(void);
+void		motorSetLeftDirection(bool dir);
+void		motorSetRightDirection(bool dir);
 void		motorSetMotionState(uint8_t motion_); // 0: forward, 1: rotate ccw, 2: backward, 3: rotate cw 
 uint8_t		motorGetMotionState(void);
 

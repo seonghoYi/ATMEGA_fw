@@ -39,13 +39,13 @@ bool a4988Init(uint8_t ch_)
 		case _DEF_A4988_0:
 		p_a4988->h_a4988				= &h_a4988_1;
 		
-		p_a4988->normal_rotate			= _DEF_CCW;
-		p_a4988->reverse_rotate			= _DEF_CW;
+		p_a4988->normal_rotate			= _DEF_CW;
+		p_a4988->reverse_rotate			= _DEF_CCW;
 		p_a4988->h_a4988->Init.ch		= _DEF_A4988_0;
 		p_a4988->h_a4988->Init.timer	= TIM0;
 		p_a4988->h_a4988->Init.phase	= A4988_FULL_STEP;
 		p_a4988->h_a4988->enable		= false;
-		p_a4988->h_a4988->direction		= _NORMAL_ROTATION;
+		p_a4988->h_a4988->direction		= _REVERSE_ROTATION;
 		p_a4988->h_a4988->speed			= 0;
 		
 		break;

@@ -64,6 +64,29 @@ void motorBreak(void)
 
 void motorSetSpeed(uint8_t speed_)
 {
+	// max: 726.74Hz, 109.01rpm, 0.376m/s min: 122.07Hz, 18.31rpm, 0.063m/s
+	
+	
+	/*
+	const uint8_t power_max = 255;
+	const uint8_t scale_limit = 20;
+	uint16_t power_ = power_max - ((power_max * speed_) / (100 + scale_limit)); 
+	
+	if (speed_ > 100 || speed_ < 0)
+	{
+		return;
+	}
+	*/
+	
+#ifdef _USE_HW_A4988
+	motor.setSpeed(_DEF_A4988_0, speed_);
+	motor.setSpeed(_DEF_A4988_1, speed_);
+#endif
+}
+
+void motorSetLeftSpeed(uint8_t speed_)
+{
+	/*
 	const uint8_t power_max = 255;
 	const uint8_t scale_limit = 20;
 	uint16_t power_ = power_max - ((power_max * speed_) / (100 + scale_limit));
@@ -72,28 +95,56 @@ void motorSetSpeed(uint8_t speed_)
 	{
 		return;
 	}
-
+	*/
 	
-#ifdef _USE_HW_A4988
-	motor.setSpeed(_DEF_A4988_0, (uint8_t) power_);
-	motor.setSpeed(_DEF_A4988_1, (uint8_t) power_);
-#endif
+	#ifdef _USE_HW_A4988
+	motor.setSpeed(_DEF_A4988_0, speed_);
+	#endif
+}
+
+void motorSetRightSpeed(uint8_t speed_)
+{
+	/*
+	const uint8_t power_max = 255;
+	const uint8_t scale_limit = 20;
+	uint16_t power_ = power_max - ((power_max * speed_) / (100 + scale_limit));
+	
+	if (speed_ > 100 || speed_ < 0)
+	{
+		return;
+	}
+	*/
+	
+	#ifdef _USE_HW_A4988
+	motor.setSpeed(_DEF_A4988_1, speed_);
+	#endif
 }
 
 uint8_t* motorGetSpeed(void)
 {
-	const uint8_t power_max = 255;
-	const uint8_t scale_limit = 20;
-	uint8_t speed_[2] = {0};
-	static uint8_t power_[2] = {0};
+	//const uint8_t power_max = 255;
+	//const uint8_t scale_limit = 20;
+	static uint8_t speed_[2] = {0};
+	//static uint8_t power_[2] = {0};
 	
 #ifdef _USE_HW_A4988
 	speed_[0] = motor.getSpeed(_DEF_A4988_0);
 	speed_[1] = motor.getSpeed(_DEF_A4988_1);
-	power_[0] = power_max - (uint8_t)((speed_[0] / power_max) * (100 + scale_limit));
-	power_[1] = power_max - (uint8_t)((speed_[1] / power_max) * (100 + scale_limit));
-	return power_;
+	//power_[0] = power_max - (uint8_t)((speed_[0] / power_max) * (100 + scale_limit));
+	//power_[1] = power_max - (uint8_t)((speed_[1] / power_max) * (100 + scale_limit));
+	//return power_;
+	return speed_;
 #endif
+}
+
+void motorSetLeftDirection(bool dir)
+{
+	motor.setDirection(_DEF_A4988_0, dir);
+}
+
+void motorSetRightDirection(bool dir)
+{
+	motor.setDirection(_DEF_A4988_1, dir);
 }
 
 void motorSetMotionState(uint8_t motion_)

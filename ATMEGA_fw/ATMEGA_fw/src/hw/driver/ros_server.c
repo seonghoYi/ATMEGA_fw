@@ -22,6 +22,9 @@ void advance(uint8_t *params);
 void reverse(uint8_t *params);
 void turn(uint8_t *params);
 void steering(uint8_t *params);
+void left_motor_config(uint8_t *params);
+void right_motor_config(uint8_t *params);
+void motor_config(uint8_t *params);
 #endif
 
 
@@ -42,6 +45,9 @@ void rosServerInit(void)
 	rosAddService(&ros_handle, reverse);
 	rosAddService(&ros_handle, turn);
 	rosAddService(&ros_handle, steering);
+	rosAddService(&ros_handle, left_motor_config);
+	rosAddService(&ros_handle, right_motor_config);
+	rosAddService(&ros_handle, motor_config);
 	//uint8_t buf = ros_handle.service_index;
 	//ros_handle.driver.write(ros_handle.ch, &buf, 1);
 }
@@ -102,7 +108,28 @@ void steering(uint8_t *params)
 	motorSteering(params[0]);
 }
 
+void left_motor_config(uint8_t *params)
+{
+	motorSetLeftSpeed(params[0]);
+	motorSetLeftDirection((bool)params[1]);	
+	motorRun();
+}
 
+void right_motor_config(uint8_t *params)
+{
+	motorSetRightSpeed(params[0]);
+	motorSetRightDirection((bool)params[1]);	
+	motorRun();
+}
+
+void motor_config(uint8_t *params)
+{
+	motorSetLeftSpeed(params[0]);
+	motorSetLeftDirection(params[1]);
+	motorSetRightSpeed(params[2]);
+	motorSetRightDirection(params[3]);
+	motorRun();
+}
 
 #endif
 
