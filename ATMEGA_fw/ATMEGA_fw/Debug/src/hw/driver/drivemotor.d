@@ -27,8 +27,7 @@ src/hw/driver/drivemotor.d src/hw/driver/drivemotor.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  ../src/lib/Drivers/Inc/atmega128_hal_uart.h \
- ../src/lib/Drivers/Inc/atmega128_hal_timer.h \
- ../src/common/hw/include/drivemotor/a4988.h
+ ../src/lib/Drivers/Inc/atmega128_hal_timer.h
 
 ../src/common/hw/include/drivemotor.h:
 
@@ -93,5 +92,3 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/lib/Drivers/Inc/atmega128_hal_uart.h:
 
 ../src/lib/Drivers/Inc/atmega128_hal_timer.h:
-
-../src/common/hw/include/drivemotor/a4988.h:

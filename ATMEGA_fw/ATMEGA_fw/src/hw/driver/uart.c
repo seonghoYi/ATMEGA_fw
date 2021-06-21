@@ -46,7 +46,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
 		
 		
 
-		if (UART_Init(&huart1) != OK)
+		if (UART_Init(&huart1) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -55,7 +55,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
 			ret = true;
 			is_open[_DEF_UART0] = true;
 			
-			if (UART_Receive_IT(&huart1, (uint8_t *)&rx_data[_DEF_UART0], 1) != OK)
+			if (UART_Receive_IT(&huart1, (uint8_t *)&rx_data[_DEF_UART0], 1) != HAL_OK)
 			{
 				ret = false;
 			}
@@ -74,7 +74,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
 		
 		
 
-		if (UART_Init(&huart2) != OK)
+		if (UART_Init(&huart2) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -83,7 +83,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
 			ret = true;
 			is_open[_DEF_UART1] = true;
 			
-			if (UART_Receive_IT(&huart2, (uint8_t *)&rx_data[_DEF_UART1], 1) != OK)
+			if (UART_Receive_IT(&huart2, (uint8_t *)&rx_data[_DEF_UART1], 1) != HAL_OK)
 			{
 				ret = false;
 			}
@@ -135,19 +135,19 @@ uint8_t uartRead(uint8_t ch)
 uint32_t uartWrite(uint8_t ch, uint8_t *p_data, uint32_t length)
 {
 	uint32_t ret = 0;
-	StatusTypeDef status;
+	HAL_StatusTypeDef status;
 	switch(ch)
 	{
 		case _DEF_UART0:
 		status = UART_Transmit(&huart1, p_data, length, 100);
-		if (status == OK)
+		if (status == HAL_OK)
 		{
 			ret = length;
 		}
 		break;
 		case _DEF_UART1:
 		status = UART_Transmit(&huart2, p_data, length, 100);
-		if (status == OK)
+		if (status == HAL_OK)
 		{
 			ret = length;
 		}

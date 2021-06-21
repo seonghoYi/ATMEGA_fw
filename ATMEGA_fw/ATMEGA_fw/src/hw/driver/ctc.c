@@ -20,12 +20,16 @@ typedef struct
 	TIM16_OC_InitTypeDef *h_tim16_oc;
 } ctc_t;
 
+#ifndef _USE_HW_SYSTICK
 TIM8_HandleTypeDef	htim1;
+#endif
 TIM8_HandleTypeDef	htim2;
 TIM16_HandleTypeDef htim3;
 TIM16_HandleTypeDef htim4;
 
+#ifndef _USE_HW_SYSTICK
 TIM8_OC_InitTypeDef htim1_oc;
+#endif
 TIM8_OC_InitTypeDef htim2_oc;
 TIM16_OC_InitTypeDef htim3_oc;
 TIM16_OC_InitTypeDef htim4_oc;
@@ -65,6 +69,7 @@ bool ctcBegin(uint8_t ch_)
 	
 	switch(ch_)
 	{
+		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
 		p_ctc->h_tim8					= &htim1;
 		p_ctc->h_tim8_oc				= &htim1_oc;
@@ -98,6 +103,7 @@ bool ctcBegin(uint8_t ch_)
 		}
 		
 		break;
+		#endif
 		case _DEF_TIM1:
 		p_ctc->h_tim16					= &htim3;
 		p_ctc->h_tim16_oc				= &htim3_oc;
@@ -122,7 +128,7 @@ bool ctcBegin(uint8_t ch_)
 		p_ctc->h_tim8->Init.Prescaler	= TIM_CLK_PRESCALER_256;
 		p_ctc->h_tim8->Init.Source		= TIM_INTCLK_SOURCE;
 		
-		if (TIM8_Base_Init(p_ctc->h_tim8) != OK)
+		if (TIM8_Base_Init(p_ctc->h_tim8) != HAL_OK)
 		{
 			return ret;
 		}
@@ -138,7 +144,7 @@ bool ctcBegin(uint8_t ch_)
 		p_ctc->h_tim8_oc->Tcnt			= 0;
 		p_ctc->h_tim8_oc->Ocr			= 0;
 		
-		if (TIM8_OC_Init(p_ctc->h_tim8, p_ctc->h_tim8_oc) != OK)
+		if (TIM8_OC_Init(p_ctc->h_tim8, p_ctc->h_tim8_oc) != HAL_OK)
 		{
 			ret = false;
 			p_ctc->is_open = false;
@@ -189,6 +195,7 @@ bool ctcStart(uint8_t ch_)
 	
 	switch(ch_)
 	{
+		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
 		//TIM8_Base_Start(p_ctc->h_tim8);
 		//TIM8_Base_Start_IT(p_ctc->h_tim8);
@@ -198,11 +205,12 @@ bool ctcStart(uint8_t ch_)
 			ret = false;
 		}
 		break;
+		#endif
 		case _DEF_TIM1:
 		//TIM16_Base_Start(p_ctc->h_tim16);
 		//TIM16_Base_Start_IT(p_ctc->h_tim16);
 		//TIM16_OC_Start_IT(p_ctc->h_tim16);
-		if (TIM16_OC_Start(p_ctc->h_tim16) != OK)
+		if (TIM16_OC_Start(p_ctc->h_tim16) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -211,7 +219,7 @@ bool ctcStart(uint8_t ch_)
 		//TIM8_Base_Start(p_ctc->h_tim8);
 		//TIM8_Base_Start_IT(p_ctc->h_tim8);
 		//TIM8_OC_Start_IT(p_ctc->h_tim8);
-		if (TIM8_OC_Start(p_ctc->h_tim8) != OK)
+		if (TIM8_OC_Start(p_ctc->h_tim8) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -220,7 +228,7 @@ bool ctcStart(uint8_t ch_)
 		//TIM16_Base_Start(p_ctc->h_tim16);
 		//TIM16_Base_Start_IT(p_ctc->h_tim16);
 		//TIM16_OC_Start_IT(p_ctc->h_tim16);
-		if (TIM16_OC_Start(p_ctc->h_tim16) != OK)
+		if (TIM16_OC_Start(p_ctc->h_tim16) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -241,6 +249,7 @@ bool ctcStop(uint8_t ch_)
 	
 	switch(ch_)
 	{
+		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
 		//TIM8_Base_Stop(p_ctc->h_tim8);
 		//TIM8_Base_Stop_IT(p_ctc->h_tim8);
@@ -250,11 +259,12 @@ bool ctcStop(uint8_t ch_)
 			ret = false;
 		}
 		break;
+		#endif
 		case _DEF_TIM1:
 		//TIM16_Base_Stop(p_ctc->h_tim16);
 		//TIM16_Base_Stop_IT(p_ctc->h_tim16);
 		//TIM16_OC_Stop_IT(p_ctc->h_tim16);
-		if (TIM16_OC_Stop(p_ctc->h_tim16) != OK)
+		if (TIM16_OC_Stop(p_ctc->h_tim16) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -263,7 +273,7 @@ bool ctcStop(uint8_t ch_)
 		//TIM8_Base_Stop(p_ctc->h_tim8);
 		//TIM8_Base_Stop_IT(p_ctc->h_tim8);
 		//TIM8_OC_Stop_IT(p_ctc->h_tim8);
-		if (TIM8_OC_Stop(p_ctc->h_tim8) != OK)
+		if (TIM8_OC_Stop(p_ctc->h_tim8) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -272,7 +282,7 @@ bool ctcStop(uint8_t ch_)
 		//TIM16_Base_Stop(p_ctc->h_tim16);
 		//TIM16_Base_Stop_IT(p_ctc->h_tim16);
 		//TIM16_OC_Stop_IT(p_ctc->h_tim16);
-		if (TIM16_OC_Stop(p_ctc->h_tim16) != OK)
+		if (TIM16_OC_Stop(p_ctc->h_tim16) != HAL_OK)
 		{
 			ret = false;
 		}
@@ -297,7 +307,7 @@ bool ctc16ChannelConfig(uint8_t ch_, uint8_t channel_)
 		case _DEF_TIM1:
 		p_ctc->h_tim16->Init.Channel	= channel_;
 		
-		if (TIM16_Base_Init(p_ctc->h_tim16) != OK)
+		if (TIM16_Base_Init(p_ctc->h_tim16) != HAL_OK)
 		{
 			return ret;
 		}
@@ -310,7 +320,7 @@ bool ctc16ChannelConfig(uint8_t ch_, uint8_t channel_)
 		p_ctc->h_tim16_oc->OCOutput		= TIM16_OC_FORCEDOUT;
 		p_ctc->h_tim16_oc->OCWave_COM	= TIM16_OC_COM_TOGGLE;
 		
-		if (TIM16_OC_Init(p_ctc->h_tim16, p_ctc->h_tim16_oc) != OK)
+		if (TIM16_OC_Init(p_ctc->h_tim16, p_ctc->h_tim16_oc) != HAL_OK)
 		{
 			ret = false;
 			p_ctc->is_open = false;
@@ -321,7 +331,7 @@ bool ctc16ChannelConfig(uint8_t ch_, uint8_t channel_)
 		case _DEF_TIM3:
 		p_ctc->h_tim16->Init.Channel	= channel_;
 		
-		if (TIM16_Base_Init(p_ctc->h_tim16) != OK)
+		if (TIM16_Base_Init(p_ctc->h_tim16) != HAL_OK)
 		{
 			return ret;
 		}
@@ -334,7 +344,7 @@ bool ctc16ChannelConfig(uint8_t ch_, uint8_t channel_)
 		p_ctc->h_tim16_oc->OCOutput		= TIM16_OC_NORMALOUT;
 		p_ctc->h_tim16_oc->OCWave_COM	= TIM8_OC_COM_NORMAL;
 		
-		if (TIM16_OC_Init(p_ctc->h_tim16, p_ctc->h_tim16_oc) != OK)
+		if (TIM16_OC_Init(p_ctc->h_tim16, p_ctc->h_tim16_oc) != HAL_OK)
 		{
 			ret = false;
 			p_ctc->is_open = false;
@@ -356,9 +366,11 @@ bool ctcSetTcnt(uint8_t ch_, uint16_t tcnt_)
 	ctc_t *p_ctc = &ctc_tbl[ch_];
 	switch(ch_)
 	{
+		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
 		*(p_ctc->h_tim8->Regs->TCNTn) = tcnt_ & 0xFF;
 		break;
+		#endif
 		case _DEF_TIM1:
 		*(p_ctc->h_tim16->Regs->TCNTnH) = (tcnt_ >> 8) & 0xFF;
 		*(p_ctc->h_tim16->Regs->TCNTnL) = (tcnt_ & 0xFF);
@@ -383,9 +395,11 @@ uint16_t ctcGetTcnt(uint8_t ch_)
 	ctc_t *p_ctc = &ctc_tbl[ch_];
 	switch(ch_)
 	{
+		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
 		ret = *(p_ctc->h_tim8->Regs->TCNTn);
 		break;
+		#endif
 		case _DEF_TIM1:
 		ret = ((((*(p_ctc->h_tim16->Regs->TCNTnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->TCNTnL)) & 0xFF));
 		break;
@@ -407,9 +421,11 @@ bool ctcSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 	ctc_t *p_ctc = &ctc_tbl[ch_];
 	switch(ch_)
 	{
+		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
 		*(p_ctc->h_tim8->Regs->OCRn) = ocr_ & 0xFF;
 		break;
+		#endif
 		case _DEF_TIM2:
 		*(p_ctc->h_tim8->Regs->OCRn) = ocr_ & 0xFF;
 		break;
@@ -438,9 +454,11 @@ uint16_t ctcGetOcr(uint8_t ch_, uint8_t channel_)
 	ctc_t *p_ctc = &ctc_tbl[ch_];
 	switch(ch_)
 	{
+		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
 		ret = *(p_ctc->h_tim8->Regs->OCRn);
 		break;
+		#endif
 		case _DEF_TIM2:
 		ret = *(p_ctc->h_tim8->Regs->OCRn);
 		break;

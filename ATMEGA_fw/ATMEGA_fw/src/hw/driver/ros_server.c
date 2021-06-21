@@ -39,6 +39,7 @@ void rosServerInit(void)
 	rosInit();
 	rosLoadDriver(&ros_handle);
 	rosOpen(&ros_handle, _DEF_ROS0, 38400);
+	/*
 	rosAddService(&ros_handle, stop);
 	rosAddService(&ros_handle, hold);
 	rosAddService(&ros_handle, advance);
@@ -50,6 +51,7 @@ void rosServerInit(void)
 	rosAddService(&ros_handle, motor_config);
 	//uint8_t buf = ros_handle.service_index;
 	//ros_handle.driver.write(ros_handle.ch, &buf, 1);
+	*/
 }
 
 void rosServerRun(void)

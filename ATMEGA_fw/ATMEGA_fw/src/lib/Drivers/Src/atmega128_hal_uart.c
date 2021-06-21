@@ -9,13 +9,13 @@ USART_TypeDef USART_descripter[] = {
 	{&UDR1, &UCSR1A, &UCSR1B, &UCSR1C, &UBRR1H, &UBRR1L},	
 };
 
-StatusTypeDef UART_Init(UART_HandleTypeDef *huart)
+HAL_StatusTypeDef UART_Init(UART_HandleTypeDef *huart)
 {
 	uint32_t temp;
 	USART_TypeDef *usart = &USART_descripter[huart->USARTn];
 	if (huart == NULL)
 	{
-		return ERROR;
+		return HAL_ERROR;
 	}
 	
 	
@@ -116,10 +116,10 @@ StatusTypeDef UART_Init(UART_HandleTypeDef *huart)
 	}
 	
 	
-	return OK;
+	return HAL_OK;
 }
 
-StatusTypeDef UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)
+HAL_StatusTypeDef UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)
 {
 	uint8_t			*pdata8bits		= NULL;
 	uint16_t		*pdata16bits	= NULL;
@@ -127,7 +127,7 @@ StatusTypeDef UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t 
 	
 	if (usart == NULL)
 	{
-		return ERROR;
+		return HAL_ERROR;
 	}
 	
 	huart->ErrorCode			= UART_ERROR_NONE;
@@ -164,10 +164,10 @@ StatusTypeDef UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t 
 	}
 	
 	
-	return OK;
+	return HAL_OK;
 }
 
-StatusTypeDef UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)
+HAL_StatusTypeDef UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)
 {
 	uint8_t			*pdata8bits		= NULL;
 	uint16_t		*pdata16bits	= NULL;
@@ -175,7 +175,7 @@ StatusTypeDef UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t S
 	
 	if (usart == NULL)
 	{
-		return ERROR;
+		return HAL_ERROR;
 	}
 	
 	huart->ErrorCode				= UART_ERROR_NONE;
@@ -208,16 +208,16 @@ StatusTypeDef UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t S
 		}
 	}
 
-	return OK;
+	return HAL_OK;
 }
 
-StatusTypeDef UART_Transmit_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
+HAL_StatusTypeDef UART_Transmit_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
 {
 	USART_TypeDef *usart = &USART_descripter[huart->USARTn];
 	
 	if (usart == NULL)
 	{
-		return ERROR;
+		return HAL_ERROR;
 	}
 	
 	huart->pTxBuffPtr	= pData;
@@ -225,16 +225,16 @@ StatusTypeDef UART_Transmit_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16
 	huart->TxXferCount	= Size;
 	
 	SETB(*(usart->UCSRnB), 6);
-	return OK;
+	return HAL_OK;
 }
 
-StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
+HAL_StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)
 {
 	USART_TypeDef *usart = &USART_descripter[huart->USARTn];
 	
 	if (usart == NULL)
 	{
-		return ERROR;
+		return HAL_ERROR;
 	}
 	
 	huart->pRxBuffPtr	= pData;
@@ -243,7 +243,7 @@ StatusTypeDef UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_
 	
 	SETB(*(usart->UCSRnB), 7);
 	
-	return OK;
+	return HAL_OK;
 }
 
 

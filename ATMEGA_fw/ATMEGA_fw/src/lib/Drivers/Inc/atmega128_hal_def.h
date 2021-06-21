@@ -5,12 +5,14 @@
 
 typedef enum 
 {
-	OK = 0x00,
-	ERROR = 0x01,
-	BUSY = 0x02,
-	TIMEOUT = 0x03
-} StatusTypeDef;
+	HAL_OK = 0x00,
+	HAL_ERROR = 0x01,
+	HAL_BUSY = 0x02,
+	HAL_TIMEOUT = 0x03
+} HAL_StatusTypeDef;
 
+
+#define HAL_MAX_DELAY 0xFFFFFFFFU
 #define UNUSED(x) (void)x
 
 

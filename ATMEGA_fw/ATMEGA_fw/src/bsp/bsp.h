@@ -6,6 +6,7 @@
 
 void bspInit(void);
 
-
+void delay(uint32_t ms);
+uint32_t millis(void);
 
 #endif /* BSP_H_ */

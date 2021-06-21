@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\hw",
+    "\\src\\hw\\driver"
+  ],
+  "SelectedNode": "\\src\\hw\\driver\\ros_server.c",
+  "PreviewInSolutionExplorer": false
+}

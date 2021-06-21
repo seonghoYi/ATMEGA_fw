@@ -177,41 +177,41 @@ typedef struct
 
 
 
-StatusTypeDef TIM8_Base_Init(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_Base_Start(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_Base_Stop(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_OC_Init(TIM8_HandleTypeDef *htim, TIM8_OC_InitTypeDef *htim_oc);
-StatusTypeDef TIM8_OC_Start(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_OC_Stop(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_PWM_Init(TIM8_HandleTypeDef *htim, TIM8_PWM_InitTypeDef *htim_pwm);
-StatusTypeDef TIM8_PWM_Start(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_PWM_Stop(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_Base_Init(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_Base_Start(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_Base_Stop(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_OC_Init(TIM8_HandleTypeDef *htim, TIM8_OC_InitTypeDef *htim_oc);
+HAL_StatusTypeDef TIM8_OC_Start(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_OC_Stop(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_PWM_Init(TIM8_HandleTypeDef *htim, TIM8_PWM_InitTypeDef *htim_pwm);
+HAL_StatusTypeDef TIM8_PWM_Start(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_PWM_Stop(TIM8_HandleTypeDef *htim);
 
-StatusTypeDef TIM8_Base_Start_IT(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_Base_Stop_IT(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_OC_Start_IT(TIM8_HandleTypeDef *htim);
-StatusTypeDef TIM8_OC_Start_IT(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_Base_Start_IT(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_Base_Stop_IT(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_OC_Start_IT(TIM8_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM8_OC_Start_IT(TIM8_HandleTypeDef *htim);
 
 
-StatusTypeDef TIM16_Base_Init(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_Base_Start(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_Base_Stop(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef *htim_oc);
-StatusTypeDef TIM16_OC_Start(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_OC_Stop(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDef *htim_pwm);
-StatusTypeDef TIM16_PWM_Start(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_PWM_Stop(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_IC_Init(TIM16_HandleTypeDef *htim, TIM16_IC_InitTypeDef *htim_ic);
-StatusTypeDef TIM16_IC_Start(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_IC_Stop(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_Base_Init(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_Base_Start(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_Base_Stop(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef *htim_oc);
+HAL_StatusTypeDef TIM16_OC_Start(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_OC_Stop(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDef *htim_pwm);
+HAL_StatusTypeDef TIM16_PWM_Start(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_PWM_Stop(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_IC_Init(TIM16_HandleTypeDef *htim, TIM16_IC_InitTypeDef *htim_ic);
+HAL_StatusTypeDef TIM16_IC_Start(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_IC_Stop(TIM16_HandleTypeDef *htim);
 
-StatusTypeDef TIM16_Base_Start_IT(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_Base_Stop_IT(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_IC_Start_IT(TIM16_HandleTypeDef *htim);
-StatusTypeDef TIM16_IC_Stop_IT(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_Base_Start_IT(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_Base_Stop_IT(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_IC_Start_IT(TIM16_HandleTypeDef *htim);
+HAL_StatusTypeDef TIM16_IC_Stop_IT(TIM16_HandleTypeDef *htim);
 
 
 void TIM0_OVF_IRQHandler(TIM8_HandleTypeDef *htim);

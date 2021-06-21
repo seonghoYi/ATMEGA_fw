@@ -29,12 +29,14 @@ ISR(USART1_TX_vect)
 
 
 #ifdef _USE_HW_CTC
+#ifndef _USE_HW_SYSTICK
 extern TIM8_HandleTypeDef htim1;
+#endif
 extern TIM8_HandleTypeDef htim2;
 extern TIM16_HandleTypeDef htim3;
 extern TIM16_HandleTypeDef htim4;
 
-
+#ifndef _USE_HW_SYSTICK
 ISR(TIMER0_OVF_vect)
 {
 	TIM0_OVF_IRQHandler(&htim1);
@@ -44,6 +46,14 @@ ISR(TIMER0_COMP_vect)
 {
 	TIM0_OC_IRQHandler(&htim1);
 }
+#endif
+
+#ifdef _USE_HW_SYSTICK
+ISR(TIMER0_COMP_vect)
+{
+	HAL_IncTick();
+}
+#endif
 
 ISR(TIMER1_OVF_vect)
 {

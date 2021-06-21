@@ -7,8 +7,8 @@ void hwInit(void)
 	uartInit();
 	//timerInit();
 	//a4988Init();
-	ctcInit();
-	pwmInit();
-	motorInit();
-	rosServerInit();
+	//ctcInit();
+	//pwmInit();
+	//motorInit();
+	//rosServerInit();
 }
