@@ -1,17 +1,17 @@
 Archive member included to satisfy reference by file (symbol)
 
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
-                              src/lib/Drivers/Src/atmega128_DRV_uart.o (__subsf3)
+                              src/lib/Drivers/Src/atmega128_hal_uart.o (__subsf3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o) (__addsf3x)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3.o)
-                              src/lib/Drivers/Src/atmega128_DRV_uart.o (__divsf3)
+                              src/lib/Drivers/Src/atmega128_hal_uart.o (__divsf3)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3x.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(divsf3.o) (__divsf3x)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
-                              src/lib/Drivers/Src/atmega128_DRV_uart.o (__fixunssfsi)
+                              src/lib/Drivers/Src/atmega128_hal_uart.o (__fixunssfsi)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(floatsisf.o)
-                              src/lib/Drivers/Src/atmega128_DRV_uart.o (__floatunsisf)
+                              src/lib/Drivers/Src/atmega128_hal_uart.o (__floatunsisf)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_inf.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3x.o) (__fp_inf)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(fp_nan.o)
@@ -178,127 +178,127 @@ Discarded input sections
  .text          0x00000000        0x0 src/hw/hw.o
  .data          0x00000000        0x0 src/hw/hw.o
  .bss           0x00000000        0x0 src/hw/hw.o
- .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV.o
- .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV.o
- .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV.o
- .debug_info    0x00000000       0x56 src/lib/Drivers/Src/atmega128_DRV.o
- .debug_abbrev  0x00000000       0x26 src/lib/Drivers/Src/atmega128_DRV.o
+ .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal.o
+ .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal.o
+ .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal.o
+ .debug_info    0x00000000       0x56 src/lib/Drivers/Src/atmega128_hal.o
+ .debug_abbrev  0x00000000       0x26 src/lib/Drivers/Src/atmega128_hal.o
  .debug_aranges
-                0x00000000       0x18 src/lib/Drivers/Src/atmega128_DRV.o
- .debug_line    0x00000000       0x1a src/lib/Drivers/Src/atmega128_DRV.o
- .debug_str     0x00000000      0x17a src/lib/Drivers/Src/atmega128_DRV.o
- .comment       0x00000000       0x31 src/lib/Drivers/Src/atmega128_DRV.o
- .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x00000000       0x18 src/lib/Drivers/Src/atmega128_hal.o
+ .debug_line    0x00000000       0x1a src/lib/Drivers/Src/atmega128_hal.o
+ .debug_str     0x00000000      0x17a src/lib/Drivers/Src/atmega128_hal.o
+ .comment       0x00000000       0x31 src/lib/Drivers/Src/atmega128_hal.o
+ .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_gpio.o
  .text.GPIO_ReadPin
-                0x00000000       0x2e src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x00000000       0x2e src/lib/Drivers/Src/atmega128_hal_gpio.o
  .text.GPIO_TogglePin
-                0x00000000       0x30 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x30 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_Base_Stop
-                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_PWM_Init
-                0x00000000       0xde src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0xde src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_PWM_Stop
-                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_Base_Stop_IT
-                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_OC_Stop_IT
-                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_Base_Init
-                0x00000000       0x90 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x90 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_Base_Stop
-                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_OC_Init
-                0x00000000      0x370 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000      0x370 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_PWM_Init
-                0x00000000      0x3d2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000      0x3d2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .progmem.gcc_sw_table.TIM16_PWM_Init
-                0x00000000       0x18 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x18 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_PWM_Stop
-                0x00000000       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x2a src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_IC_Init
-                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_IC_Start
-                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_IC_Stop
-                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_Base_Stop_IT
-                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_OC_Stop_IT
-                0x00000000       0x7e src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x7e src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_IC_Start_IT
-                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_IC_Stop_IT
-                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_Base_Start
-                0x00000000       0x4c src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x4c src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_Base_Start_IT
-                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_OC_Start_IT
-                0x00000000       0x24 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x24 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM8_PWM_Start
-                0x00000000       0x26 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x26 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_Base_Start
-                0x00000000       0x62 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x62 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_Base_Start_IT
-                0x00000000       0x28 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x28 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_OC_Start_IT
-                0x00000000       0x7e src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x7e src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM16_PWM_Start
-                0x00000000       0x26 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000       0x26 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OVF_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OVF_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OVF_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OVF_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OCA_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OCA_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OCB_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OCB_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OCC_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_OCC_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_CAPT_CpltCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM1_CAPT_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OCA_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OCA_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OCB_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OCB_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OCC_ElapsedCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_OCC_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_CAPT_CpltCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
  .text.TIM3_CAPT_IRQHandler
-                0x00000000        0x6 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_uart.o
- .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00000000        0x6 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .text          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_uart.o
+ .data          0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_uart.o
+ .bss           0x00000000        0x0 src/lib/Drivers/Src/atmega128_hal_uart.o
  .text.UART_Transmit_IT
-                0x00000000       0x38 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00000000       0x38 src/lib/Drivers/Src/atmega128_hal_uart.o
  .text.UART_TxCpltCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_uart.o
  .text.UART_RxCpltCallback
-                0x00000000        0x2 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00000000        0x2 src/lib/Drivers/Src/atmega128_hal_uart.o
  .text          0x00000000        0x0 src/main.o
  .data          0x00000000        0x0 src/main.o
  .bss           0x00000000        0x0 src/main.o
@@ -510,10 +510,10 @@ LOAD src/hw/driver/ros/ros.o
 LOAD src/hw/driver/ros/ros_uart.o
 LOAD src/hw/driver/uart.o
 LOAD src/hw/hw.o
-LOAD src/lib/Drivers/Src/atmega128_DRV.o
-LOAD src/lib/Drivers/Src/atmega128_DRV_gpio.o
-LOAD src/lib/Drivers/Src/atmega128_DRV_timer.o
-LOAD src/lib/Drivers/Src/atmega128_DRV_uart.o
+LOAD src/lib/Drivers/Src/atmega128_hal.o
+LOAD src/lib/Drivers/Src/atmega128_hal_gpio.o
+LOAD src/lib/Drivers/Src/atmega128_hal_timer.o
+LOAD src/lib/Drivers/Src/atmega128_hal_uart.o
 LOAD src/main.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a
@@ -634,7 +634,7 @@ END GROUP
  .progmem.gcc_sw_table.rosReceivePacket
                 0x0000008c       0x12 src/hw/driver/ros/ros.o
  .progmem.gcc_sw_table.TIM0_CLK_Configuration
-                0x0000009e        0xe src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000009e        0xe src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x000000ac                . = ALIGN (0x2)
                 0x000000ac                __trampolines_start = .
  *(.trampolines)
@@ -976,82 +976,82 @@ END GROUP
  .text.hwInit   0x00001a48       0x14 src/hw/hw.o
                 0x00001a48                hwInit
  .text.GPIO_Init
-                0x00001a5c       0x76 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x00001a5c       0x76 src/lib/Drivers/Src/atmega128_hal_gpio.o
                 0x00001a5c                GPIO_Init
  .text.GPIO_WritePin
-                0x00001ad2       0x68 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x00001ad2       0x68 src/lib/Drivers/Src/atmega128_hal_gpio.o
                 0x00001ad2                GPIO_WritePin
  .text.TIM8_Base_Init
-                0x00001b3a       0xa6 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001b3a       0xa6 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001b3a                TIM8_Base_Init
  .text.TIM8_OC_Init
-                0x00001be0      0x132 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001be0      0x132 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001be0                TIM8_OC_Init
  .text.TIM8_OC_Stop
-                0x00001d12       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001d12       0x2a src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001d12                TIM8_OC_Stop
  .text.TIM16_OC_Stop
-                0x00001d3c       0x2a src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001d3c       0x2a src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001d3c                TIM16_OC_Stop
  .text.TIM0_CLK_Configuration
-                0x00001d66      0x124 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001d66      0x124 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001d66                TIM0_CLK_Configuration
  .text.TIM2_CLK_Configuration
-                0x00001e8a       0xd8 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001e8a       0xd8 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001e8a                TIM2_CLK_Configuration
  .text.TIM8_OC_Start
-                0x00001f62       0x48 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001f62       0x48 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001f62                TIM8_OC_Start
  .text.TIM1_CLK_Configuration
-                0x00001faa       0xd8 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00001faa       0xd8 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00001faa                TIM1_CLK_Configuration
  .text.TIM3_CLK_Configuration
-                0x00002082       0xd8 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00002082       0xd8 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00002082                TIM3_CLK_Configuration
  .text.TIM16_OC_Start
-                0x0000215a       0x22 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000215a       0x22 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x0000215a                TIM16_OC_Start
  .text.TIM0_OVF_ElapsedCallback
-                0x0000217c        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000217c        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x0000217c                TIM0_OVF_ElapsedCallback
  .text.TIM0_OVF_IRQHandler
-                0x0000217e        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000217e        0x4 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x0000217e                TIM0_OVF_IRQHandler
  .text.TIM2_OVF_ElapsedCallback
-                0x00002182        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00002182        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00002182                TIM2_OVF_ElapsedCallback
  .text.TIM2_OVF_IRQHandler
-                0x00002184        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00002184        0x4 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00002184                TIM2_OVF_IRQHandler
  .text.TIM0_OC_ElapsedCallback
-                0x00002188        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00002188        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00002188                TIM0_OC_ElapsedCallback
  .text.TIM0_OC_IRQHandler
-                0x0000218a        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000218a        0x4 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x0000218a                TIM0_OC_IRQHandler
  .text.TIM2_OC_ElapsedCallback
-                0x0000218e        0x2 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x0000218e        0x2 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x0000218e                TIM2_OC_ElapsedCallback
  .text.TIM2_OC_IRQHandler
-                0x00002190        0x4 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00002190        0x4 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00002190                TIM2_OC_IRQHandler
  .text.UART_Init
-                0x00002194      0x3fa src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00002194      0x3fa src/lib/Drivers/Src/atmega128_hal_uart.o
                 0x00002194                UART_Init
  .text.UART_Transmit
-                0x0000258e       0xcc src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x0000258e       0xcc src/lib/Drivers/Src/atmega128_hal_uart.o
                 0x0000258e                UART_Transmit
  .text.UART_Receive
-                0x0000265a       0xd8 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x0000265a       0xd8 src/lib/Drivers/Src/atmega128_hal_uart.o
                 0x0000265a                UART_Receive
  .text.UART_Receive_IT
-                0x00002732       0x38 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00002732       0x38 src/lib/Drivers/Src/atmega128_hal_uart.o
                 0x00002732                UART_Receive_IT
  .text.UART_TxIRQHandler
-                0x0000276a        0x4 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x0000276a        0x4 src/lib/Drivers/Src/atmega128_hal_uart.o
                 0x0000276a                UART_TxIRQHandler
  .text.UART_RxIRQHandler
-                0x0000276e       0x2a src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x0000276e       0x2a src/lib/Drivers/Src/atmega128_hal_uart.o
                 0x0000276e                UART_RxIRQHandler
  .text.main     0x00002798       0x10 src/main.o
                 0x00002798                main
@@ -1146,16 +1146,16 @@ END GROUP
                 0x00800100       0x1e src/hw/driver/gpio.o
                 0x00800100                gpio_tbl
  .data.GPIO_descripter
-                0x0080011e       0x2a src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x0080011e       0x2a src/lib/Drivers/Src/atmega128_hal_gpio.o
                 0x0080011e                GPIO_descripter
  .data.TIM16_descripter
-                0x00800148       0x2c src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00800148       0x2c src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00800148                TIM16_descripter
  .data.TIM8_descripter
-                0x00800174       0x10 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00800174       0x10 src/lib/Drivers/Src/atmega128_hal_timer.o
                 0x00800174                TIM8_descripter
  .data.USART_descripter
-                0x00800184       0x18 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00800184       0x18 src/lib/Drivers/Src/atmega128_hal_uart.o
                 0x00800184                USART_descripter
  *(.gnu.linkonce.d*)
  *(.rodata)
@@ -1267,9 +1267,9 @@ END GROUP
  .comment       0x00000030       0x31 src/hw/driver/ros/ros_uart.o
  .comment       0x00000030       0x31 src/hw/driver/uart.o
  .comment       0x00000030       0x31 src/hw/hw.o
- .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .comment       0x00000030       0x31 src/lib/Drivers/Src/atmega128_hal_uart.o
  .comment       0x00000030       0x31 src/main.o
 
 .note.gnu.avr.deviceinfo
@@ -1323,11 +1323,11 @@ END GROUP
  .debug_aranges
                 0x00000510       0x20 src/hw/hw.o
  .debug_aranges
-                0x00000530       0x38 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+                0x00000530       0x38 src/lib/Drivers/Src/atmega128_hal_gpio.o
  .debug_aranges
-                0x00000568      0x210 src/lib/Drivers/Src/atmega128_DRV_timer.o
+                0x00000568      0x210 src/lib/Drivers/Src/atmega128_hal_timer.o
  .debug_aranges
-                0x00000778       0x60 src/lib/Drivers/Src/atmega128_DRV_uart.o
+                0x00000778       0x60 src/lib/Drivers/Src/atmega128_hal_uart.o
  .debug_aranges
                 0x000007d8       0x20 src/main.o
 
@@ -1351,9 +1351,9 @@ END GROUP
  .debug_info    0x000046c5      0x441 src/hw/driver/ros/ros_uart.o
  .debug_info    0x00004b06      0x8d8 src/hw/driver/uart.o
  .debug_info    0x000053de      0x12c src/hw/hw.o
- .debug_info    0x0000550a      0x27c src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_info    0x00005786     0x153f src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_info    0x00006cc5      0x5c5 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_info    0x0000550a      0x27c src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .debug_info    0x00005786     0x153f src/lib/Drivers/Src/atmega128_hal_timer.o
+ .debug_info    0x00006cc5      0x5c5 src/lib/Drivers/Src/atmega128_hal_uart.o
  .debug_info    0x0000728a       0xd8 src/main.o
 
 .debug_abbrev   0x00000000     0x1f28
@@ -1373,9 +1373,9 @@ END GROUP
  .debug_abbrev  0x00001673      0x10a src/hw/driver/ros/ros_uart.o
  .debug_abbrev  0x0000177d      0x207 src/hw/driver/uart.o
  .debug_abbrev  0x00001984       0x63 src/hw/hw.o
- .debug_abbrev  0x000019e7      0x130 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_abbrev  0x00001b17      0x1cb src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_abbrev  0x00001ce2      0x1e1 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_abbrev  0x000019e7      0x130 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .debug_abbrev  0x00001b17      0x1cb src/lib/Drivers/Src/atmega128_hal_timer.o
+ .debug_abbrev  0x00001ce2      0x1e1 src/lib/Drivers/Src/atmega128_hal_uart.o
  .debug_abbrev  0x00001ec3       0x65 src/main.o
 
 .debug_line     0x00000000     0x4445
@@ -1395,9 +1395,9 @@ END GROUP
  .debug_line    0x0000235a      0x227 src/hw/driver/ros/ros_uart.o
  .debug_line    0x00002581      0x3b2 src/hw/driver/uart.o
  .debug_line    0x00002933       0xd7 src/hw/hw.o
- .debug_line    0x00002a0a      0x193 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_line    0x00002b9d     0x13c5 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_line    0x00003f62      0x46e src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_line    0x00002a0a      0x193 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .debug_line    0x00002b9d     0x13c5 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .debug_line    0x00003f62      0x46e src/lib/Drivers/Src/atmega128_hal_uart.o
  .debug_line    0x000043d0       0x75 src/main.o
 
 .debug_frame    0x00000000     0x1440
@@ -1416,9 +1416,9 @@ END GROUP
  .debug_frame   0x00000c68       0x84 src/hw/driver/ros/ros_uart.o
  .debug_frame   0x00000cec       0xf8 src/hw/driver/uart.o
  .debug_frame   0x00000de4       0x24 src/hw/hw.o
- .debug_frame   0x00000e08       0x54 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_frame   0x00000e5c      0x478 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_frame   0x000012d4      0x148 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_frame   0x00000e08       0x54 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .debug_frame   0x00000e5c      0x478 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .debug_frame   0x000012d4      0x148 src/lib/Drivers/Src/atmega128_hal_uart.o
  .debug_frame   0x0000141c       0x24 src/main.o
 
 .debug_str      0x00000000     0x19e5
@@ -1452,11 +1452,11 @@ END GROUP
                                 0x3ec (size before relaxing)
  .debug_str     0x00001463       0x16 src/hw/hw.o
                                 0x1bf (size before relaxing)
- .debug_str     0x00001479       0x67 src/lib/Drivers/Src/atmega128_DRV_gpio.o
+ .debug_str     0x00001479       0x67 src/lib/Drivers/Src/atmega128_hal_gpio.o
                                 0x23a (size before relaxing)
- .debug_str     0x000014e0      0x431 src/lib/Drivers/Src/atmega128_DRV_timer.o
+ .debug_str     0x000014e0      0x431 src/lib/Drivers/Src/atmega128_hal_timer.o
                                 0x862 (size before relaxing)
- .debug_str     0x00001911       0xc1 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_str     0x00001911       0xc1 src/lib/Drivers/Src/atmega128_hal_uart.o
                                 0x38b (size before relaxing)
  .debug_str     0x000019d2       0x13 src/main.o
                                 0x18f (size before relaxing)
@@ -1474,9 +1474,9 @@ END GROUP
  .debug_loc     0x00003231      0x759 src/hw/driver/ros/ros.o
  .debug_loc     0x0000398a      0x351 src/hw/driver/ros/ros_uart.o
  .debug_loc     0x00003cdb      0x5df src/hw/driver/uart.o
- .debug_loc     0x000042ba      0x1b2 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_loc     0x0000446c     0x16c3 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_loc     0x00005b2f      0x668 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_loc     0x000042ba      0x1b2 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .debug_loc     0x0000446c     0x16c3 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .debug_loc     0x00005b2f      0x668 src/lib/Drivers/Src/atmega128_hal_uart.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1512,9 +1512,9 @@ END GROUP
  .debug_ranges  0x000003c8       0x40 src/hw/driver/ros/ros_uart.o
  .debug_ranges  0x00000408       0x58 src/hw/driver/uart.o
  .debug_ranges  0x00000460       0x10 src/hw/hw.o
- .debug_ranges  0x00000470       0x28 src/lib/Drivers/Src/atmega128_DRV_gpio.o
- .debug_ranges  0x00000498      0x200 src/lib/Drivers/Src/atmega128_DRV_timer.o
- .debug_ranges  0x00000698       0x50 src/lib/Drivers/Src/atmega128_DRV_uart.o
+ .debug_ranges  0x00000470       0x28 src/lib/Drivers/Src/atmega128_hal_gpio.o
+ .debug_ranges  0x00000498      0x200 src/lib/Drivers/Src/atmega128_hal_timer.o
+ .debug_ranges  0x00000698       0x50 src/lib/Drivers/Src/atmega128_hal_uart.o
  .debug_ranges  0x000006e8       0x10 src/main.o
 
 .debug_macro

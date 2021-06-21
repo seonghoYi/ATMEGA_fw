@@ -1,8 +1,8 @@
-﻿#include "atmega128_DRV.h"
+﻿#include "atmega128_hal.h"
 
 
 
-#ifdef DRV_UART_MODULE_ENABLED
+#ifdef HAL_UART_MODULE_ENABLED
 
 USART_TypeDef USART_descripter[] = {
 	{&UDR0, &UCSR0A, &UCSR0B, &UCSR0C, &UBRR0H, &UBRR0L},

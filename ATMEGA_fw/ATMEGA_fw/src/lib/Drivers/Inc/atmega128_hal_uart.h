@@ -1,7 +1,7 @@
-﻿#ifndef ATMEGA128_DRV_UART_H_
-#define ATMEGA128_DRV_UART_H_
+﻿#ifndef ATMEGA128_HAL_UART_H_
+#define ATMEGA128_HAL_UART_H_
 
-#include "atmega128_DRV_def.h"
+#include "atmega128_hal_def.h"
 
 typedef struct
 {
@@ -95,4 +95,4 @@ void UART_RxIRQHandler(UART_HandleTypeDef *huart);
 void UART_TxCpltCallback(UART_HandleTypeDef *huart);
 void UART_RxCpltCallback(UART_HandleTypeDef *huart);
 
-#endif /* ATMEGA128_DRV_UART_H_ */
+#endif /* ATMEGA128_HAL_UART_H_ */

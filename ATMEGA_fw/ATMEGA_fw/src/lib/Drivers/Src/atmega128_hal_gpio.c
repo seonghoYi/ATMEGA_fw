@@ -1,6 +1,6 @@
-﻿#include "atmega128_DRV.h"
+﻿#include "atmega128_hal.h"
 
-#ifdef DRV_GPIO_MODULE_ENABLED
+#ifdef HAL_GPIO_MODULE_ENABLED
 
 
 GPIO_TypeDef GPIO_descripter[] = {

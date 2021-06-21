@@ -1,7 +1,7 @@
-﻿#ifndef ATMEGA128_DRV_TIMER_H_
-#define ATMEGA128_DRV_TIMER_H_
+﻿#ifndef ATMEGA128_HAL_TIMER_H_
+#define ATMEGA128_HAL_TIMER_H_
 
-#include "atmega128_DRV_def.h"
+#include "atmega128_hal_def.h"
 
 typedef struct
 {
@@ -245,4 +245,4 @@ void TIM3_OCA_ElapsedCallback(TIM16_HandleTypeDef *htim);
 void TIM3_OCB_ElapsedCallback(TIM16_HandleTypeDef *htim);
 void TIM3_OCC_ElapsedCallback(TIM16_HandleTypeDef *htim);
 void TIM3_CAPT_CpltCallback(TIM16_HandleTypeDef *htim);
-#endif /* ATMEGA128_DRV_TIMER_H_ */
+#endif /* ATMEGA128_HAL_TIMER_H_ */

@@ -1,6 +1,6 @@
-﻿#include "atmega128_DRV.h"
+﻿#include "atmega128_hal.h"
 
-#ifdef DRV_TIMER_MODULE_ENABLED
+#ifdef HAL_TIMER_MODULE_ENABLED
 
 TIM8_TypeDef TIM8_descripter[] = {
 	{&TCCR0, &TCNT0, &OCR0, &ASSR},

@@ -1,7 +1,7 @@
-﻿#ifndef ATMEGA128_DRV_GPIO_H_
-#define ATMEGA128_DRV_GPIO_H_
+﻿#ifndef ATMEGA128_HAL_GPIO_H_
+#define ATMEGA128_HAL_GPIO_H_
 
-#include "atmega128_DRV_def.h"
+#include "atmega128_hal_def.h"
 
 
 #define PUDISABLE() (SFIOR |= 1 << PUD)
@@ -38,4 +38,4 @@ GPIO_PinState GPIO_ReadPin(uint8_t port, uint8_t pin);
 void GPIO_WritePin(uint8_t port, uint8_t pin, GPIO_PinState pinState);
 void GPIO_TogglePin(uint8_t port, uint8_t pin);
 
-#endif /* ATMEGA128_DRV_GPIO_H_ */
+#endif /* ATMEGA128_HAL_GPIO_H_ */

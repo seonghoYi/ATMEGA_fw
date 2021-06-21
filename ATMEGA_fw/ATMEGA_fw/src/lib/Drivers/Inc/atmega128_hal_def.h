@@ -1,5 +1,5 @@
-﻿#ifndef ATMEGA128_DRV_DEF_H_
-#define ATMEGA128_DRV_DEF_H_
+﻿#ifndef ATMEGA128_HAL_DEF_H_
+#define ATMEGA128_HAL_DEF_H_
 
 #include "atmega128.h"
 
@@ -14,4 +14,4 @@ typedef enum
 #define UNUSED(x) (void)x
 
 
-#endif /* ATMEGA128_DRV_DEF_H_ */
+#endif /* ATMEGA128_HAL_DEF_H_ */

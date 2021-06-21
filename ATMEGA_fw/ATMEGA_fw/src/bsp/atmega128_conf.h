@@ -3,22 +3,22 @@
 
 
 
-#define DRV_MODULE_ENABLED
-#define DRV_GPIO_MODULE_ENABLED
-#define DRV_UART_MODULE_ENABLED
-#define DRV_TIMER_MODULE_ENABLED
+#define HAL_MODULE_ENABLED
+#define HAL_GPIO_MODULE_ENABLED
+#define HAL_UART_MODULE_ENABLED
+#define HAL_TIMER_MODULE_ENABLED
 
 
-#ifdef DRV_GPIO_MODULE_ENABLED
-#include "atmega128_DRV_gpio.h"
+#ifdef HAL_GPIO_MODULE_ENABLED
+#include "atmega128_hal_gpio.h"
 #endif
 
-#ifdef DRV_UART_MODULE_ENABLED
-#include "atmega128_DRV_uart.h"
+#ifdef HAL_UART_MODULE_ENABLED
+#include "atmega128_hal_uart.h"
 #endif
 
-#ifdef DRV_TIMER_MODULE_ENABLED
-#include "atmega128_DRV_timer.h"
+#ifdef HAL_TIMER_MODULE_ENABLED
+#include "atmega128_hal_timer.h"
 #endif
 
 #endif /* ATMEGA128_CONF_H_ */

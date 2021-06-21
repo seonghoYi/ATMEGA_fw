@@ -283,31 +283,34 @@
     <Compile Include="src\lib\Device\Inc\atmega128.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Inc\atmega128_DRV.h">
+    <Compile Include="src\lib\Drivers\Inc\atmega128_hal.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Inc\atmega128_DRV_def.h">
+    <Compile Include="src\lib\Drivers\Inc\atmega128_hal_def.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Inc\atmega128_DRV_gpio.h">
+    <Compile Include="src\lib\Drivers\Inc\atmega128_hal_gpio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Inc\atmega128_DRV_timer.h">
+    <Compile Include="_gpio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Inc\atmega128_DRV_uart.h">
+    <Compile Include="src\lib\Drivers\Inc\atmega128_hal_timer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Src\atmega128_DRV.c">
+    <Compile Include="src\lib\Drivers\Inc\atmega128_hal_uart.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Src\atmega128_DRV_gpio.c">
+    <Compile Include="src\lib\Drivers\Src\atmega128_hal.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Src\atmega128_DRV_timer.c">
+    <Compile Include="src\lib\Drivers\Src\atmega128_hal_gpio.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\lib\Drivers\Src\atmega128_DRV_uart.c">
+    <Compile Include="src\lib\Drivers\Src\atmega128_hal_timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\lib\Drivers\Src\atmega128_hal_uart.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\main.c">

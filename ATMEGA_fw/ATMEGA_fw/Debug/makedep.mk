@@ -30,13 +30,13 @@ src\hw\driver\uart.c
 
 src\hw\hw.c
 
-src\lib\Drivers\Src\atmega128_DRV.c
+src\lib\Drivers\Src\atmega128_hal.c
 
-src\lib\Drivers\Src\atmega128_DRV_gpio.c
+src\lib\Drivers\Src\atmega128_hal_gpio.c
 
-src\lib\Drivers\Src\atmega128_DRV_timer.c
+src\lib\Drivers\Src\atmega128_hal_timer.c
 
-src\lib\Drivers\Src\atmega128_DRV_uart.c
+src\lib\Drivers\Src\atmega128_hal_uart.c
 
 src\main.c
 
