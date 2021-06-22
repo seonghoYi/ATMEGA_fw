@@ -123,6 +123,7 @@ HAL_StatusTypeDef UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint1
 {
 	uint8_t			*pdata8bits		= NULL;
 	uint16_t		*pdata16bits	= NULL;
+	uint32_t		 tickstart		= 0U;
 	USART_TypeDef	*usart			= &USART_descripter[huart->USARTn];
 	
 	if (usart == NULL)
@@ -148,10 +149,17 @@ HAL_StatusTypeDef UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint1
 		pdata16bits = NULL;
 	}
 	
-
+	
 	for(int i = 0; i < huart->TxXferCount; i++)
 	{
-		while (!(*(usart->UCSRnA) & 0x20));
+		tickstart = HAL_GetTick();
+		while (!(*(usart->UCSRnA) & 0x20))
+		{
+			if (HAL_GetTick() - tickstart >= Timeout)
+			{
+				return HAL_TIMEOUT;
+			}
+		}
 		if (pdata16bits == NULL)
 		{
 			*(usart->UDRn) = *(pdata8bits + i);
@@ -171,6 +179,7 @@ HAL_StatusTypeDef UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16
 {
 	uint8_t			*pdata8bits		= NULL;
 	uint16_t		*pdata16bits	= NULL;
+	uint32_t		 tickstart		= 0U;
 	USART_TypeDef	*usart			= &USART_descripter[huart->USARTn];
 	
 	if (usart == NULL)
@@ -197,7 +206,15 @@ HAL_StatusTypeDef UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16
 
 	for(int i = 0; i < huart->RxXferCount; i++)
 	{
-		while ((*(usart->UCSRnA) & 0x80) && !(*(usart->UCSRnA) & 0x20));
+		tickstart = HAL_GetTick();
+		while ((*(usart->UCSRnA) & 0x80) && !(*(usart->UCSRnA) & 0x20))
+		{
+			if (HAL_GetTick() - tickstart >= Timeout)
+			{
+				return HAL_TIMEOUT;
+			}
+			
+		}
 		if (pdata16bits == NULL)
 		{
 			*(pdata8bits + i) = *(usart->UDRn);

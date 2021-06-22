@@ -292,9 +292,6 @@
     <Compile Include="src\lib\Drivers\Inc\atmega128_hal_gpio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="_gpio.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\lib\Drivers\Inc\atmega128_hal_timer.h">
       <SubType>compile</SubType>
     </Compile>
