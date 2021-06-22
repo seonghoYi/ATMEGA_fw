@@ -67,6 +67,15 @@ typedef struct
 	volatile uint8_t *UBRRnL;
 } USART_TypeDef;
 
+typedef struct
+{
+	volatile uint8_t *TWBRn;
+	volatile uint8_t *TWCRn;
+	volatile uint8_t *TWSRn;
+	volatile uint8_t *TWDRn;
+	volatile uint8_t *TWARn;
+} I2C_TypeDef;
+
 
 #define TIM0	0
 #define TIM1	1
