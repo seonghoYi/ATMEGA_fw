@@ -152,6 +152,12 @@ bool rosReceivePacket(ros_t *p_ros)
 	{
 		return false;
 	}
+	
+	if (millis() - p_ros->pre_time >= 100)
+	{
+		p_ros->state = ROS_STATE_SYNC1;
+	}
+	p_ros->pre_time = millis();
 
 	switch(p_ros->state)
 	{

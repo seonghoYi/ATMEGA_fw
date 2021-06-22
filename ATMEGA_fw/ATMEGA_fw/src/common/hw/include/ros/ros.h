@@ -62,6 +62,7 @@ typedef struct
 	uint32_t		baud;
 	uint8_t			state;
 	uint8_t			index;
+	uint32_t		pre_time;
 	
 	ros_packet_t	packet;
 	uint8_t			packet_buf[ROS_PACKET_BUF_MAX];

@@ -5,6 +5,8 @@
 #include "def.h"
 #include "bsp.h"
 
+#define _USE_HW_SYSTICK
+
 #define _USE_HW_GPIO
 #define		 HW_GPIO_MAX_CH			6
 
@@ -16,8 +18,6 @@
 
 #define _USE_HW_PWM
 #define		 HW_PWM_MAX_CH			4
-
-#define _USE_HW_SYSTICK
 
 /*
 #define _USE_HW_A4988
