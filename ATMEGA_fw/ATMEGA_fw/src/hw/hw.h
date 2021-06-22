@@ -2,7 +2,8 @@
 #define HW_H_
 
 #include "hw_def.h"
+#include "uart.h"
 
-void hw_init(void);
+void hwInit(void);
 
 #endif /* HW_H_ */

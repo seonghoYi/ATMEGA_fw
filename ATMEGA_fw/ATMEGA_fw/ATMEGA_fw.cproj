@@ -141,6 +141,7 @@
       <Value>../src/lib/Device/Inc</Value>
       <Value>../src/lib/Drivers/Inc</Value>
       <Value>../src/lib/Drivers/Src</Value>
+      <Value>../src/bsp</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -165,14 +166,60 @@
   <ItemGroup>
     <Folder Include="src" />
     <Folder Include="src\ap" />
-    <Folder Include="src\common\core" />
-    <Folder Include="src\lib" />
-    <Folder Include="src\lib\Drivers" />
-    <Folder Include="src\lib\Drivers\Inc" />
-    <Folder Include="src\lib\Drivers\Src" />
+    <Folder Include="src\bsp" />
     <Folder Include="src\common" />
+    <Folder Include="src\common\core\" />
+    <Folder Include="src\common\hw" />
+    <Folder Include="src\common\hw\include" />
+    <Folder Include="src\hw" />
+    <Folder Include="src\hw\driver" />
+    <Folder Include="src\lib" />
+    <Folder Include="src\lib\Device" />
+    <Folder Include="src\lib\Device\Inc" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\ap\ap.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ap\ap.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\bsp\atmega128_it.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\bsp\bsp.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\bsp\bsp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\core\qbuffer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\core\qbuffer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\def.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\hw.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\hw.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\hw_def.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\lib\Device\Inc\atmega128.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\main.c">
       <SubType>compile</SubType>
     </Compile>
