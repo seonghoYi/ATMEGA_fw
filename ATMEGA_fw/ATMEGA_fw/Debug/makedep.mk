@@ -10,6 +10,12 @@ src\bsp\bsp.c
 
 src\common\core\qbuffer.c
 
+src\hw\driver\sg90.c
+
+src\hw\driver\sg90\sg90_pwm.c
+
+src\hw\driver\timer.c
+
 src\hw\driver\uart.c
 
 src\hw\hw.c
