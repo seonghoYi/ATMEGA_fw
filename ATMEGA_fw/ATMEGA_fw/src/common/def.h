@@ -8,18 +8,18 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define _DEF_GPIO0		0
-#define _DEF_GPIO1		1
-#define _DEF_GPIO2		2
-#define _DEF_GPIO3		3
-#define _DEF_GPIO4		4
-#define _DEF_GPIO5		5
-#define _DEF_GPIO6		6
-#define _DEF_GPIO7		7
-#define _DEF_GPIO8		8
-#define _DEF_GPIO9		9
-#define _DEF_GPIO10		10
-#define _DEF_GPIO11		11
+#define _DEF_GPIO_BT_RST		0
+#define _DEF_GPIO_BT_CFG		1
+#define _DEF_GPIO_LINE_LED		2
+#define _DEF_GPIO_RUN_LED		3
+#define _DEF_GPIO_MOTOR_EN		4
+#define _DEF_GPIO_MOTOR_DIR_L	5
+#define _DEF_GPIO_MOTOR_DIR_R	6
+#define _DEF_GPIO7				7
+#define _DEF_GPIO8				8
+#define _DEF_GPIO9				9
+#define _DEF_GPIO10				10
+#define _DEF_GPIO11				11
 
 
 #define _DEF_INPUT		0
