@@ -1,9 +1,9 @@
 ﻿#include "ap.h"
-#include "uart.h"
 
 void apInit(void)
 {
 	//uartOpen(_DEF_UART1, 38400);
+	runLedInit();
 	sei();
 }
 

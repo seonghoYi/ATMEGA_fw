@@ -229,6 +229,9 @@
     <Compile Include="src\common\hw\include\gpio.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\common\hw\include\line_led.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\common\hw\include\pwm.h">
       <SubType>compile</SubType>
     </Compile>
@@ -239,6 +242,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\ros_server.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\run_led.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\uart.h">
@@ -256,6 +262,9 @@
     <Compile Include="src\hw\driver\gpio.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\hw\driver\line_led.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\hw\driver\pwm.c">
       <SubType>compile</SubType>
     </Compile>
@@ -266,6 +275,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\ros\ros_uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\run_led.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\uart.c">
