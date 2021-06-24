@@ -16,6 +16,7 @@
 #define SET_BIT(PORT, BIT)						(PORT |= (BIT))
 #define CLR_BIT(PORT, BIT)						(PORT &= ~(BIT))
 #define READ_BIT(PORT, BIT)						(PORT & (BIT))
+#define TOGGLE_BIT(PORT, BIT)					(PORT ^= (BIT))
 #define CLEAR_REG(REG)							(REG = 0x00)
 #define WRITE_REG(REG, VAL)						(REG = VAL)
 #define READ_REG(REG)							(REG)
@@ -24,25 +25,12 @@
 
 /*----------------------------SYSTEM DEFINITIONS----------------------------*/
 #define SYSTICK_MODULE_ENABLED			//systick 활성화
+#define GPIO_MODULE_ENABLED
 #define UART_MODULE_ENABLED				//uart 활성화
 #define TIMER_MODULE_ENABLED
 
 
 /*----------------------------SYSTEM DEFINITIONS END----------------------------*/
-
-/*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS----------------------------*/
-#define _DEF_UART1		0
-#define _DEF_UART2		1
-
-#define _DEF_TIM1		0	// timer2
-#define _DEF_TIM4		1	// timer0
-#define _DEF_TIM2		0	// timer1
-#define _DEF_TIM3		1	// timer3
-#define _DEF_CH_A		0
-#define _DEF_CH_B		1
-#define _DEF_CH_C		2
-
-/*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS END----------------------------*/
 
 /*----------------------------GLOBAL H/W MACRO DEFINITIONS----------------------------*/
 #define	HW_UART_MAX_CH				2
@@ -51,13 +39,49 @@
 #define	HW_TIMER8_MAX_CH			1
 #define	HW_TIMER16_MAX_CH			2
 
+#define GPIO_MAX_CH					5
+
+#define GPIOA						0
+#define GPIOB						1
+#define GPIOC						2
+#define GPIOD						3
+#define GPIOE						4
+#define GPIOF						5
+#define GPIOG						6
+
 #define _USE_ROS_MODULE				//ros 사용
 #define _USE_BLUETOOTH_MODULE		
 #define _USE_SERVO_MODULE		
 #define _USE_SUCTION_MOTOR_MODULE
-
-
 /*----------------------------GLOBAL H/W MACRO DEFINITIONS END----------------------------*/
+
+/*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS----------------------------*/
+#define _DEF_UART1			0
+#define _DEF_UART2			1
+
+#define _DEF_TIM1			0		// timer2
+#define _DEF_TIM4			1		// timer0
+#define _DEF_TIM2			0		// timer1
+#define _DEF_TIM3			1		// timer3
+#define _DEF_CH_A			0
+#define _DEF_CH_B			1
+#define _DEF_CH_C			2
+
+#define _DEF_INPUT			0
+#define _DEF_OUTPUT			1
+
+#define _DEF_RESET			0
+#define _DEF_SET			1
+
+#define _DEF_BT_PORT		GPIOA
+#define _DEF_LINE_LED_PORT	GPIOA
+#define _DEF_RUN_LED_PORT	GPIOB
+#define _DEF_MOTOR_EN_PORT	GPIOG
+
+#define _DEF_GPIO_BT_RST	0		//active low
+#define _DEF_GPIO_BT_CFG	1		//active high
+
+/*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS END----------------------------*/
 
 /*----------------------------QUEUE BUFFER----------------------------*/
 
@@ -291,6 +315,132 @@ ISR(TIMER0_OVF_vect)
 
 #endif
 /*----------------------------SYSTICK END----------------------------*/
+
+/*----------------------------GPIO----------------------------*/
+#ifdef GPIO_MODULE_ENABLED
+
+#define PIN_RESET		0
+#define PIN_SET			1
+
+#define INPUT			_DEF_INPUT
+#define	OUTPUT			_DEF_OUTPUT
+
+typedef struct
+{
+	volatile uint8_t *DDRn;
+	volatile uint8_t *PORTn;
+	volatile uint8_t *PINn;
+} GPIO_TypeDef;
+
+static const GPIO_TypeDef GPIO_descripter[] = {
+	{&DDRA, &PORTA, &PINA},
+	{&DDRB, &PORTB, &PINB},
+	{&DDRC, &PORTC, &PINC},
+	{&DDRD, &PORTD, &PIND},
+	{&DDRE, &PORTE, &PINE},
+	{&DDRF, &PORTF, &PINF},
+	{&DDRG, &PORTG, &PING},
+};
+
+typedef enum
+{
+	on_state,
+	off_state
+} GPIO_PinState;
+
+typedef struct
+{
+	uint8_t port;
+	uint8_t pin;
+	uint8_t mode;
+	GPIO_PinState on_state;
+	GPIO_PinState off_state;
+} gpio_tbl_t;
+
+gpio_tbl_t gpio_tbl[GPIO_MAX_CH] =
+{
+	{_DEF_BT_PORT, PIN0, OUTPUT, PIN_SET, PIN_RESET}, // bt_rst
+	{_DEF_BT_PORT, PIN1, OUTPUT, PIN_RESET, PIN_SET}, // bt_cfg
+	{_DEF_LINE_LED_PORT, PIN2, OUTPUT, PIN_SET, PIN_RESET}, // line_led
+	{_DEF_RUN_LED_PORT, PIN3, OUTPUT, PIN_SET, PIN_RESET}, // run_led
+	{_DEF_MOTOR_EN_PORT, PIN0, OUTPUT, PIN_SET, PIN_RESET}, // motor_enable
+};
+
+bool gpioPinMode(uint8_t ch, uint8_t mode);
+
+bool gpioInit(void)
+{
+	bool ret = true;
+	
+	for(int i = 0; i < GPIO_MAX_CH; i++)
+	{
+		gpioPinMode(i, gpio_tbl[i].mode);
+	}
+	return ret;
+}
+
+bool gpioPinMode(uint8_t ch, uint8_t mode)
+{
+	bool ret = false;
+	if (ch < 0 || ch >= GPIO_MAX_CH) return ret;
+	
+	switch(mode)
+	{
+		case _DEF_INPUT:
+			CLR_BIT(*(GPIO_descripter[ch].PORTn), gpio_tbl[ch].pin);
+		break;
+		case _DEF_OUTPUT:
+			SET_BIT(*(GPIO_descripter[ch].PORTn), gpio_tbl[ch].pin);
+		break;
+		default:
+		break;
+	}
+	ret = true;
+	
+	return ret;
+}
+
+void gpioPinWrite(uint8_t ch, bool value)
+{
+	if (ch < 0 || ch >= GPIO_MAX_CH) return;
+	if (value)
+	{
+		if (gpio_tbl[ch].off_state == PIN_RESET)
+		{
+			*(GPIO_descripter[ch].DDRn) = false;
+		}
+		else if (gpio_tbl[ch].off_state == PIN_SET)
+		{
+			*(GPIO_descripter[ch].DDRn) = true;
+		}
+	}
+	else
+	{
+		if (gpio_tbl[ch].on_state == PIN_RESET)
+		{
+			*(GPIO_descripter[ch].DDRn) = true;
+		}
+		else if (gpio_tbl[ch].on_state == PIN_SET)
+		{
+			*(GPIO_descripter[ch].DDRn) = false;
+		}
+	}
+}
+
+bool gpioPinRead(uint8_t ch)
+{
+	if (ch < 0 || ch >= GPIO_MAX_CH) return false;
+	return READ_BIT(*(GPIO_descripter[ch].PINn), gpio_tbl[ch].pin);
+}
+
+void gpioPinToggle(uint8_t ch)
+{
+	if (ch < 0 || ch >= GPIO_MAX_CH) return;
+	TOGGLE_BIT(*(GPIO_descripter[ch].DDRn), gpio_tbl[ch].pin);
+}
+
+#endif
+/*----------------------------GPIO END----------------------------*/
 
 /*----------------------------UART----------------------------*/
 #ifdef UART_MODULE_ENABLED
@@ -910,7 +1060,7 @@ bool btOpen(bt_t *p_bt, uint8_t ch_, uint32_t baud_)
 	bool ret = true;
 	p_bt->ch = ch_;
 	p_bt->baud = baud_;
-	p_bt->is_open = uartOpen(p_bt->ch);
+	p_bt->is_open = uartOpen(p_bt->ch, baud_);
 	return ret;
 }
 

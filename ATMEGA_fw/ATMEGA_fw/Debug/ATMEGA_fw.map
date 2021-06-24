@@ -84,6 +84,16 @@ Discarded input sections
  .text.initTick
                 0x00000000      0x262 main.o
  .text.getTick  0x00000000       0x12 main.o
+ .text.gpioPinMode
+                0x00000000       0x88 main.o
+ .text.gpioInit
+                0x00000000       0x2a main.o
+ .text.gpioPinWrite
+                0x00000000       0xba main.o
+ .text.gpioPinRead
+                0x00000000       0x46 main.o
+ .text.gpioPinToggle
+                0x00000000       0x3a main.o
  .text.uartInit
                 0x00000000        0x4 main.o
  .text.uartOpen
@@ -104,21 +114,6 @@ Discarded input sections
                 0x00000000        0x2 main.o
  .text.UART_RxCpltCallback
                 0x00000000       0x44 main.o
- .text.rosOpen  0x00000000       0x4a main.o
- .text.rosIsOpen
-                0x00000000        0x6 main.o
- .text.rosClose
-                0x00000000        0x4 main.o
- .text.rosSendInst
-                0x00000000       0xd2 main.o
- .text.rosReceivePacket
-                0x00000000      0x1ae main.o
- .progmem.gcc_sw_table.rosReceivePacket
-                0x00000000       0x12 main.o
- .text.rosAddService
-                0x00000000       0x24 main.o
- .text.rosCallService
-                0x00000000       0x20 main.o
  .text.timerInit
                 0x00000000       0x4c main.o
  .text.timerBegin
@@ -145,6 +140,27 @@ Discarded input sections
                 0x00000000       0x32 main.o
  .text.timer16GetIcr
                 0x00000000       0x24 main.o
+ .text.btOpen   0x00000000       0x24 main.o
+ .text.btAvailable
+                0x00000000        0xa main.o
+ .text.btRead   0x00000000        0xa main.o
+ .text.btWrite  0x00000000       0x16 main.o
+ .text.btBegin  0x00000000        0x2 main.o
+ .text.rosOpen  0x00000000       0x4a main.o
+ .text.rosIsOpen
+                0x00000000        0x6 main.o
+ .text.rosClose
+                0x00000000        0x4 main.o
+ .text.rosSendInst
+                0x00000000       0xd2 main.o
+ .text.rosReceivePacket
+                0x00000000      0x1ae main.o
+ .progmem.gcc_sw_table.rosReceivePacket
+                0x00000000       0x12 main.o
+ .text.rosAddService
+                0x00000000       0x24 main.o
+ .text.rosCallService
+                0x00000000       0x20 main.o
  .text.servoInit
                 0x00000000        0xe main.o
  .text.servoIsInit
@@ -173,6 +189,10 @@ Discarded input sections
  .bss.rx_data   0x00000000        0x2 main.o
  .bss.rx_buf    0x00000000      0x200 main.o
  .bss.qbuffer   0x00000000       0x1c main.o
+ .data.gpio_tbl
+                0x00000000       0x19 main.o
+ .rodata.GPIO_descripter
+                0x00000000       0x2a main.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr51\libm.a(addsf3.o)
@@ -745,42 +765,42 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x1a8
+.debug_aranges  0x00000000      0x1f8
  *(.debug_aranges)
  .debug_aranges
-                0x00000000      0x1a8 main.o
+                0x00000000      0x1f8 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1e91
+.debug_info     0x00000000     0x236a
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x780 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_info    0x00000780     0x1711 main.o
+ .debug_info    0x00000780     0x1bea main.o
 
-.debug_abbrev   0x00000000      0xbd2
+.debug_abbrev   0x00000000      0xbe3
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x718 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_abbrev  0x00000718      0x4ba main.o
+ .debug_abbrev  0x00000718      0x4cb main.o
 
-.debug_line     0x00000000     0x11ae
+.debug_line     0x00000000     0x135c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x169 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_line    0x00000169     0x1045 main.o
+ .debug_line    0x00000169     0x11f3 main.o
 
-.debug_frame    0x00000000      0x4fc
+.debug_frame    0x00000000      0x5b8
  *(.debug_frame)
- .debug_frame   0x00000000      0x4fc main.o
+ .debug_frame   0x00000000      0x5b8 main.o
 
-.debug_str      0x00000000      0x98b
+.debug_str      0x00000000      0xa99
  *(.debug_str)
  .debug_str     0x00000000      0x27d C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o
- .debug_str     0x0000027d      0x70e main.o
-                                0x766 (size before relaxing)
+ .debug_str     0x0000027d      0x81c main.o
+                                0x87a (size before relaxing)
 
-.debug_loc      0x00000000     0x1eb0
+.debug_loc      0x00000000     0x2160
  *(.debug_loc)
- .debug_loc     0x00000000     0x1eb0 main.o
+ .debug_loc     0x00000000     0x2160 main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -800,9 +820,9 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x1f8
+.debug_ranges   0x00000000      0x248
  *(.debug_ranges)
- .debug_ranges  0x00000000      0x1f8 main.o
+ .debug_ranges  0x00000000      0x248 main.o
 
 .debug_macro
  *(.debug_macro)
