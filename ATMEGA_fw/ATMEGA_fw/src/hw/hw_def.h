@@ -13,6 +13,9 @@
 #define _USE_HW_LINE_LED
 #define		 HW_LINE_LED_MAX_CH		1
 
+#define _USE_HW_RUN_LED
+#define		 HW_RUN_LED_MAX_CH		1
+
 #define _USE_HW_UART
 #define		 HW_UART_MAX_CH			2
 
