@@ -19,7 +19,6 @@ HAL_StatusTypeDef HAL_InitTick(void)
 	uint32_t equation; //ctc 방정식에서의 분모 이름 진짜 애매하네
 	uint32_t prescalers[] = {1, 8, 32, 64, 128, 256, 1024};
 	uint8_t index = 0;
-	bool is_ocr_get_range = false;
 
 	SETB(TIMSK, 1);
 	SETB(TIMSK, 6); // CTC mode
@@ -31,11 +30,7 @@ HAL_StatusTypeDef HAL_InitTick(void)
 		ocr = (equation / prescalers[index++]) - 1;
 		/*소수점이 나오는 경우는 처리하지 않음. 필요하면 알아서.*/
 		
-		if (ocr < 255)
-		{
-			is_ocr_get_range = true;
-		}
-	} while(!is_ocr_get_range);
+	} while(!(ocr < 255));
 	
 	switch(prescalers[index - 1])
 	{
