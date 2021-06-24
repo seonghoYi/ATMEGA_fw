@@ -32,39 +32,12 @@ LIB_DEP:=
 LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
-SUBDIRS :=  \
-../src \
-../src/ap \
-../src/bsp \
-../src/common \
-../src/common/core/ \
-../src/common/hw \
-../src/common/hw/include \
-../src/common/hw/include/ros \
-../src/common/hw/include/sg90 \
-../src/hw \
-../src/hw/driver \
-../src/hw/driver/ros \
-../src/hw/driver/sg90 \
-../src/lib \
-../src/lib/Device \
-../src/lib/Device/Inc
+SUBDIRS := 
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../src/ap/ap.c \
-../src/bsp/atmega128_it.c \
-../src/bsp/bsp.c \
-../src/common/core/qbuffer.c \
-../src/hw/driver/ros.c \
-../src/hw/driver/ros/ros_uart.c \
-../src/hw/driver/sg90.c \
-../src/hw/driver/sg90/sg90_pwm.c \
-../src/hw/driver/timer.c \
-../src/hw/driver/uart.c \
-../src/hw/hw.c \
-../src/main.c
+../main.c
 
 
 PREPROCESSING_SRCS += 
@@ -74,60 +47,16 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-src/ap/ap.o \
-src/bsp/atmega128_it.o \
-src/bsp/bsp.o \
-src/common/core/qbuffer.o \
-src/hw/driver/ros.o \
-src/hw/driver/ros/ros_uart.o \
-src/hw/driver/sg90.o \
-src/hw/driver/sg90/sg90_pwm.o \
-src/hw/driver/timer.o \
-src/hw/driver/uart.o \
-src/hw/hw.o \
-src/main.o
+main.o
 
 OBJS_AS_ARGS +=  \
-src/ap/ap.o \
-src/bsp/atmega128_it.o \
-src/bsp/bsp.o \
-src/common/core/qbuffer.o \
-src/hw/driver/ros.o \
-src/hw/driver/ros/ros_uart.o \
-src/hw/driver/sg90.o \
-src/hw/driver/sg90/sg90_pwm.o \
-src/hw/driver/timer.o \
-src/hw/driver/uart.o \
-src/hw/hw.o \
-src/main.o
+main.o
 
 C_DEPS +=  \
-src/ap/ap.d \
-src/bsp/atmega128_it.d \
-src/bsp/bsp.d \
-src/common/core/qbuffer.d \
-src/hw/driver/ros.d \
-src/hw/driver/ros/ros_uart.d \
-src/hw/driver/sg90.d \
-src/hw/driver/sg90/sg90_pwm.d \
-src/hw/driver/timer.d \
-src/hw/driver/uart.d \
-src/hw/hw.d \
-src/main.d
+main.d
 
 C_DEPS_AS_ARGS +=  \
-src/ap/ap.d \
-src/bsp/atmega128_it.d \
-src/bsp/bsp.d \
-src/common/core/qbuffer.d \
-src/hw/driver/ros.d \
-src/hw/driver/ros/ros_uart.d \
-src/hw/driver/sg90.d \
-src/hw/driver/sg90/sg90_pwm.d \
-src/hw/driver/timer.d \
-src/hw/driver/uart.d \
-src/hw/hw.d \
-src/main.d
+main.d
 
 OUTPUT_FILE_PATH +=ATMEGA_fw.elf
 
@@ -143,84 +72,7 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-src/ap/ap.o: ../src/ap/ap.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/bsp/atmega128_it.o: ../src/bsp/atmega128_it.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/bsp/bsp.o: ../src/bsp/bsp.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/common/core/qbuffer.o: ../src/common/core/qbuffer.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/hw/driver/ros.o: ../src/hw/driver/ros.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/hw/driver/ros/ros_uart.o: ../src/hw/driver/ros/ros_uart.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/hw/driver/sg90.o: ../src/hw/driver/sg90.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/hw/driver/sg90/sg90_pwm.o: ../src/hw/driver/sg90/sg90_pwm.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/hw/driver/timer.o: ../src/hw/driver/timer.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/hw/driver/uart.o: ../src/hw/driver/uart.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/hw/hw.o: ../src/hw/hw.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-src/main.o: ../src/main.c
+./main.o: .././main.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../src" -I"../src/ap" -I"../src/common" -I"../src/common/core" -I"../src/common/hw" -I"../src/common/hw/include" -I"../src/hw" -I"../src/hw/driver" -I"../src/lib" -I"../src/lib/Device/Inc" -I"../src/lib/Drivers/Inc" -I"../src/lib/Drivers/Src" -I"../src/bsp"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega128 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega128" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
