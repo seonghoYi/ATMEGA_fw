@@ -39,7 +39,7 @@
 #define	HW_TIMER8_MAX_CH			1
 #define	HW_TIMER16_MAX_CH			2
 
-#define GPIO_MAX_CH					5
+#define GPIO_MAX_CH					7
 
 #define GPIOA						0
 #define GPIOB						1
@@ -53,6 +53,8 @@
 #define _USE_BLUETOOTH_MODULE		
 #define _USE_SERVO_MODULE		
 #define _USE_SUCTION_MOTOR_MODULE
+#define _USE_DRIVE_MOTOR_MODULE
+#define _USE_LINE_LED_MODULE
 /*----------------------------GLOBAL H/W MACRO DEFINITIONS END----------------------------*/
 
 /*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS----------------------------*/
@@ -81,8 +83,12 @@
 #define _DEF_BT_PORT		GPIOA
 #define _DEF_LINE_LED_PORT	GPIOA
 #define _DEF_RUN_LED_PORT	GPIOB
-#define _DEF_MOTOR_EN_PORT	GPIOG
+#define _DEF_MOTOR_PORT		GPIOG
 /*--------------------------*/
+
+/*-----------LINE LED-----------*/
+#define  _DEF_GPIO_LINE_LED	2
+/*------------------------------*/
 
 /*-----------BT-----------*/
 #define _DEF_GPIO_BT_RST	0		//active low
@@ -90,6 +96,13 @@
 #define _DEF_BT_SLAVE		0
 #define _DEF_BT_MASTER		1
 /*------------------------*/
+
+/*-----------MOTOR-----------*/
+#define _DEF_GPIO_MT_EN		4
+#define _DEF_GPIO_MT_L_DIR	5
+#define _DEF_GPIO_MT_R_DIR	6
+/*---------------------------*/
+
 /*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS END----------------------------*/
 
 /*----------------------------QUEUE BUFFER----------------------------*/
@@ -368,11 +381,13 @@ typedef struct
 
 gpio_tbl_t gpio_tbl[GPIO_MAX_CH] =
 {
-	{_DEF_BT_PORT, PIN0, OUTPUT, PIN_SET, PIN_RESET}, // bt_rst
-	{_DEF_BT_PORT, PIN1, OUTPUT, PIN_RESET, PIN_SET}, // bt_cfg
+	{_DEF_BT_PORT, PIN0, OUTPUT, PIN_SET, PIN_RESET},		// bt_rst
+	{_DEF_BT_PORT, PIN1, OUTPUT, PIN_RESET, PIN_SET},		// bt_cfg
 	{_DEF_LINE_LED_PORT, PIN2, OUTPUT, PIN_SET, PIN_RESET}, // line_led
-	{_DEF_RUN_LED_PORT, PIN3, OUTPUT, PIN_SET, PIN_RESET}, // run_led
-	{_DEF_MOTOR_EN_PORT, PIN0, OUTPUT, PIN_SET, PIN_RESET}, // motor_enable
+	{_DEF_RUN_LED_PORT, PIN3, OUTPUT, PIN_SET, PIN_RESET},	// run_led
+	{_DEF_MOTOR_PORT, PIN0, OUTPUT, PIN_SET, PIN_RESET},	// motor_enable
+	{_DEF_MOTOR_PORT, PIN1, OUTPUT, PIN_SET, PIN_RESET},	// motor_L_dir
+	{_DEF_MOTOR_PORT, PIN2, OUTPUT, PIN_SET, PIN_RESET},	// motor_R_dir
 };
 
 bool gpioPinMode(uint8_t ch, uint8_t mode);
@@ -1103,11 +1118,19 @@ uint32_t btWrite(bt_t *p_bt)
 	return ret;
 }
 
+inline bool checkResponse(bt_t *p_bt, char *command, char *response)
+{
+	int index = 0;
+	while(btAvailable(p_bt) > 0)
+	{
+		command[index++] = btRead(p_bt);
+	}
+	return strncmp(&response[0], &response[0], strlen(&response[0]));
+}
+
 bool btBegin(bt_t *p_bt, uint8_t mode)
 {
 	char atCommand[BT_BUF_MAX];
-	char response[BT_BUF_MAX];
-	int index = 0;
 	uint32_t tickstart;
 	
 	gpioPinWrite(_DEF_GPIO_BT_CFG, _DEF_SET);
@@ -1124,60 +1147,35 @@ bool btBegin(bt_t *p_bt, uint8_t mode)
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+PSWD=%s\r\n", (char*)&(p_bt->bt_cfg.pswd[0]));
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+UART=%d,0,0\r\n", (int)p_bt->baud);
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+ROLE=1\r\n");
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+INIT\r\n");
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+PAIR=%s,20\r\n", (char*)&(p_bt->bt_cfg.slave_addr[0]));
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
@@ -1193,12 +1191,7 @@ bool btBegin(bt_t *p_bt, uint8_t mode)
 				}
 			}
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			
 		break;
@@ -1208,60 +1201,35 @@ bool btBegin(bt_t *p_bt, uint8_t mode)
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+PSWD=%s\r\n", (char*)&(p_bt->bt_cfg.pswd[0]));
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+UART=%d,0,0\r\n", (int)p_bt->baud);
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+ROLE=0\r\n");
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 			
 			sprintf(&atCommand[0], "AT+INIT\r\n");
 			p_bt->msg.msg_len = strlen(&atCommand[0]);
 			btWrite(p_bt);
 			delay(500);
 			
-			while(btAvailable(p_bt) > 0)
-			{
-				response[index++] = btRead(p_bt);
-			}
-			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
-			index = 0;
+			if (checkResponse(p_bt, &atCommand[0], "OK\r\n")) return false;
 		break;
 	}
 	
@@ -1669,6 +1637,29 @@ void suctionMotorStop(void)
 #endif
 /*----------------------------SUCTION MOTOR END----------------------------*/
 
+/*----------------------------DRIVE MOTOR----------------------------*/
+#ifdef _USE_DRIVE_MOTOR_MODULE
+
+
+
+#endif
+/*----------------------------DRIVE MOTOR END----------------------------*/
+
+/*----------------------------LINE LED----------------------------*/
+#ifdef _USE_LINE_LED_MODULE
+void lineLedOn(void)
+{
+	gpioPinWrite(_DEF_GPIO_LINE_LED, _DEF_SET);
+}
+
+void lineLedOff(void)
+{
+	gpioPinWrite(_DEF_GPIO_LINE_LED, _DEF_RESET);
+}
+#endif
+/*----------------------------LINE LED END----------------------------*/
+
+
 void mcuInit(void)
 {
 	gpioInit();
@@ -1684,17 +1675,20 @@ void hwInit(void)
 	suctionMotorInit();
 }
 
+
+static bt_t bt;
+static ros_t ros;
+
 int main(void)
 {
 	mcuInit();
 	hwInit();
 	
-	bt_t bt;
-	ros_t ros;
+
 	
 	btOpen(&bt, _DEF_UART1, 38400);
 	rosOpen(&ros, _DEF_UART2, 38400);
-	
+	btBegin(&bt, _DEF_BT_MASTER);
 	
 	while(1)
 	{
