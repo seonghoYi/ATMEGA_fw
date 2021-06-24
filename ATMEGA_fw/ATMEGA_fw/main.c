@@ -1646,7 +1646,15 @@ void suctionMotorStop(void)
 /*----------------------------DRIVE MOTOR----------------------------*/
 #ifdef _USE_DRIVE_MOTOR_MODULE
 
+static uint8_t motor_ch_tbl[] = {_DEF_TIM2, };
+static bool motor_is_init = false;
 
+bool initMotor(void)
+{
+	timerBegin(motor_ch_tbl[0]);
+	motor_is_init = true;
+	return true;
+}
 
 #endif
 /*----------------------------DRIVE MOTOR END----------------------------*/
