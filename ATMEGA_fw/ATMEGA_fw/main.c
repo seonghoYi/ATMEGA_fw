@@ -56,9 +56,12 @@
 /*----------------------------GLOBAL H/W MACRO DEFINITIONS END----------------------------*/
 
 /*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS----------------------------*/
+/*-----------UART-----------*/
 #define _DEF_UART1			0
 #define _DEF_UART2			1
+/*--------------------------*/
 
+/*-----------TIMER-----------*/
 #define _DEF_TIM1			0		// timer2
 #define _DEF_TIM4			1		// timer0
 #define _DEF_TIM2			0		// timer1
@@ -66,7 +69,9 @@
 #define _DEF_CH_A			0
 #define _DEF_CH_B			1
 #define _DEF_CH_C			2
+/*---------------------------*/
 
+/*-----------GPIO-----------*/
 #define _DEF_INPUT			0
 #define _DEF_OUTPUT			1
 
@@ -77,10 +82,14 @@
 #define _DEF_LINE_LED_PORT	GPIOA
 #define _DEF_RUN_LED_PORT	GPIOB
 #define _DEF_MOTOR_EN_PORT	GPIOG
+/*--------------------------*/
 
+/*-----------BT-----------*/
 #define _DEF_GPIO_BT_RST	0		//active low
 #define _DEF_GPIO_BT_CFG	1		//active high
-
+#define _DEF_BT_SLAVE		0
+#define _DEF_BT_MASTER		1
+/*------------------------*/
 /*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS END----------------------------*/
 
 /*----------------------------QUEUE BUFFER----------------------------*/
@@ -676,6 +685,16 @@ void UART_RxCpltCallback(uint8_t ch)
 	}
 }
 
+ISR(USART0_RX_vect)
+{
+	UART_RxCpltCallback(_DEF_UART1);
+}
+
+ISR(USART1_RX_vect)
+{
+	UART_RxCpltCallback(_DEF_UART2);
+}
+
 
 #endif
 /*----------------------------UART END----------------------------*/
@@ -1036,7 +1055,7 @@ typedef struct
 {
 	uint8_t name[BT_BUF_MAX];
 	uint8_t pswd[BT_BUF_MAX];
-	uint8_t	slave_addr_buf[BT_BUF_MAX];
+	uint8_t	slave_addr[BT_BUF_MAX];
 } bt_cfg_t;
 
 typedef struct
@@ -1060,6 +1079,7 @@ bool btOpen(bt_t *p_bt, uint8_t ch_, uint32_t baud_)
 	bool ret = true;
 	p_bt->ch = ch_;
 	p_bt->baud = baud_;
+	p_bt->msg.msgs = NULL;
 	p_bt->is_open = uartOpen(p_bt->ch, baud_);
 	return ret;
 }
@@ -1083,9 +1103,174 @@ uint32_t btWrite(bt_t *p_bt)
 	return ret;
 }
 
-bool btBegin(void)
+bool btBegin(bt_t *p_bt, uint8_t mode)
 {
+	char atCommand[BT_BUF_MAX];
+	char response[BT_BUF_MAX];
+	int index = 0;
+	uint32_t tickstart;
 	
+	gpioPinWrite(_DEF_GPIO_BT_CFG, _DEF_SET);
+	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_SET);
+	delay(10);
+	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_RESET);
+	
+	p_bt->msg.msgs = (uint8_t*)&atCommand[0];
+	switch(mode)
+	{
+		case _DEF_BT_MASTER:
+			sprintf(&atCommand[0], "AT+NAME=%s\r\n", (char*)&(p_bt->bt_cfg.name[0]));
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+PSWD=%s\r\n", (char*)&(p_bt->bt_cfg.pswd[0]));
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+UART=%d,0,0\r\n", (int)p_bt->baud);
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+ROLE=1\r\n");
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+INIT\r\n");
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+PAIR=%s,20\r\n", (char*)&(p_bt->bt_cfg.slave_addr[0]));
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			tickstart = millis();
+			while(!(btAvailable(p_bt) > 0))
+			{
+				if (millis() - tickstart > 100)
+				{
+					return false;
+				}
+			}
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			
+		break;
+		case _DEF_BT_SLAVE:
+			sprintf(&atCommand[0], "AT+NAME=%s\r\n", (char*)&(p_bt->bt_cfg.name[0]));
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+PSWD=%s\r\n", (char*)&(p_bt->bt_cfg.pswd[0]));
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+UART=%d,0,0\r\n", (int)p_bt->baud);
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+ROLE=0\r\n");
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+			
+			sprintf(&atCommand[0], "AT+INIT\r\n");
+			p_bt->msg.msg_len = strlen(&atCommand[0]);
+			btWrite(p_bt);
+			delay(500);
+			
+			while(btAvailable(p_bt) > 0)
+			{
+				response[index++] = btRead(p_bt);
+			}
+			if (!strncmp(&response[0], "OK\r\n", 4)) return false;
+			index = 0;
+		break;
+	}
+	
+	gpioPinWrite(_DEF_GPIO_BT_CFG, _DEF_RESET);
+	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_SET);
+	delay(10);
+	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_RESET);
+	
+	return true;
 }
 
 #endif
@@ -1484,9 +1669,33 @@ void suctionMotorStop(void)
 #endif
 /*----------------------------SUCTION MOTOR END----------------------------*/
 
+void mcuInit(void)
+{
+	gpioInit();
+	uartInit();
+	timerInit();
+	initTick();
+	sei();
+}
+
+void hwInit(void)
+{
+	servoInit();
+	suctionMotorInit();
+}
 
 int main(void)
 {
+	mcuInit();
+	hwInit();
+	
+	bt_t bt;
+	ros_t ros;
+	
+	btOpen(&bt, _DEF_UART1, 38400);
+	rosOpen(&ros, _DEF_UART2, 38400);
+	
+	
 	while(1)
 	{
 		
