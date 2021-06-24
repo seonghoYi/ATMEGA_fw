@@ -240,10 +240,13 @@ uint32_t millis(void)
 
 void initTick(void)
 {
-	uint16_t prescaler;
 	uint32_t ocr;
 	uint32_t equation; //ctc 방정식에서의 분모 이름 진짜 애매하네
+	uint32_t prescalers[] = {1, 8, 32, 64, 128, 256, 1024};
+	uint8_t index = 0;
 	bool is_ocr_get_range = false;
+	
+	
 
 	SET_BIT(TIMSK, 1 << OCIE0);
 	SET_BIT(TCCR0, 1 << WGM00); // CTC mode
@@ -251,37 +254,9 @@ void initTick(void)
 	equation = (tickFreq * F_CPU) / 2000; //ms
 	
 	do
-	{
-		if (!(equation % 8))
-		{
-			prescaler = 8;
-		}
-		else if (!(equation % 32))
-		{
-			prescaler = 32;
-		}
-		else if (!(equation % 64))
-		{
-			prescaler = 64;
-		}
-		else if (!(equation % 128))
-		{
-			prescaler = 128;
-		}
-		else if (!(equation % 256))
-		{
-			prescaler = 256;
-		}
-		else if (!(equation % 1024))
-		{
-			prescaler = 1024;
-		}
-		else
-		{
-			prescaler = 1;
-		}
-		
-		ocr = (equation / prescaler) - 1;
+	{	
+		ocr = (equation / prescalers[index++]) - 1;
+		/*소수점이 나오는 경우는 처리하지 않음. 필요하면 알아서.*/
 		
 		if (ocr < 255)
 		{
@@ -289,8 +264,7 @@ void initTick(void)
 		}
 	} while(!is_ocr_get_range);
 	
-	
-	switch(prescaler)
+	switch(prescalers[index - 1])
 	{
 		case 1:
 		CLR_BIT(TCCR0, (1 << CS01) | (1 << CS02));
@@ -1132,6 +1106,22 @@ uint32_t btWrite(bt_t *p_bt)
 	return ret;
 }
 
+uint32_t btPrintf(bt_t *p_bt, char *fmt, ...)
+{
+	char buf[256];
+	va_list args;
+	int len;
+	uint32_t ret;
+
+	va_start(args, fmt);
+	len = vsnprintf(&buf[0], 256, fmt, args);
+
+	ret = uartWrite(p_bt->ch, (uint8_t *)&buf[0], len);
+
+	va_end(args);
+	return ret;
+}
+
 inline bool checkResponse(bt_t *p_bt, char *command, char *response)
 {
 	int index = 0;
@@ -1141,6 +1131,8 @@ inline bool checkResponse(bt_t *p_bt, char *command, char *response)
 	}
 	return strncmp(&response[0], &response[0], strlen(&response[0]));
 }
+
+
 
 bool btBegin(bt_t *p_bt, uint8_t mode)
 {
@@ -1707,10 +1699,11 @@ ISR(TIMER0_COMP_vect)
 		count = 0;
 	}
 }
-
-
 #endif
 /*----------------------------RUN LED END----------------------------*/
+
+
+
 void mcuInit(void)
 {
 	gpioInit();
