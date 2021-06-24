@@ -8,7 +8,7 @@ void hwInit(void)
 	//timerInit();
 	//a4988Init();
 	//ctcInit();
-	//pwmInit();
+	pwmInit();
 	//motorInit();
 	//rosServerInit();
 }
