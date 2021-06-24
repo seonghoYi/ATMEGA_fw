@@ -605,7 +605,7 @@ HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef 
 	}
 
 	
-	if (htim->Init.Channel == TIM16_CHANNEL_A)
+	if ((htim->Init.Channel) & TIM16_CHANNEL_A)
 	{
 		switch(htim_oc->OCOutput)
 		{
@@ -644,7 +644,7 @@ HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef 
 		*(tim->OCRnAH) = (htim_oc->Ocr >> 8) & 0xFF;
 		*(tim->OCRnAL) = htim_oc->Ocr & 0xFF;
 	}
-	else if(htim->Init.Channel == TIM16_CHANNEL_B)
+	else if((htim->Init.Channel) & TIM16_CHANNEL_B)
 	{
 		switch(htim_oc->OCOutput)
 		{
@@ -682,7 +682,7 @@ HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef 
 		*(tim->OCRnBH) = (htim_oc->Ocr >> 8) & 0xFF;
 		*(tim->OCRnBL) = htim_oc->Ocr & 0xFF;
 	}
-	else if(htim->Init.Channel == TIM16_CHANNEL_C)
+	else if((htim->Init.Channel) & TIM16_CHANNEL_C)
 	{
 		switch(htim_oc->OCOutput)
 		{
@@ -885,7 +885,7 @@ HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDe
 		default:
 		break;
 	}
-	if (htim->Init.Channel == TIM16_CHANNEL_A)
+	if ((htim->Init.Channel) & TIM16_CHANNEL_A)
 	{
 		switch(htim_pwm->PWMWave_COM)
 		{
@@ -909,7 +909,7 @@ HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDe
 			break;
 		}
 	}
-	else if (htim->Init.Channel == TIM16_CHANNEL_B)
+	else if ((htim->Init.Channel) & TIM16_CHANNEL_B)
 	{
 		switch(htim_pwm->PWMWave_COM)
 		{
@@ -933,7 +933,7 @@ HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDe
 			break;
 		}
 	}
-	else if (htim->Init.Channel == TIM16_CHANNEL_C)
+	else if ((htim->Init.Channel) & TIM16_CHANNEL_C)
 	{
 		switch(htim_pwm->PWMWave_COM)
 		{
@@ -1118,7 +1118,7 @@ HAL_StatusTypeDef TIM16_Base_Stop_IT(TIM16_HandleTypeDef *htim)
 }
 HAL_StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim)
 {
-	if (htim->Init.Channel == TIM16_CHANNEL_A)
+	if ((htim->Init.Channel) & TIM16_CHANNEL_A)
 	{
 		switch(htim->TIMn)
 		{
@@ -1132,7 +1132,7 @@ HAL_StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim)
 			break;
 		}
 	}
-	else if (htim->Init.Channel == TIM16_CHANNEL_B)
+	else if ((htim->Init.Channel) & TIM16_CHANNEL_B)
 	{
 		switch(htim->TIMn)
 		{
@@ -1146,7 +1146,7 @@ HAL_StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim)
 			break;
 		}
 	}
-	else if (htim->Init.Channel == TIM16_CHANNEL_C)
+	else if ((htim->Init.Channel) & TIM16_CHANNEL_C)
 	{
 		switch(htim->TIMn)
 		{
@@ -1166,7 +1166,7 @@ HAL_StatusTypeDef TIM16_OC_Start_IT(TIM16_HandleTypeDef *htim)
 }
 HAL_StatusTypeDef TIM16_OC_Stop_IT(TIM16_HandleTypeDef *htim)
 {
-	if (htim->Init.Channel == TIM16_CHANNEL_A)
+	if ((htim->Init.Channel) & TIM16_CHANNEL_A)
 	{
 		switch(htim->TIMn)
 		{
@@ -1180,7 +1180,7 @@ HAL_StatusTypeDef TIM16_OC_Stop_IT(TIM16_HandleTypeDef *htim)
 			break;
 		}
 	}
-	else if (htim->Init.Channel == TIM16_CHANNEL_B)
+	else if ((htim->Init.Channel) & TIM16_CHANNEL_B)
 	{
 		switch(htim->TIMn)
 		{
@@ -1194,7 +1194,7 @@ HAL_StatusTypeDef TIM16_OC_Stop_IT(TIM16_HandleTypeDef *htim)
 			break;
 		}
 	}
-	else if (htim->Init.Channel == TIM16_CHANNEL_C)
+	else if ((htim->Init.Channel) & TIM16_CHANNEL_C)
 	{
 		switch(htim->TIMn)
 		{

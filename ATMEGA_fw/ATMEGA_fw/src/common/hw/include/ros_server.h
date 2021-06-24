@@ -4,7 +4,7 @@
 #include "hw_def.h"
 
 #ifdef _USE_HW_ROS_SERVER
-#include "ros/ros.h"
+#include "ros.h"
 
 
 void rosServerInit(void);

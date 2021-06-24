@@ -37,7 +37,7 @@
 #define _DEF_CH_NONE	0
 #define _DEF_CH_A		1
 #define _DEF_CH_B		2
-#define _DEF_CH_C		3
+#define _DEF_CH_C		4
 
 #define _DEF_CW			0
 #define _DEF_CCW		1

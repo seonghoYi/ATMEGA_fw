@@ -138,7 +138,7 @@ typedef struct
 
 #define TIM16_CHANNEL_A				1
 #define TIM16_CHANNEL_B				2
-#define TIM16_CHANNEL_C				3				
+#define TIM16_CHANNEL_C				4				
 
 #define TIM16_OC_NORMALOUT			0
 #define TIM16_OC_FORCEDOUT			1

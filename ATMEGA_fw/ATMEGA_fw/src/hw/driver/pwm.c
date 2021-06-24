@@ -92,7 +92,7 @@ bool pwmBegin(uint8_t ch_)
 		p_pwm->h_tim16_pwm				= &htim3_pwm;
 		
 		p_pwm->h_tim16->TIMn			= TIM1;
-		p_pwm->h_tim16->Init.Prescaler	= TIM_CLK_PRESCALER_64;
+		p_pwm->h_tim16->Init.Prescaler	= TIM_CLK_PRESCALER_8; // 10-bit Fast PWM f=1.953KHz (F_CPU = 16MHz) (in 8MHz case, set timer as 9-bit Fast PWM prescaler 8 then will be same)
 		p_pwm->h_tim16->Init.Source		= TIM_INTCLK_SOURCE;
 		p_pwm->h_tim16->Init.Tcnt		= 0;
 		p_pwm->h_tim16_pwm->Tcnt		= 0;
@@ -108,7 +108,7 @@ bool pwmBegin(uint8_t ch_)
 		p_pwm->h_tim8_pwm				= &htim2_pwm;
 		
 		p_pwm->h_tim8->TIMn				= TIM2;
-		p_pwm->h_tim8->Init.Prescaler	= TIM_CLK_PRESCALER_1;
+		p_pwm->h_tim8->Init.Prescaler	= TIM_CLK_PRESCALER_1; // Phase correct PWM f=31.372KHz (F_CPU = 16MHz) (in 8MHz case, set timer as same then will be f=15.686KHz)
 		p_pwm->h_tim8->Init.Source		= TIM_INTCLK_SOURCE;
 		
 		if (TIM8_Base_Init(p_pwm->h_tim8) != HAL_OK)
@@ -121,8 +121,8 @@ bool pwmBegin(uint8_t ch_)
 			p_pwm->is_open = true;
 		}
 		
-		p_pwm->h_tim8_pwm->PWMMode		= TIM8_PWM_MOD_FASTPWM;
-		p_pwm->h_tim8_pwm->PWMWave_COM	= TIM8_PWM_COM_NORMAL;
+		p_pwm->h_tim8_pwm->PWMMode		= TIM8_PWM_MOD_PCPWM;
+		p_pwm->h_tim8_pwm->PWMWave_COM	= TIM8_PWM_COM_NONINV;
 		p_pwm->h_tim8_pwm->Tcnt			= 0;
 		p_pwm->h_tim8_pwm->Ocr			= 0;
 		
@@ -138,13 +138,13 @@ bool pwmBegin(uint8_t ch_)
 		p_pwm->h_tim16_pwm				= &htim4_pwm;
 		
 		p_pwm->h_tim16->TIMn			= TIM3;
-		p_pwm->h_tim16->Init.Prescaler	= TIM_CLK_PRESCALER_1;
+		p_pwm->h_tim16->Init.Prescaler	= TIM_CLK_PRESCALER_64;
 		p_pwm->h_tim16->Init.Source		= TIM_INTCLK_SOURCE;
 		
 		p_pwm->h_tim16->Init.Tcnt		= 0;
 		p_pwm->h_tim16_pwm->Tcnt		= 0;
 		p_pwm->h_tim16_pwm->Ocr			= 0;
-		p_pwm->h_tim16_pwm->Icr			= 0;
+		p_pwm->h_tim16_pwm->Icr			= 4999; // Fast PWM f=50Hz (in 8MHz case, set ICR3 as 2499)
 		
 		ret = true;
 		p_pwm->is_open = true;
@@ -274,7 +274,7 @@ bool pwm16ChannelConfig(uint8_t ch_, uint8_t channel_)
 			ret = true;
 		}
 		
-		p_pwm->h_tim16_pwm->PWMMode		= TIM16_PWM_MOD_FASTPWM_ICR;
+		p_pwm->h_tim16_pwm->PWMMode		= TIM16_PWM_MOD_FASTPWM_10;
 		p_pwm->h_tim16_pwm->PWMWave_COM = TIM16_PWM_COM_NONINV;
 		
 		if (TIM16_PWM_Init(p_pwm->h_tim16, p_pwm->h_tim16_pwm) != HAL_OK)
@@ -297,7 +297,7 @@ bool pwm16ChannelConfig(uint8_t ch_, uint8_t channel_)
 			ret = true;
 		}
 		
-		p_pwm->h_tim16_pwm->PWMMode		= TIM16_PWM_MOD_FASTPWM_OCR;
+		p_pwm->h_tim16_pwm->PWMMode		= TIM16_PWM_MOD_FASTPWM_ICR;
 		p_pwm->h_tim16_pwm->PWMWave_COM	= TIM16_PWM_COM_NORMAL;
 		
 		if (TIM16_PWM_Init(p_pwm->h_tim16, p_pwm->h_tim16_pwm) != HAL_OK)
