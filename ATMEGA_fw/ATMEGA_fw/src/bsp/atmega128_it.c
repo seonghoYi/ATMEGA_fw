@@ -51,7 +51,13 @@ ISR(TIMER0_COMP_vect)
 #ifdef _USE_HW_SYSTICK
 ISR(TIMER0_COMP_vect)
 {
+	static volatile uint16_t count = 0;
 	HAL_IncTick();
+	if (count > 1000)
+	{
+		runLedCallback();
+	}
+	count++;
 }
 #endif
 
