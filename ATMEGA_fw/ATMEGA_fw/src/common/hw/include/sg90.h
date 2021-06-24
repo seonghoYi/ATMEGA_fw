@@ -2,7 +2,7 @@
 #define SG90_H_
 
 #ifdef _USE_HW_SG90
-
+#include "hw_def.h"
 
 typedef struct
 {

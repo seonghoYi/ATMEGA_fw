@@ -12,6 +12,8 @@
 #define _DEF_UART1		0
 #define _DEF_UART2		1
 
+#define _DEF_ROS1		_DEF_UART2
+
 #define _DEF_TIM1		0	// timer2
 #define _DEF_TIM4		1	// timer0
 #define _DEF_TIM2		0	// timer1

@@ -34,6 +34,8 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
                               src/bsp/bsp.o (__udivmodsi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega128/avr51/crtatmega128.o (exit)
+c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+                              src/hw/driver/ros.o (__tablejump2__)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
                               src/bsp/bsp.o (__do_copy_data)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_clear_bss.o)
@@ -106,6 +108,59 @@ Discarded input sections
                 0x00000000       0x34 src/common/core/qbuffer.o
  .text.qbufferFlush
                 0x00000000       0x14 src/common/core/qbuffer.o
+ .text          0x00000000        0x0 src/hw/driver/ros.o
+ .data          0x00000000        0x0 src/hw/driver/ros.o
+ .bss           0x00000000        0x0 src/hw/driver/ros.o
+ .text.rosInit  0x00000000        0x4 src/hw/driver/ros.o
+ .text.rosLoadDriver
+                0x00000000        0xc src/hw/driver/ros.o
+ .text.rosOpen  0x00000000       0x5a src/hw/driver/ros.o
+ .text.rosIsOpen
+                0x00000000        0x6 src/hw/driver/ros.o
+ .text.rosClose
+                0x00000000        0x4 src/hw/driver/ros.o
+ .text.rosSendInst
+                0x00000000       0xdc src/hw/driver/ros.o
+ .text.rosReceivePacket
+                0x00000000      0x1ae src/hw/driver/ros.o
+ .progmem.gcc_sw_table.rosReceivePacket
+                0x00000000       0x12 src/hw/driver/ros.o
+ .text.rosAddService
+                0x00000000       0x24 src/hw/driver/ros.o
+ .text.rosCallService
+                0x00000000       0x20 src/hw/driver/ros.o
+ .debug_info    0x00000000      0x707 src/hw/driver/ros.o
+ .debug_abbrev  0x00000000      0x1e7 src/hw/driver/ros.o
+ .debug_loc     0x00000000      0x66f src/hw/driver/ros.o
+ .debug_aranges
+                0x00000000       0x60 src/hw/driver/ros.o
+ .debug_ranges  0x00000000       0x50 src/hw/driver/ros.o
+ .debug_line    0x00000000      0x403 src/hw/driver/ros.o
+ .debug_str     0x00000000      0x424 src/hw/driver/ros.o
+ .comment       0x00000000       0x31 src/hw/driver/ros.o
+ .debug_frame   0x00000000      0x108 src/hw/driver/ros.o
+ .text          0x00000000        0x0 src/hw/driver/ros/ros_uart.o
+ .data          0x00000000        0x0 src/hw/driver/ros/ros_uart.o
+ .bss           0x00000000        0x0 src/hw/driver/ros/ros_uart.o
+ .text.close    0x00000000        0x4 src/hw/driver/ros/ros_uart.o
+ .text.open     0x00000000        0xe src/hw/driver/ros/ros_uart.o
+ .text.available
+                0x00000000       0x12 src/hw/driver/ros/ros_uart.o
+ .text.write    0x00000000       0x12 src/hw/driver/ros/ros_uart.o
+ .text.read     0x00000000        0xe src/hw/driver/ros/ros_uart.o
+ .text.flush    0x00000000        0xe src/hw/driver/ros/ros_uart.o
+ .text.rosUartDriver
+                0x00000000       0x3a src/hw/driver/ros/ros_uart.o
+ .debug_info    0x00000000      0x44b src/hw/driver/ros/ros_uart.o
+ .debug_abbrev  0x00000000      0x10a src/hw/driver/ros/ros_uart.o
+ .debug_loc     0x00000000      0x351 src/hw/driver/ros/ros_uart.o
+ .debug_aranges
+                0x00000000       0x50 src/hw/driver/ros/ros_uart.o
+ .debug_ranges  0x00000000       0x40 src/hw/driver/ros/ros_uart.o
+ .debug_line    0x00000000      0x20a src/hw/driver/ros/ros_uart.o
+ .debug_str     0x00000000      0x245 src/hw/driver/ros/ros_uart.o
+ .comment       0x00000000       0x31 src/hw/driver/ros/ros_uart.o
+ .debug_frame   0x00000000       0x84 src/hw/driver/ros/ros_uart.o
  .text          0x00000000        0x0 src/hw/driver/sg90.o
  .data          0x00000000        0x0 src/hw/driver/sg90.o
  .bss           0x00000000        0x0 src/hw/driver/sg90.o
@@ -321,6 +376,22 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
  .text.libgcc.fixed
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_exit.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .text.libgcc.mul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .text.libgcc.div
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .text.libgcc   0x00000000       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_tablejump2.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr51\libgcc.a(_copy_data.o)
@@ -439,6 +510,8 @@ LOAD src/ap/ap.o
 LOAD src/bsp/atmega128_it.o
 LOAD src/bsp/bsp.o
 LOAD src/common/core/qbuffer.o
+LOAD src/hw/driver/ros.o
+LOAD src/hw/driver/ros/ros_uart.o
 LOAD src/hw/driver/sg90.o
 LOAD src/hw/driver/sg90/sg90_pwm.o
 LOAD src/hw/driver/timer.o

@@ -9,6 +9,9 @@
 #define _USE_HW_UART
 #define		 HW_UART_MAX_CH			2
 
+#define _USE_HW_ROS
+#define		 HW_ROS_PACKET_BUF_MAX	512
+
 #define _USE_HW_TIMER
 #define		 HW_TIMER8_MAX_CH		1
 #define		 HW_TIMER16_MAX_CH		2

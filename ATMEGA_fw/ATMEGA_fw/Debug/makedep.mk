@@ -10,6 +10,10 @@ src\bsp\bsp.c
 
 src\common\core\qbuffer.c
 
+src\hw\driver\ros.c
+
+src\hw\driver\ros\ros_uart.c
+
 src\hw\driver\sg90.c
 
 src\hw\driver\sg90\sg90_pwm.c

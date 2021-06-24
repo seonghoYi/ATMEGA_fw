@@ -171,9 +171,11 @@
     <Folder Include="src\common\core\" />
     <Folder Include="src\common\hw" />
     <Folder Include="src\common\hw\include" />
+    <Folder Include="src\common\hw\include\ros" />
     <Folder Include="src\common\hw\include\sg90" />
     <Folder Include="src\hw" />
     <Folder Include="src\hw\driver" />
+    <Folder Include="src\hw\driver\ros" />
     <Folder Include="src\hw\driver\sg90" />
     <Folder Include="src\lib" />
     <Folder Include="src\lib\Device" />
@@ -204,6 +206,12 @@
     <Compile Include="src\common\def.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\common\hw\include\ros.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\ros\ros_uart.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\common\hw\include\sg90.h">
       <SubType>compile</SubType>
     </Compile>
@@ -214,6 +222,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\ros.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\ros\ros_uart.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\sg90.c">
