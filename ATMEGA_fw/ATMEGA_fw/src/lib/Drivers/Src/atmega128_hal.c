@@ -15,52 +15,29 @@ HAL_StatusTypeDef HAL_Init(void)
 HAL_StatusTypeDef HAL_InitTick(void)
 {
 	HAL_StatusTypeDef status = HAL_OK;
-	uint16_t prescaler;
 	uint32_t ocr;
 	uint32_t equation; //ctc 방정식에서의 분모 이름 진짜 애매하네
+	uint32_t prescalers[] = {1, 8, 32, 64, 128, 256, 1024};
+	uint8_t index = 0;
+	bool is_ocr_get_range = false;
 
 	SETB(TIMSK, 1);
 	SETB(TIMSK, 6); // CTC mode
 	
 	equation = (tickFreq * F_CPU) / 2000; //ms
 	
-	if (!(equation % 8))
+	do
 	{
-		prescaler = 8;
-	}
-	else if (!(equation % 32))
-	{
-		prescaler = 32;
-	}
-	else if (!(equation % 64))
-	{
-		prescaler = 64;
-	}
-	else if (!(equation % 128))
-	{
-		prescaler = 128;
-	}
-	else if (!(equation % 256))
-	{
-		prescaler = 256;
-	}
-	else if (!(equation % 1024))
-	{
-		prescaler = 1024;
-	}
-	else
-	{
-		prescaler = 1;
-	}
+		ocr = (equation / prescalers[index++]) - 1;
+		/*소수점이 나오는 경우는 처리하지 않음. 필요하면 알아서.*/
+		
+		if (ocr < 255)
+		{
+			is_ocr_get_range = true;
+		}
+	} while(!is_ocr_get_range);
 	
-	ocr = (equation / prescaler) - 1;
-	
-	if (ocr < 255)
-	{
-		tickFreq = HAL_TICK_FREQ_DEFAULT;
-	}
-	
-	switch(prescaler)
+	switch(prescalers[index - 1])
 	{
 		case 1:
 		SETB(TCCR0, 0);
