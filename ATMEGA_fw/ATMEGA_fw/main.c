@@ -55,6 +55,7 @@
 #define _USE_SUCTION_MOTOR_MODULE
 #define _USE_DRIVE_MOTOR_MODULE
 #define _USE_LINE_LED_MODULE
+#define _USE_RUN_LED_MODULE
 /*----------------------------GLOBAL H/W MACRO DEFINITIONS END----------------------------*/
 
 /*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS----------------------------*/
@@ -102,6 +103,10 @@
 #define _DEF_GPIO_MT_L_DIR	5
 #define _DEF_GPIO_MT_R_DIR	6
 /*---------------------------*/
+
+/*-----------RUN LED-----------*/
+#define _DEF_GPIO_RUN_LED	3
+/*-----------------------------*/
 
 /*----------------------------GLOBAL MACRO CONSTANT DEFINITIONS END----------------------------*/
 
@@ -238,47 +243,52 @@ void initTick(void)
 	uint16_t prescaler;
 	uint32_t ocr;
 	uint32_t equation; //ctc 방정식에서의 분모 이름 진짜 애매하네
+	bool is_ocr_get_range = false;
 
 	SET_BIT(TIMSK, 1 << OCIE0);
 	SET_BIT(TCCR0, 1 << WGM00); // CTC mode
 	
 	equation = (tickFreq * F_CPU) / 2000; //ms
 	
-	if (!(equation % 8))
+	do
 	{
-		prescaler = 8;
-	}
-	else if (!(equation % 32))
-	{
-		prescaler = 32;
-	}
-	else if (!(equation % 64))
-	{
-		prescaler = 64;
-	}
-	else if (!(equation % 128))
-	{
-		prescaler = 128;
-	}
-	else if (!(equation % 256))
-	{
-		prescaler = 256;
-	}
-	else if (!(equation % 1024))
-	{
-		prescaler = 1024;
-	}
-	else
-	{
-		prescaler = 1;
-	}
+		if (!(equation % 8))
+		{
+			prescaler = 8;
+		}
+		else if (!(equation % 32))
+		{
+			prescaler = 32;
+		}
+		else if (!(equation % 64))
+		{
+			prescaler = 64;
+		}
+		else if (!(equation % 128))
+		{
+			prescaler = 128;
+		}
+		else if (!(equation % 256))
+		{
+			prescaler = 256;
+		}
+		else if (!(equation % 1024))
+		{
+			prescaler = 1024;
+		}
+		else
+		{
+			prescaler = 1;
+		}
+		
+		ocr = (equation / prescaler) - 1;
+		
+		if (ocr < 255)
+		{
+			is_ocr_get_range = true;
+		}
+	} while(!is_ocr_get_range);
 	
-	ocr = (equation / prescaler) - 1;
-	
-	if (ocr < 255)
-	{
-		tickFreq = TICK_FREQ_DEFAULT;
-	}
 	
 	switch(prescaler)
 	{
@@ -325,6 +335,10 @@ uint32_t getTick(void)
 	return tick;
 }
 
+uint8_t getSystickOcr(void)
+{
+	return OCR0;
+}
 
 
 
@@ -1659,7 +1673,44 @@ void lineLedOff(void)
 #endif
 /*----------------------------LINE LED END----------------------------*/
 
+/*----------------------------RUN LED----------------------------*/
+#ifdef _USE_RUN_LED_MODULE
 
+void runLedInit(void)
+{
+	SET_BIT(TIMSK, (1 << OCIE0)); // from systick
+}
+
+void runLedOn(void)
+{
+	gpioPinWrite(_DEF_GPIO_RUN_LED, _DEF_SET);
+}
+
+void runLedOff(void)
+{
+	gpioPinWrite(_DEF_GPIO_RUN_LED, _DEF_RESET);
+}
+
+void runLedToggle(void)
+{
+	gpioPinToggle(_DEF_GPIO_RUN_LED);
+}
+
+
+ISR(TIMER0_COMP_vect)
+{
+	static uint32_t count = 0;
+	count++;
+	if (count > 1000)
+	{
+		runLedToggle();
+		count = 0;
+	}
+}
+
+
+#endif
+/*----------------------------RUN LED END----------------------------*/
 void mcuInit(void)
 {
 	gpioInit();
@@ -1671,6 +1722,7 @@ void mcuInit(void)
 
 void hwInit(void)
 {
+	runLedInit();
 	servoInit();
 	suctionMotorInit();
 }
