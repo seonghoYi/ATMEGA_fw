@@ -18,6 +18,6 @@ void apMain(void)
 			uartWrite(_DEF_UART1, &rx_data, 1);
 		}
 		*/
-		rosServerRun();
+		//rosServerRun();
 	}
 }
