@@ -12,7 +12,10 @@
 #define CLRB(PORT, BIT)		(PORT &= ~(1 << BIT))
 #define READB(PORT, BIT)	(PORT & (1 << BIT))
 #define TGLB(PORT, BIT)		(PORT ^= (1 << BIT)) // toggle
-
+#define CLEAR_REG(REG)							(REG = 0x00)
+#define WRITE_REG(REG, VAL)						(REG = VAL)
+#define READ_REG(REG)							(REG)
+#define MODIFY_REG(REG, CLEARMASK, SETMASK)		WRITE_REG((REG), (READ_REG(REG) & (~(CLEARMASK))) | (SETMASK))
 
 
 typedef struct
