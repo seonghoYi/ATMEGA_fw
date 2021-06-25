@@ -1,5 +1,4 @@
 ﻿#include "main.h"
-#include "atmega128_it.h"
 
 
 #ifdef _USE_HW_UART
