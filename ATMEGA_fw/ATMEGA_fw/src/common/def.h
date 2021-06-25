@@ -42,8 +42,11 @@
 #define _DEF_CW			0
 #define _DEF_CCW		1
 
-#define _DEF_A4988_0	0
-#define _DEF_A4988_1	1
+//#define _DEF_A4988_0	0
+//#define _DEF_A4988_1	1
+
+#define _DEF_DMC16_0	0
+#define _DEF_DMC16_1	1
 
 #define _DEF_DRVMTR0	0
 #define _DEF_DRVMTR1	1
