@@ -12,7 +12,7 @@ typedef struct drivemotor_driver_t
 	bool		(*startMotor)	(uint8_t ch_);
 	bool		(*stopMotor)	(uint8_t ch_);
 	bool		(*breakMotor)	(uint8_t ch_);
-	bool		(*setSpeed)		(uint8_t ch_, uint8_t speed_);
+	bool		(*setSpeed)		(uint8_t ch_, uint16_t speed_);
 	uint16_t	(*getSpeed)		(uint8_t ch_);
 	bool		(*setDirection)	(uint8_t ch_, bool dir_);
 	bool		(*getDirection)	(uint8_t ch_);
