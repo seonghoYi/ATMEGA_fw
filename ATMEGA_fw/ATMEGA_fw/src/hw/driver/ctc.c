@@ -433,15 +433,20 @@ bool ctcSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 		break;
 	}
 	
-	if (channel_ == _DEF_CH_A)
+	if (channel_ & _DEF_CH_A)
 	{
 		*(p_ctc->h_tim16->Regs->OCRnAH) = (ocr_ >> 8) & 0xFF;
 		*(p_ctc->h_tim16->Regs->OCRnAL) = (ocr_ & 0xFF);
 	}
-	else if (channel_ == _DEF_CH_B)
+	else if (channel_ & _DEF_CH_B)
 	{
 		*(p_ctc->h_tim16->Regs->OCRnBH) = (ocr_ >> 8) & 0xFF;
 		*(p_ctc->h_tim16->Regs->OCRnBL) = (ocr_ & 0xFF);
+	}
+	else if (channel_ & _DEF_CH_C)
+	{
+		*(p_ctc->h_tim16->Regs->OCRnCH) = (ocr_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs->OCRnCL) = (ocr_ & 0xFF);
 	}
 	
 	return ret;
@@ -466,13 +471,17 @@ uint16_t ctcGetOcr(uint8_t ch_, uint8_t channel_)
 		break;
 	}
 	
-	if (channel_ == _DEF_CH_A)
+	if (channel_ & _DEF_CH_A)
 	{
 		ret = ((((*(p_ctc->h_tim16->Regs->OCRnAH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->OCRnAL)) & 0xFF));
 	}
-	else if (channel_ == _DEF_CH_B)
+	else if (channel_ & _DEF_CH_B)
 	{
-		ret = ((((*(p_ctc->h_tim16->Regs->OCRnAH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->OCRnAL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs->OCRnBH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->OCRnBL)) & 0xFF));
+	}
+	else if (channel_ & _DEF_CH_C)
+	{
+		ret = ((((*(p_ctc->h_tim16->Regs->OCRnCH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->OCRnCL)) & 0xFF));
 	}
 	
 	return ret;

@@ -104,6 +104,8 @@ typedef struct
 	volatile uint8_t *OCRnAH;
 	volatile uint8_t *OCRnBL;
 	volatile uint8_t *OCRnBH;
+	volatile uint8_t *OCRnCL;
+	volatile uint8_t *OCRnCH;
 	volatile uint8_t *ICRnL;
 	volatile uint8_t *ICRnH;
 } TIM16_TypeDef;
