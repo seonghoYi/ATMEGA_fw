@@ -199,9 +199,6 @@
     <Compile Include="src\bsp\atmega128_it.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\bsp\atmega128_it.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\bsp\bsp.c">
       <SubType>compile</SubType>
     </Compile>
@@ -224,6 +221,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\drivemotor\a4988.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\drivemotor\dmc16.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\gpio.h">
@@ -257,6 +257,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\drivemotor\a4988.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\drivemotor\dmc16.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\gpio.c">
