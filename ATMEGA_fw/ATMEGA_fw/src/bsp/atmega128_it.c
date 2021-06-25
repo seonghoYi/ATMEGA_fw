@@ -56,6 +56,7 @@ ISR(TIMER0_COMP_vect)
 	if (count > 1000)
 	{
 		runLedCallback();
+		count = 0;
 	}
 	count++;
 }

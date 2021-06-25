@@ -10,7 +10,7 @@ void apInit(void)
 void apMain(void)
 {	
 	while(true)
-	{
+	{	
 		/*
 		if (uartAvailable(_DEF_UART1))
 		{

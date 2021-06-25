@@ -11,6 +11,7 @@
 //#include "ros/ros.h"
 //#include "ros_server.h"
 #include "run_led.h"
+#include "line_led.h"
 
 void hwInit(void);
 
