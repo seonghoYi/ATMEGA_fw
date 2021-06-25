@@ -5,6 +5,7 @@
 #include "gpio.h"
 #include "uart.h"
 //#include "drivemotor/a4988.h"
+#include "drivemotor/dmc16.h"
 #include "drivemotor.h"
 #include "ctc.h"
 #include "pwm.h"
