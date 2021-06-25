@@ -19,10 +19,10 @@ HAL_StatusTypeDef HAL_InitTick(void)
 	uint32_t equation; //ctc 방정식에서의 분모 이름 진짜 애매하네
 	uint32_t prescalers[] = {1, 8, 32, 64, 128, 256, 1024};
 	uint8_t index = 0;
-
+	/*
 	SETB(TIMSK, 1);
 	SETB(TIMSK, 6); // CTC mode
-	
+	*/
 	equation = (tickFreq * F_CPU) / 2000; //ms
 	
 	do
