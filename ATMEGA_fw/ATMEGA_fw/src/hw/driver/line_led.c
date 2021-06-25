@@ -4,6 +4,11 @@
 
 #ifdef _USE_HW_LINE_LED
 
+bool lineLedInit(void)
+{
+	return true;
+}
+
 void lineLedOn(void)
 {
 	gpioPinWrite(_DEF_GPIO_LINE_LED, true);
