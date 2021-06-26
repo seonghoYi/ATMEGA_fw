@@ -16,7 +16,7 @@ static bool is_init = false;
 
 
 void motorBreak(void);
-void motorSetSpeed(uint8_t speed_);
+void motorSetSpeed(uint16_t speed_);
 void motorSetMotionState(uint8_t motion_);
 
 bool motorInit(void)
@@ -95,7 +95,7 @@ void motorBreak(void)
 #endif	
 }
 
-void motorSetSpeed(uint8_t speed_)
+void motorSetSpeed(uint16_t speed_)
 {
 	// max: 726.74Hz, 109.01rpm, 0.376m/s min: 122.07Hz, 18.31rpm, 0.063m/s
 	
@@ -121,7 +121,7 @@ void motorSetSpeed(uint8_t speed_)
 #endif
 }
 
-void motorSetLeftSpeed(uint8_t speed_)
+void motorSetLeftSpeed(uint16_t speed_)
 {
 	/*
 	const uint8_t power_max = 255;
@@ -142,7 +142,7 @@ void motorSetLeftSpeed(uint8_t speed_)
 #endif
 }
 
-void motorSetRightSpeed(uint8_t speed_)
+void motorSetRightSpeed(uint16_t speed_)
 {
 	/*
 	const uint8_t power_max = 255;
