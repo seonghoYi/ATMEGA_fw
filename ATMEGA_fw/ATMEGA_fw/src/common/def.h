@@ -39,6 +39,10 @@
 #define _DEF_CH_B		2
 #define _DEF_CH_C		4
 
+#define _DEF_XIAOMI_0	0
+
+#define _DEF_SUCTION_0	0
+
 #define _DEF_CW			0
 #define _DEF_CCW		1
 
