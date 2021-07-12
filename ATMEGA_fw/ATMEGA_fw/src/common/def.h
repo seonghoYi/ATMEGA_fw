@@ -57,6 +57,8 @@
 #define _DEF_DRVMTR2	2
 #define _DEF_DRVMTR3	3
 
+#define _DEF_HC05_0		0
+
 #define _DEF_ROS0		0
 
 #endif /* DEF_H_ */
