@@ -7,9 +7,11 @@ void hwInit(void)
 	uartInit();
 	//ctcInit();
 	pwmInit();
+	hc05Init();
 	suctionMotorInit();
 	motorInit();
 	//rosServerInit();
 	
 	runLedInit();
+	lineLedInit();
 }
