@@ -29,10 +29,10 @@ bool hc05Open(hc05_t *p_hc05, uint8_t ch_, uint32_t baud_)
 		return false;
 	}
 	
-	gpioPinWrite(_DEF_GPIO_BT_CFG, _DEF_PIN_SET);
-	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_PIN_SET);
+	gpioPinWrite(_DEF_GPIO_BT_CFG, true);
+	gpioPinWrite(_DEF_GPIO_BT_RST, true);
 	delay(10);
-	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_PIN_RESET);
+	gpioPinWrite(_DEF_GPIO_BT_RST, false);
 	
 	if (!hc05SetBaud(p_hc05, baud_))
 	{
@@ -68,10 +68,10 @@ bool hc05Open(hc05_t *p_hc05, uint8_t ch_, uint32_t baud_)
 		}
 	}
 	//uartPrintf(_DEF_UART0, "5\n");
-	gpioPinWrite(_DEF_GPIO_BT_CFG, _DEF_PIN_RESET);
-	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_PIN_SET);
+	gpioPinWrite(_DEF_GPIO_BT_CFG, false);
+	gpioPinWrite(_DEF_GPIO_BT_RST, true);
 	delay(10);
-	gpioPinWrite(_DEF_GPIO_BT_RST, _DEF_PIN_RESET);
+	gpioPinWrite(_DEF_GPIO_BT_RST, false);
 	
 	p_hc05->is_open = ret;
 	return ret;
