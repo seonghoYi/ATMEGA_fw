@@ -6,6 +6,7 @@
 #include "uart.h"
 #include "ctc.h"
 #include "pwm.h"
+#include "hc05.h"
 #include "suctionmotor.h"
 #include "drivemotor.h"
 //#include "ros/ros.h"
