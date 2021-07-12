@@ -53,6 +53,13 @@
 #define _REVERSE_ROTATION					0
 #define _NORMAL_ROTATION					1
 
+#define _USE_HW_HC05
+#define		 HW_HC05_MAX_CH					1
+
+#define _USE_HW_BT
+#define		 HW_BT_MAX_CH					1
+#define		 HW_BT_MSG_BUF_MAX				128
+
 #define _USE_HW_ROS
 #define		 HW_ROS_PACKET_BUF_MAX			512
 
