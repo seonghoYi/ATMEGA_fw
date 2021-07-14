@@ -33,8 +33,8 @@ bool dmc16Init(uint8_t ch_)
 		case _DEF_DMC16_0:
 		p_dmc16->h_dmc16				= &h_dmc16_1;
 		
-		p_dmc16->normal_rotate			= _DEF_CW;
-		p_dmc16->reverse_rotate			= _DEF_CCW;
+		p_dmc16->normal_rotate			= _DEF_CCW;
+		p_dmc16->reverse_rotate			= _DEF_CW;
 		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_0;
 		p_dmc16->h_dmc16->Init.pwm		= TIM1;
 		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_A;
@@ -46,8 +46,8 @@ bool dmc16Init(uint8_t ch_)
 		case _DEF_DMC16_1:
 		p_dmc16->h_dmc16				= &h_dmc16_2;
 		
-		p_dmc16->normal_rotate			= _DEF_CCW;
-		p_dmc16->reverse_rotate			= _DEF_CW;
+		p_dmc16->normal_rotate			= _DEF_CW;
+		p_dmc16->reverse_rotate			= _DEF_CCW;
 		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_1;
 		p_dmc16->h_dmc16->Init.pwm		= TIM1;
 		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_B;
@@ -197,7 +197,12 @@ bool dmc16SetSpeed(uint8_t ch_, uint16_t speed_)
 
 	dmc16_t *p_dmc16 = &dmc16_tbl[ch_];
 	
-	p_dmc16->h_dmc16->speed = speed_;
+	if (speed_ < 0 || speed_ > 100)
+	{
+		return ret;
+	}
+	
+	p_dmc16->h_dmc16->speed = 511 * speed_ / 100;
 	
 	if (p_dmc16->h_dmc16->Init.pwm == TIM0 || p_dmc16->h_dmc16->Init.pwm == TIM2)
 	{
