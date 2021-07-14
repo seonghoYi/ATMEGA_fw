@@ -145,7 +145,7 @@ bool pwmBegin(uint8_t ch_)
 		p_pwm->h_tim16->Init.Tcnt		= 0;
 		p_pwm->h_tim16_pwm->Tcnt		= 0;
 		p_pwm->h_tim16_pwm->Ocr			= 0;
-		p_pwm->h_tim16_pwm->Icr			= 4999; // Fast PWM f=50Hz (in 8MHz case, set ICR3 as 2499)
+		p_pwm->h_tim16_pwm->Icr			= 2499; // Fast PWM f=50Hz (in 8MHz case, set ICR3 as 2499) 4999
 		
 		ret = true;
 		p_pwm->is_open = true;

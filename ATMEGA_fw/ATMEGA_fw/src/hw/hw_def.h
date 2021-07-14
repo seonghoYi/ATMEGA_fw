@@ -8,7 +8,7 @@
 #define _USE_HW_SYSTICK
 
 #define _USE_HW_GPIO
-#define		 HW_GPIO_MAX_CH					10
+#define		 HW_GPIO_MAX_CH					12
 
 #define _USE_HW_EXTI
 #define		 HW_EXTI_MAX_CH					3
@@ -33,6 +33,12 @@
 
 #define _USE_HW_SUCTION_MT
 #define		 HW_SUCTION_MT_MAX_CH			1
+
+#define _USE_HW_SG90
+#define		 HW_SG90_MAX_CH					2
+
+#define _USE_HW_SERVO
+#define		 HW_SERVO_MAX_CH				2
 
 /*
 #define _USE_HW_A4988

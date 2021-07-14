@@ -18,8 +18,8 @@
 #define _DEF_GPIO_MOTOR_PWM_L	7
 #define _DEF_GPIO_MOTOR_PWM_R	8
 #define _DEF_GPIO_SUCTION_PWM	9
-#define _DEF_GPIO10				10
-#define _DEF_GPIO11				11
+#define _DEF_GPIO_SERVO_L		10
+#define _DEF_GPIO_SERVO_R		11
 
 
 #define _DEF_INPUT		0
@@ -42,6 +42,12 @@
 #define _DEF_XIAOMI_0	0
 
 #define _DEF_SUCTION_0	0
+
+#define _DEF_SG90_1		0
+#define _DEF_SG90_2		1
+
+#define _DEF_SERVO_1	0
+#define _DEF_SERVO_2	1
 
 #define _DEF_CW			0
 #define _DEF_CCW		1
