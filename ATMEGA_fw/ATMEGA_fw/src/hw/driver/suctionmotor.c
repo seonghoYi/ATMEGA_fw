@@ -9,9 +9,6 @@
 static suctionmotor_driver_t motor;
 static bool is_init = false;
 
-void suctionMotorStop(void);
-void suctionMotorSetSpeed(uint16_t speed_);
-
 bool suctionMotorInit(void)
 {
 #ifdef _USE_HW_SUCTION_MT
@@ -19,8 +16,8 @@ bool suctionMotorInit(void)
 	{
 		is_init = xiaomiDriverInit(&motor);
 	}
-	suctionMotorSetSpeed(0);
-	suctionMotorStop();
+	motor.setSpeed(_DEF_SUCTION_0, 0);
+	motor.stopMotor(_DEF_SUCTION_0);
 	return true;
 	
 #endif
