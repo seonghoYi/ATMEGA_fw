@@ -4,6 +4,7 @@ void hwInit(void)
 {
 	bspInit();
 	gpioInit();
+	extiInit();
 	uartInit();
 	//ctcInit();
 	pwmInit();
@@ -13,5 +14,5 @@ void hwInit(void)
 	//rosServerInit();
 	
 	runLedInit();
-	lineLedInit();
+	//lineLedInit();
 }
