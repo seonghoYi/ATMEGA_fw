@@ -99,6 +99,7 @@ bool pwmBegin(uint8_t ch_)
 		p_pwm->h_tim16_pwm->Ocr			= 0;
 		p_pwm->h_tim16_pwm->Icr			= 0;
 		
+		
 		ret = true;
 		p_pwm->is_open = true;
 		
@@ -274,7 +275,7 @@ bool pwm16ChannelConfig(uint8_t ch_, uint8_t channel_)
 			ret = true;
 		}
 		
-		p_pwm->h_tim16_pwm->PWMMode		= TIM16_PWM_MOD_FASTPWM_10;
+		p_pwm->h_tim16_pwm->PWMMode		= TIM16_PWM_MOD_FASTPWM_9;
 		p_pwm->h_tim16_pwm->PWMWave_COM = TIM16_PWM_COM_NONINV;
 		
 		if (TIM16_PWM_Init(p_pwm->h_tim16, p_pwm->h_tim16_pwm) != HAL_OK)
@@ -324,19 +325,19 @@ bool pwmSetTcnt(uint8_t ch_, uint16_t tcnt_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		*(p_pwm->h_tim8->Regs->TCNTn) = tcnt_ & 0xFF;
+		*(p_pwm->h_tim8->Regs.TCNTn) = tcnt_ & 0xFF;
 		break;
 		#endif
 		case _DEF_TIM1:
-		*(p_pwm->h_tim16->Regs->TCNTnH) = (tcnt_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs->TCNTnL) = (tcnt_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.TCNTnH) = (tcnt_ >> 8) & 0xFF;
+		*(p_pwm->h_tim16->Regs.TCNTnL) = (tcnt_ & 0xFF);
 		break;
 		case _DEF_TIM2:
-		*(p_pwm->h_tim8->Regs->TCNTn) = tcnt_ & 0xFF;
+		*(p_pwm->h_tim8->Regs.TCNTn) = tcnt_ & 0xFF;
 		break;
 		case _DEF_TIM3:
-		*(p_pwm->h_tim16->Regs->TCNTnH) = (tcnt_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs->TCNTnL) = (tcnt_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.TCNTnH) = (tcnt_ >> 8) & 0xFF;
+		*(p_pwm->h_tim16->Regs.TCNTnL) = (tcnt_ & 0xFF);
 		break;
 		default:
 		break;
@@ -353,17 +354,17 @@ uint16_t pwmGetTcnt(uint8_t ch_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		ret = (uint16_t)(*(p_pwm->h_tim8->Regs->TCNTn));
+		ret = (uint16_t)(*(p_pwm->h_tim8->Regs.TCNTn));
 		break;
 		#endif
 		case _DEF_TIM1:
-		ret = ((((*(p_pwm->h_tim16->Regs->TCNTnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs->TCNTnL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.TCNTnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.TCNTnL)) & 0xFF));
 		break;
 		case _DEF_TIM2:
-		ret = (uint16_t)(*(p_pwm->h_tim8->Regs->TCNTn));
+		ret = (uint16_t)(*(p_pwm->h_tim8->Regs.TCNTn));
 		break;
 		case _DEF_TIM3:
-		ret = ((((*(p_pwm->h_tim16->Regs->TCNTnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs->TCNTnL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.TCNTnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.TCNTnL)) & 0xFF));
 		break;
 		default:
 		break;
@@ -379,11 +380,11 @@ bool pwmSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		*(p_pwm->h_tim8->Regs->OCRn) = ocr_ & 0xFF;
+		*(p_pwm->h_tim8->Regs.OCRn) = ocr_ & 0xFF;
 		break;
 		#endif
 		case _DEF_TIM2:
-		*(p_pwm->h_tim8->Regs->OCRn) = ocr_ & 0xFF;
+		*(p_pwm->h_tim8->Regs.OCRn) = ocr_ & 0xFF;
 		break;
 		default:
 		break;
@@ -391,18 +392,19 @@ bool pwmSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 	
 	if (channel_ & _DEF_CH_A)
 	{
-		*(p_pwm->h_tim16->Regs->OCRnAH) = (ocr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs->OCRnAL) = (ocr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.OCRnAH) = (ocr_ >> 8) & 0xFF;
+		*(p_pwm->h_tim16->Regs.OCRnAL) = (ocr_ & 0xFF);
+		
 	}
 	else if (channel_ & _DEF_CH_B)
 	{
-		*(p_pwm->h_tim16->Regs->OCRnBH) = (ocr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs->OCRnBL) = (ocr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.OCRnBH) = (ocr_ >> 8) & 0xFF;
+		*(p_pwm->h_tim16->Regs.OCRnBL) = (ocr_ & 0xFF);
 	}
 	else if (channel_ & _DEF_CH_C)
 	{
-		*(p_pwm->h_tim16->Regs->OCRnCH) = (ocr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs->OCRnCL) = (ocr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.OCRnCH) = (ocr_ >> 8) & 0xFF;
+		*(p_pwm->h_tim16->Regs.OCRnCL) = (ocr_ & 0xFF);
 	}
 	
 	return ret;
@@ -417,11 +419,11 @@ uint16_t pwmGetOcr(uint8_t ch_, uint8_t channel_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		ret = (uint16_t)(*(p_pwm->h_tim8->Regs->OCRn));
+		ret = (uint16_t)(*(p_pwm->h_tim8->Regs.OCRn));
 		break;
 		#endif
 		case _DEF_TIM2:
-		ret = (uint16_t)(*(p_pwm->h_tim8->Regs->OCRn));
+		ret = (uint16_t)(*(p_pwm->h_tim8->Regs.OCRn));
 		break;
 		default:
 		break;
@@ -429,15 +431,15 @@ uint16_t pwmGetOcr(uint8_t ch_, uint8_t channel_)
 	
 	if (channel_ & _DEF_CH_A)
 	{
-		ret = ((((*(p_pwm->h_tim16->Regs->OCRnAH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs->OCRnAL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.OCRnAH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.OCRnAL)) & 0xFF));
 	}
 	else if (channel_ & _DEF_CH_B)
 	{
-		ret = ((((*(p_pwm->h_tim16->Regs->OCRnBH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs->OCRnBL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.OCRnBH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.OCRnBL)) & 0xFF));
 	}
 	else if (channel_ & _DEF_CH_C)
 	{
-		ret = ((((*(p_pwm->h_tim16->Regs->OCRnCH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs->OCRnCL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.OCRnCH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.OCRnCL)) & 0xFF));
 	}
 	
 	return ret;
@@ -451,12 +453,12 @@ bool pwmSetIcr(uint8_t ch_, uint16_t icr_)
 	switch(ch_)
 	{
 		case _DEF_TIM1:
-		*(p_pwm->h_tim16->Regs->ICRnH) = (icr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs->ICRnL) = (icr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.ICRnH) = (icr_ >> 8) & 0xFF;
+		*(p_pwm->h_tim16->Regs.ICRnL) = (icr_ & 0xFF);
 		break;
 		case _DEF_TIM3:
-		*(p_pwm->h_tim16->Regs->ICRnH) = (icr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs->ICRnL) = (icr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.ICRnH) = (icr_ >> 8) & 0xFF;
+		*(p_pwm->h_tim16->Regs.ICRnL) = (icr_ & 0xFF);
 		break;
 		default:
 		break;
@@ -472,10 +474,10 @@ uint16_t pwmGetIcr(uint8_t ch_)
 	switch(ch_)
 	{
 		case _DEF_TIM1:
-		ret = ((((*(p_pwm->h_tim16->Regs->ICRnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs->ICRnL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.ICRnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
 		break;
 		case _DEF_TIM3:
-		ret = ((((*(p_pwm->h_tim16->Regs->ICRnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs->ICRnL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.ICRnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
 		break;
 		default:
 		break;

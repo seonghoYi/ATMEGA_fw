@@ -87,7 +87,7 @@ typedef struct
 	uint8_t TIMn;
 	
 	TIM8_Base_InitTypeDef Init;
-	TIM8_TypeDef *Regs;
+	TIM8_TypeDef Regs;
 	
 	uint8_t	ErrorCode;
 	
@@ -98,7 +98,7 @@ typedef struct
 	uint8_t TIMn;
 	
 	TIM16_Base_InitTypeDef Init;
-	TIM16_TypeDef *Regs;
+	TIM16_TypeDef Regs;
 	
 	uint8_t	ErrorCode;
 	

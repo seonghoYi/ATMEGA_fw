@@ -368,19 +368,19 @@ bool ctcSetTcnt(uint8_t ch_, uint16_t tcnt_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		*(p_ctc->h_tim8->Regs->TCNTn) = tcnt_ & 0xFF;
+		*(p_ctc->h_tim8->Regs.TCNTn) = tcnt_ & 0xFF;
 		break;
 		#endif
 		case _DEF_TIM1:
-		*(p_ctc->h_tim16->Regs->TCNTnH) = (tcnt_ >> 8) & 0xFF;
-		*(p_ctc->h_tim16->Regs->TCNTnL) = (tcnt_ & 0xFF);
+		*(p_ctc->h_tim16->Regs.TCNTnH) = (tcnt_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs.TCNTnL) = (tcnt_ & 0xFF);
 		break;
 		case _DEF_TIM2:
-		*(p_ctc->h_tim8->Regs->TCNTn) = tcnt_ & 0xFF;
+		*(p_ctc->h_tim8->Regs.TCNTn) = tcnt_ & 0xFF;
 		break;
 		case _DEF_TIM3:
-		*(p_ctc->h_tim16->Regs->TCNTnH) = (tcnt_ >> 8) & 0xFF;
-		*(p_ctc->h_tim16->Regs->TCNTnL) = (tcnt_ & 0xFF);
+		*(p_ctc->h_tim16->Regs.TCNTnH) = (tcnt_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs.TCNTnL) = (tcnt_ & 0xFF);
 		break;
 		default:
 		break;
@@ -397,17 +397,17 @@ uint16_t ctcGetTcnt(uint8_t ch_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		ret = *(p_ctc->h_tim8->Regs->TCNTn);
+		ret = *(p_ctc->h_tim8->Regs.TCNTn);
 		break;
 		#endif
 		case _DEF_TIM1:
-		ret = ((((*(p_ctc->h_tim16->Regs->TCNTnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->TCNTnL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs.TCNTnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs.TCNTnL)) & 0xFF));
 		break;
 		case _DEF_TIM2:
-		ret = *(p_ctc->h_tim8->Regs->TCNTn);
+		ret = *(p_ctc->h_tim8->Regs.TCNTn);
 		break;
 		case _DEF_TIM3:
-		ret = ((((*(p_ctc->h_tim16->Regs->TCNTnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->TCNTnL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs.TCNTnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs.TCNTnL)) & 0xFF));
 		break;
 		default:
 		break;
@@ -423,11 +423,11 @@ bool ctcSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		*(p_ctc->h_tim8->Regs->OCRn) = ocr_ & 0xFF;
+		*(p_ctc->h_tim8->Regs.OCRn) = ocr_ & 0xFF;
 		break;
 		#endif
 		case _DEF_TIM2:
-		*(p_ctc->h_tim8->Regs->OCRn) = ocr_ & 0xFF;
+		*(p_ctc->h_tim8->Regs.OCRn) = ocr_ & 0xFF;
 		break;
 		default:
 		break;
@@ -435,18 +435,18 @@ bool ctcSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 	
 	if (channel_ & _DEF_CH_A)
 	{
-		*(p_ctc->h_tim16->Regs->OCRnAH) = (ocr_ >> 8) & 0xFF;
-		*(p_ctc->h_tim16->Regs->OCRnAL) = (ocr_ & 0xFF);
+		*(p_ctc->h_tim16->Regs.OCRnAH) = (ocr_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs.OCRnAL) = (ocr_ & 0xFF);
 	}
 	else if (channel_ & _DEF_CH_B)
 	{
-		*(p_ctc->h_tim16->Regs->OCRnBH) = (ocr_ >> 8) & 0xFF;
-		*(p_ctc->h_tim16->Regs->OCRnBL) = (ocr_ & 0xFF);
+		*(p_ctc->h_tim16->Regs.OCRnBH) = (ocr_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs.OCRnBL) = (ocr_ & 0xFF);
 	}
 	else if (channel_ & _DEF_CH_C)
 	{
-		*(p_ctc->h_tim16->Regs->OCRnCH) = (ocr_ >> 8) & 0xFF;
-		*(p_ctc->h_tim16->Regs->OCRnCL) = (ocr_ & 0xFF);
+		*(p_ctc->h_tim16->Regs.OCRnCH) = (ocr_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs.OCRnCL) = (ocr_ & 0xFF);
 	}
 	
 	return ret;
@@ -461,11 +461,11 @@ uint16_t ctcGetOcr(uint8_t ch_, uint8_t channel_)
 	{
 		#ifndef _USE_HW_SYSTICK
 		case _DEF_TIM0:
-		ret = *(p_ctc->h_tim8->Regs->OCRn);
+		ret = *(p_ctc->h_tim8->Regs.OCRn);
 		break;
 		#endif
 		case _DEF_TIM2:
-		ret = *(p_ctc->h_tim8->Regs->OCRn);
+		ret = *(p_ctc->h_tim8->Regs.OCRn);
 		break;
 		default:
 		break;
@@ -473,15 +473,15 @@ uint16_t ctcGetOcr(uint8_t ch_, uint8_t channel_)
 	
 	if (channel_ & _DEF_CH_A)
 	{
-		ret = ((((*(p_ctc->h_tim16->Regs->OCRnAH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->OCRnAL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs.OCRnAH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs.OCRnAL)) & 0xFF));
 	}
 	else if (channel_ & _DEF_CH_B)
 	{
-		ret = ((((*(p_ctc->h_tim16->Regs->OCRnBH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->OCRnBL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs.OCRnBH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs.OCRnBL)) & 0xFF));
 	}
 	else if (channel_ & _DEF_CH_C)
 	{
-		ret = ((((*(p_ctc->h_tim16->Regs->OCRnCH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->OCRnCL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs.OCRnCH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs.OCRnCL)) & 0xFF));
 	}
 	
 	return ret;
@@ -495,12 +495,12 @@ bool ctcSetIcr(uint8_t ch_, uint16_t icr_)
 	switch(ch_)
 	{
 		case _DEF_TIM1:
-		*(p_ctc->h_tim16->Regs->ICRnH) = (icr_ >> 8) & 0xFF;
-		*(p_ctc->h_tim16->Regs->ICRnL) = (icr_ & 0xFF);
+		*(p_ctc->h_tim16->Regs.ICRnH) = (icr_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs.ICRnL) = (icr_ & 0xFF);
 		break;
 		case _DEF_TIM3:
-		*(p_ctc->h_tim16->Regs->ICRnH) = (icr_ >> 8) & 0xFF;
-		*(p_ctc->h_tim16->Regs->ICRnL) = (icr_ & 0xFF);
+		*(p_ctc->h_tim16->Regs.ICRnH) = (icr_ >> 8) & 0xFF;
+		*(p_ctc->h_tim16->Regs.ICRnL) = (icr_ & 0xFF);
 		break;
 		default:
 		break;
@@ -516,10 +516,10 @@ uint16_t ctcGetIcr(uint8_t ch_)
 	switch(ch_)
 	{
 		case _DEF_TIM1:
-		ret = ((((*(p_ctc->h_tim16->Regs->ICRnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->ICRnL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs.ICRnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs.ICRnL)) & 0xFF));
 		break;
 		case _DEF_TIM3:
-		ret = ((((*(p_ctc->h_tim16->Regs->ICRnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs->ICRnL)) & 0xFF));
+		ret = ((((*(p_ctc->h_tim16->Regs.ICRnH)) << 8) & 0xFF00) | ((*(p_ctc->h_tim16->Regs.ICRnL)) & 0xFF));
 		break;
 		default:
 		break;

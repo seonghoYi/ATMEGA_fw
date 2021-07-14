@@ -15,9 +15,9 @@
 #define _DEF_GPIO_MOTOR_EN		4
 #define _DEF_GPIO_MOTOR_DIR_L	5
 #define _DEF_GPIO_MOTOR_DIR_R	6
-#define _DEF_GPIO7				7
-#define _DEF_GPIO8				8
-#define _DEF_GPIO9				9
+#define _DEF_GPIO_MOTOR_PWM_L	7
+#define _DEF_GPIO_MOTOR_PWM_R	8
+#define _DEF_GPIO_SUCTION_PWM	9
 #define _DEF_GPIO10				10
 #define _DEF_GPIO11				11
 

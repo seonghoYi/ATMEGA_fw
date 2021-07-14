@@ -14,7 +14,6 @@ TIM16_TypeDef TIM16_descripter[] = {
 
 
 
-
 void TIM0_CLK_Configuration(TIM8_HandleTypeDef *htim);
 void TIM2_CLK_Configuration(TIM8_HandleTypeDef *htim);
 void TIM1_CLK_Configuration(TIM16_HandleTypeDef *htim);
@@ -27,21 +26,22 @@ HAL_StatusTypeDef TIM8_Base_Init(TIM8_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
 		return HAL_ERROR;
 	}
 	
-	htim->Regs = tim;
 
 	if (htim->TIMn == TIM2)
 	{
@@ -76,14 +76,16 @@ HAL_StatusTypeDef TIM8_Base_Start(TIM8_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -113,14 +115,16 @@ HAL_StatusTypeDef TIM8_Base_Stop(TIM8_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -136,14 +140,16 @@ HAL_StatusTypeDef TIM8_OC_Init(TIM8_HandleTypeDef *htim, TIM8_OC_InitTypeDef *ht
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -199,7 +205,7 @@ HAL_StatusTypeDef TIM8_OC_Init(TIM8_HandleTypeDef *htim, TIM8_OC_InitTypeDef *ht
 		default:
 		break;
 	}
-	
+
 	(*tim->OCRn) = htim_oc->Ocr;
 	(*tim->TCNTn) = htim_oc->Tcnt;
 	
@@ -212,14 +218,16 @@ HAL_StatusTypeDef TIM8_OC_Start(TIM8_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -257,6 +265,8 @@ HAL_StatusTypeDef TIM8_OC_Stop(TIM8_HandleTypeDef *htim)
 		break;
 	}
 	
+	tim = &(htim->Regs);
+	
 	if (tim == NULL)
 	{
 		return HAL_ERROR;
@@ -271,14 +281,16 @@ HAL_StatusTypeDef TIM8_PWM_Init(TIM8_HandleTypeDef *htim, TIM8_PWM_InitTypeDef *
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -327,14 +339,16 @@ HAL_StatusTypeDef TIM8_PWM_Start(TIM8_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -361,14 +375,16 @@ HAL_StatusTypeDef TIM8_PWM_Stop(TIM8_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM0:
-		tim = &TIM8_descripter[0];
+		htim->Regs = TIM8_descripter[0];
 		break;
 		case TIM2:
-		tim = &TIM8_descripter[1];
+		htim->Regs = TIM8_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -459,21 +475,21 @@ HAL_StatusTypeDef TIM16_Base_Init(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
 	
+	tim = &(htim->Regs);
+	
 	if (tim == NULL)
 	{
 		return HAL_ERROR;
 	}
-	
-	htim->Regs = tim;
 	
 	switch(htim->Init.Source)
 	{
@@ -504,14 +520,16 @@ HAL_StatusTypeDef TIM16_Base_Start(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -542,14 +560,16 @@ HAL_StatusTypeDef TIM16_Base_Stop(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -565,14 +585,16 @@ HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef 
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -734,14 +756,16 @@ HAL_StatusTypeDef TIM16_OC_Start(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -769,14 +793,16 @@ HAL_StatusTypeDef TIM16_OC_Stop(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -792,14 +818,16 @@ HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDe
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -968,14 +996,16 @@ HAL_StatusTypeDef TIM16_PWM_Start(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -1002,14 +1032,16 @@ HAL_StatusTypeDef TIM16_PWM_Stop(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -1025,14 +1057,16 @@ HAL_StatusTypeDef TIM16_IC_Init(TIM16_HandleTypeDef *htim, TIM16_IC_InitTypeDef 
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -1046,14 +1080,16 @@ HAL_StatusTypeDef TIM16_IC_Start(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -1067,14 +1103,16 @@ HAL_StatusTypeDef TIM16_IC_Stop(TIM16_HandleTypeDef *htim)
 	switch(htim->TIMn)
 	{
 		case TIM1:
-		tim = &TIM16_descripter[0];
+		htim->Regs = TIM16_descripter[0];
 		break;
 		case TIM3:
-		tim = &TIM16_descripter[1];
+		htim->Regs = TIM16_descripter[1];
 		break;
 		default:
 		break;
 	}
+	
+	tim = &(htim->Regs);
 	
 	if (tim == NULL)
 	{
@@ -1249,7 +1287,7 @@ HAL_StatusTypeDef TIM16_IC_Stop_IT(TIM16_HandleTypeDef *htim)
 
 void TIM0_CLK_Configuration(TIM8_HandleTypeDef *htim)
 {
-	TIM8_TypeDef *tim = &TIM8_descripter[0];
+	TIM8_TypeDef *tim = &(htim->Regs);
 	
 	switch(htim->Init.Prescaler)
 	{
@@ -1295,7 +1333,7 @@ void TIM0_CLK_Configuration(TIM8_HandleTypeDef *htim)
 
 void TIM2_CLK_Configuration(TIM8_HandleTypeDef *htim)
 {
-	TIM8_TypeDef *tim = &TIM8_descripter[1];
+	TIM8_TypeDef *tim = &(htim->Regs);
 	
 	if ((*(tim->TCCRn) & 0x03) == 0x06 || (*(tim->TCCRn) & 0x03) == 0x07)
 		return;
@@ -1334,7 +1372,7 @@ void TIM2_CLK_Configuration(TIM8_HandleTypeDef *htim)
 
 void TIM1_CLK_Configuration(TIM16_HandleTypeDef *htim)
 {
-	TIM16_TypeDef *tim = &TIM16_descripter[0];
+	TIM16_TypeDef *tim = &(htim->Regs);
 	
 	if ((*(tim->TCCRnB) & 0x03) == 0x06 || (*(tim->TCCRnB) & 0x03) == 0x07)
 		return;
@@ -1373,7 +1411,7 @@ void TIM1_CLK_Configuration(TIM16_HandleTypeDef *htim)
 
 void TIM3_CLK_Configuration(TIM16_HandleTypeDef *htim)
 {
-	TIM16_TypeDef *tim = &TIM16_descripter[1];
+	TIM16_TypeDef *tim = &(htim->Regs);
 	
 	if ((*(tim->TCCRnB) & 0x03) == 0x06 || (*(tim->TCCRnB) & 0x03) == 0x07)
 		return;
