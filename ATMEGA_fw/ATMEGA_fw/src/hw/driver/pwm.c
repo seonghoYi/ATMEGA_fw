@@ -127,6 +127,7 @@ bool pwmBegin(uint8_t ch_)
 		p_pwm->h_tim8_pwm->Tcnt			= 0;
 		p_pwm->h_tim8_pwm->Ocr			= 0;
 		
+		
 		if (TIM8_PWM_Init(p_pwm->h_tim8, p_pwm->h_tim8_pwm) != HAL_OK)
 		{
 			ret = false;
@@ -299,7 +300,7 @@ bool pwm16ChannelConfig(uint8_t ch_, uint8_t channel_)
 		}
 		
 		p_pwm->h_tim16_pwm->PWMMode		= TIM16_PWM_MOD_FASTPWM_ICR;
-		p_pwm->h_tim16_pwm->PWMWave_COM	= TIM16_PWM_COM_NORMAL;
+		p_pwm->h_tim16_pwm->PWMWave_COM	= TIM16_PWM_COM_NONINV;
 		
 		if (TIM16_PWM_Init(p_pwm->h_tim16, p_pwm->h_tim16_pwm) != HAL_OK)
 		{
@@ -474,10 +475,11 @@ uint16_t pwmGetIcr(uint8_t ch_)
 	switch(ch_)
 	{
 		case _DEF_TIM1:
-		ret = ((((*(p_pwm->h_tim16->Regs.ICRnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
+		ret = ((((*(p_pwm->h_tim16->Regs.ICRnH)) << 8)) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
 		break;
 		case _DEF_TIM3:
-		ret = ((((*(p_pwm->h_tim16->Regs.ICRnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
+		//ret = (((((*(p_pwm->h_tim16->Regs.ICRnH))) << 8)) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
+		ret = *(p_pwm->h_tim16->Regs.ICRn);
 		break;
 		default:
 		break;
