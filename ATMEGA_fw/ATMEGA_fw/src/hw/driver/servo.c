@@ -19,7 +19,10 @@ bool servoInit(void)
 	}
 	
 	servo.setAngle(_DEF_SG90_1, 0);
-	servo.setAngle(_DEF_SG90_2, 0);
+	servo.setAngle(_DEF_SG90_2, 180);
+	delay(100);
+	//sg90Write(_DEF_SG90_1, 0);
+	//sg90Write(_DEF_SG90_2, 0);
 	
 	return true;
 }
@@ -41,6 +44,7 @@ bool servoWrite(uint8_t ch_, uint8_t angle_)
 	}
 	
 	servo.setAngle(ch_, angle_);
+	//sg90Write(ch_, angle_);
 	return true;
 }
 
