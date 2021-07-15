@@ -15,4 +15,6 @@ void hwInit(void)
 	
 	runLedInit();
 	//lineLedInit();
+	
+	servoInit();
 }
