@@ -330,15 +330,13 @@ bool pwmSetTcnt(uint8_t ch_, uint16_t tcnt_)
 		break;
 		#endif
 		case _DEF_TIM1:
-		*(p_pwm->h_tim16->Regs.TCNTnH) = (tcnt_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs.TCNTnL) = (tcnt_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.TCNTn) = tcnt_;
 		break;
 		case _DEF_TIM2:
 		*(p_pwm->h_tim8->Regs.TCNTn) = tcnt_ & 0xFF;
 		break;
 		case _DEF_TIM3:
-		*(p_pwm->h_tim16->Regs.TCNTnH) = (tcnt_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs.TCNTnL) = (tcnt_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.TCNTn) = tcnt_;;
 		break;
 		default:
 		break;
@@ -359,13 +357,13 @@ uint16_t pwmGetTcnt(uint8_t ch_)
 		break;
 		#endif
 		case _DEF_TIM1:
-		ret = ((((*(p_pwm->h_tim16->Regs.TCNTnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.TCNTnL)) & 0xFF));
+		ret = *(p_pwm->h_tim16->Regs.TCNTn);
 		break;
 		case _DEF_TIM2:
 		ret = (uint16_t)(*(p_pwm->h_tim8->Regs.TCNTn));
 		break;
 		case _DEF_TIM3:
-		ret = ((((*(p_pwm->h_tim16->Regs.TCNTnH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.TCNTnL)) & 0xFF));
+		ret = *(p_pwm->h_tim16->Regs.TCNTn);
 		break;
 		default:
 		break;
@@ -393,19 +391,16 @@ bool pwmSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 	
 	if (channel_ & _DEF_CH_A)
 	{
-		*(p_pwm->h_tim16->Regs.OCRnAH) = (ocr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs.OCRnAL) = (ocr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.OCRnA) = ocr_;
 		
 	}
 	else if (channel_ & _DEF_CH_B)
 	{
-		*(p_pwm->h_tim16->Regs.OCRnBH) = (ocr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs.OCRnBL) = (ocr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.OCRnB) = ocr_;
 	}
 	else if (channel_ & _DEF_CH_C)
 	{
-		*(p_pwm->h_tim16->Regs.OCRnCH) = (ocr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs.OCRnCL) = (ocr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.OCRnC) = ocr_;
 	}
 	
 	return ret;
@@ -432,15 +427,15 @@ uint16_t pwmGetOcr(uint8_t ch_, uint8_t channel_)
 	
 	if (channel_ & _DEF_CH_A)
 	{
-		ret = ((((*(p_pwm->h_tim16->Regs.OCRnAH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.OCRnAL)) & 0xFF));
+		ret = *(p_pwm->h_tim16->Regs.OCRnA);
 	}
 	else if (channel_ & _DEF_CH_B)
 	{
-		ret = ((((*(p_pwm->h_tim16->Regs.OCRnBH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.OCRnBL)) & 0xFF));
+		ret = *(p_pwm->h_tim16->Regs.OCRnB);
 	}
 	else if (channel_ & _DEF_CH_C)
 	{
-		ret = ((((*(p_pwm->h_tim16->Regs.OCRnCH)) << 8) & 0xFF00) | ((*(p_pwm->h_tim16->Regs.OCRnCL)) & 0xFF));
+		ret = *(p_pwm->h_tim16->Regs.OCRnC);
 	}
 	
 	return ret;
@@ -454,12 +449,10 @@ bool pwmSetIcr(uint8_t ch_, uint16_t icr_)
 	switch(ch_)
 	{
 		case _DEF_TIM1:
-		*(p_pwm->h_tim16->Regs.ICRnH) = (icr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs.ICRnL) = (icr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.ICRn) = icr_;
 		break;
 		case _DEF_TIM3:
-		*(p_pwm->h_tim16->Regs.ICRnH) = (icr_ >> 8) & 0xFF;
-		*(p_pwm->h_tim16->Regs.ICRnL) = (icr_ & 0xFF);
+		*(p_pwm->h_tim16->Regs.ICRn) = icr_;
 		break;
 		default:
 		break;
@@ -475,10 +468,9 @@ uint16_t pwmGetIcr(uint8_t ch_)
 	switch(ch_)
 	{
 		case _DEF_TIM1:
-		ret = ((((*(p_pwm->h_tim16->Regs.ICRnH)) << 8)) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
+		ret = *(p_pwm->h_tim16->Regs.ICRn);
 		break;
 		case _DEF_TIM3:
-		//ret = (((((*(p_pwm->h_tim16->Regs.ICRnH))) << 8)) | ((*(p_pwm->h_tim16->Regs.ICRnL)) & 0xFF));
 		ret = *(p_pwm->h_tim16->Regs.ICRn);
 		break;
 		default:

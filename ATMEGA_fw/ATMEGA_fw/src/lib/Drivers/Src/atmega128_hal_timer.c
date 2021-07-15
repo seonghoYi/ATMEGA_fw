@@ -8,8 +8,8 @@ TIM8_TypeDef TIM8_descripter[] = {
 };
 
 TIM16_TypeDef TIM16_descripter[] = {
-	{&TCCR1A, &TCCR1B, &TCCR1C, &TCNT1L,&TCNT1H, &OCR1AL, &OCR1AH, &OCR1BL, &OCR1BH, &OCR1CL, &OCR1CH, &ICR1L, &ICR1H},
-	{&TCCR3A, &TCCR3B, &TCCR3C, &TCNT3L,&TCNT3H, &OCR3AL, &OCR3AH, &OCR3BL, &OCR3BH, &OCR3CL, &OCR3CH, &ICR3L, &ICR3H}
+	{&TCCR1A, &TCCR1B, &TCCR1C, &TCNT1, &OCR1A, &OCR1B, &OCR1C, &ICR1},
+	{&TCCR3A, &TCCR3B, &TCCR3C, &TCNT3, &OCR3A, &OCR3B, &OCR3C, &ICR3}
 };
 
 
@@ -536,8 +536,7 @@ HAL_StatusTypeDef TIM16_Base_Start(TIM16_HandleTypeDef *htim)
 		return HAL_ERROR;
 	}
 	
-	*(tim->TCNTnH) = (htim->Init.Tcnt >> 8) & 0xFF;
-	*(tim->TCNTnL) = htim->Init.Tcnt & 0xFF;
+	*(tim->TCNTn) = htim->Init.Tcnt;
 	
 	switch(htim->TIMn)
 	{
@@ -663,8 +662,7 @@ HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef 
 			break;
 		}
 		
-		*(tim->OCRnAH) = (htim_oc->Ocr >> 8) & 0xFF;
-		*(tim->OCRnAL) = htim_oc->Ocr & 0xFF;
+		*(tim->OCRnA) = htim_oc->Ocr;
 	}
 	else if((htim->Init.Channel) & TIM16_CHANNEL_B)
 	{
@@ -701,8 +699,7 @@ HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef 
 			default:
 			break;
 		}
-		*(tim->OCRnBH) = (htim_oc->Ocr >> 8) & 0xFF;
-		*(tim->OCRnBL) = htim_oc->Ocr & 0xFF;
+		*(tim->OCRnB) = htim_oc->Ocr;
 	}
 	else if((htim->Init.Channel) & TIM16_CHANNEL_C)
 	{
@@ -741,10 +738,8 @@ HAL_StatusTypeDef TIM16_OC_Init(TIM16_HandleTypeDef *htim, TIM16_OC_InitTypeDef 
 		}
 	}
 	
-	*(tim->TCNTnH) = (htim_oc->Tcnt >> 8) & 0xFF;
-	*(tim->TCNTnL) = htim_oc->Tcnt & 0xFF;
-	*(tim->ICRnH) = (htim_oc->Icr >> 8) & 0xFF;
-	*(tim->ICRnL) = htim_oc->Icr & 0xFF;
+	*(tim->TCNTn) = htim_oc->Tcnt;
+	*(tim->ICRn) = htim_oc->Icr;
 	
 	
 	return HAL_OK;
@@ -936,6 +931,8 @@ HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDe
 			default:
 			break;
 		}
+		
+		*(tim->OCRnA) = htim_pwm->Ocr;
 	}
 	else if ((htim->Init.Channel) & TIM16_CHANNEL_B)
 	{
@@ -960,6 +957,7 @@ HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDe
 			default:
 			break;
 		}
+		*(tim->OCRnB) = htim_pwm->Ocr;
 	}
 	else if ((htim->Init.Channel) & TIM16_CHANNEL_C)
 	{
@@ -984,8 +982,11 @@ HAL_StatusTypeDef TIM16_PWM_Init(TIM16_HandleTypeDef *htim, TIM16_PWM_InitTypeDe
 			default:
 			break;
 		}
+		*(tim->OCRnC) = htim_pwm->Ocr;
 	}
 	
+	*(tim->TCNTn) = htim_pwm->Tcnt;
+	*(tim->ICRn) = htim_pwm->Icr;
 	
 	return HAL_OK;
 }

@@ -98,16 +98,10 @@ typedef struct
 	volatile uint8_t *TCCRnA;
 	volatile uint8_t *TCCRnB;
 	volatile uint8_t *TCCRnC;
-	volatile uint8_t *TCNTnL;
-	volatile uint8_t *TCNTnH;
-	volatile uint8_t *OCRnAL;
-	volatile uint8_t *OCRnAH;
-	volatile uint8_t *OCRnBL;
-	volatile uint8_t *OCRnBH;
-	volatile uint8_t *OCRnCL;
-	volatile uint8_t *OCRnCH;
-	volatile uint8_t *ICRnL;
-	volatile uint8_t *ICRnH;
+	volatile uint16_t *TCNTn;
+	volatile uint16_t *OCRnA;
+	volatile uint16_t *OCRnB;
+	volatile uint16_t *OCRnC;
 	volatile uint16_t *ICRn;
 } TIM16_TypeDef;
 
