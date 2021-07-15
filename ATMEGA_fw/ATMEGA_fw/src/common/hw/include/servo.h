@@ -7,7 +7,7 @@
 #define SERVO_MAX_CH	HW_SERVO_MAX_CH
 
 
-typedef struct
+typedef struct servo_driver_t
 {
 		bool		(*init)			(uint8_t ch_);
 		bool		(*setAngle)		(uint8_t ch_, uint8_t angle_);
