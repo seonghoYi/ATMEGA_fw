@@ -392,7 +392,6 @@ bool pwmSetOcr(uint8_t ch_, uint16_t ocr_, uint8_t channel_)
 	if (channel_ & _DEF_CH_A)
 	{
 		*(p_pwm->h_tim16->Regs.OCRnA) = ocr_;
-		
 	}
 	else if (channel_ & _DEF_CH_B)
 	{
