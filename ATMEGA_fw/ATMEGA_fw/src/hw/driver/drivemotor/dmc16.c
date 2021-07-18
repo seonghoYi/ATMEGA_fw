@@ -37,7 +37,7 @@ bool dmc16Init(uint8_t ch_)
 		p_dmc16->reverse_rotate			= _DEF_CW;
 		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_0;
 		p_dmc16->h_dmc16->Init.pwm		= TIM1;
-		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_A;
+		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_B;
 		p_dmc16->h_dmc16->enable		= false;
 		p_dmc16->h_dmc16->direction		= _REVERSE_ROTATION;
 		p_dmc16->h_dmc16->speed			= 0;
@@ -50,7 +50,7 @@ bool dmc16Init(uint8_t ch_)
 		p_dmc16->reverse_rotate			= _DEF_CCW;
 		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_1;
 		p_dmc16->h_dmc16->Init.pwm		= TIM1;
-		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_B;
+		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_A;
 		p_dmc16->h_dmc16->enable		= false;
 		p_dmc16->h_dmc16->direction		= _NORMAL_ROTATION;
 		p_dmc16->h_dmc16->speed			= 0;
