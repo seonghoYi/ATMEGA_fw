@@ -101,12 +101,15 @@ enum
 
 
 bool		hc05Init(void);
-bool		hc05Open(hc05_t *p_hc05, uint8_t ch_, uint32_t baud_);
-bool		hc05IsOpen(hc05_t *p_hc05);
-uint32_t	hc05Available(hc05_t *p_hc05);
-uint8_t		hc05Read(hc05_t *p_hc05);
-uint32_t	hc05Write(hc05_t *p_hc05, uint8_t *p_data, uint32_t length);
-uint32_t	hc05Printf(hc05_t *p_hc05, char *fmt, ...);
-bool		hc05flush(hc05_t *p_hc05);
+bool		hc05Open(uint8_t ch_, uint32_t baud_);
+bool		hc05IsOpen(void);
+uint32_t	hc05Available(void);
+uint8_t		hc05Read(void);
+uint32_t	hc05Write(uint8_t *p_data, uint32_t length);
+uint32_t	hc05Printf(char *fmt, ...);
+bool		hc05flush(void);
+bool		hc05SetConfigMode(void);
+bool		hc05ClearConfigMode(void);
+
 #endif
 #endif /* HC05_H_ */
