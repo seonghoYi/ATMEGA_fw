@@ -1,8 +1,8 @@
 ﻿#include "ap.h"
 
 #define P_GAIN	50 //50
-#define I_GAIN	30 //30
-#define D_GAIN	30 //30
+#define I_GAIN	43 //30
+#define D_GAIN	7 //30
 
 /*
 volatile double L_interval_time;
@@ -20,8 +20,8 @@ typedef struct
 
 typedef struct 
 {
-	int Left_rpm_goal;
-	int Right_rpm_goal;
+	float Left_rpm_goal;
+	float Right_rpm_goal;
 	float prev_Lrpm;
 	float prev_Rrpm;
 	
@@ -61,14 +61,13 @@ void apInit(void)
 void rosServerInit(ros_t *p_ros);
 void rosServerRun(ros_t *p_ros);
 void calculatePID(pid_t *p_pid_variables);
-
+void rosPublishRPM(ros_t *p_ros, pid_t *p_pid_variables);
 
 void apMain(void)
 {	
 	pid_t pid_variables;
-	
-	pid_variables.Left_rpm_goal = 20;
-	pid_variables.Right_rpm_goal = 20;
+	pid_variables.Left_rpm_goal = 0;
+	pid_variables.Right_rpm_goal = 0;
 	pid_variables.ep_LeftTerm = 0;
 	pid_variables.ep_RightTerm = 0;
 	pid_variables.ei_LeftTerm = 0;
@@ -83,10 +82,9 @@ void apMain(void)
 	ros_t ros_handle;
 	rosServerInit(&ros_handle);
 	
-	
-	motorSetLeftDirection(true);
-	motorSetRightDirection(true);
-	motorRun();
+	//motorSetLeftDirection(true);
+	//motorSetRightDirection(true);
+	//motorRun();
 	//motorSetSpeed(40);
 	
 	int starttick = millis();
@@ -109,19 +107,16 @@ void apMain(void)
 			pid_variables.dt = (float)dt/1000; // 0.000066625s
 			
 			calculatePID(&pid_variables);
+			rosServerRun(&ros_handle);
+			rosPublishRPM(&ros_handle, &pid_variables);
 		}
-	
-		/*
-		if (uartAvailable(_DEF_UART1))
-		{
-			uint8_t rx_data = uartRead(_DEF_UART1);
-			uartWrite(_DEF_UART1, &rx_data, 1);
-		}
-		*/
-		//rosServerRun();
 	}
 }
 
+
+/*---------------------------------ROS---------------------------------*/
+static float left_goal;
+static float right_goal;
 
 void rosStopMotor(uint8_t *params);
 void rosRunMotor(uint8_t *params);
@@ -132,7 +127,9 @@ void rosSetRightDirection(uint8_t *params);
 void rosBTSetConfigMode(uint8_t *params);
 void rosBTClearConfigMode(uint8_t *params);
 void rosBTWrite(uint8_t *params);
-void rosBTPrintf(uint8_t *params);
+void rosSuctionRun(uint8_t *params);
+void rosSuctionStop(uint8_t *params);
+void rosWriteServo(uint8_t *params);
 
 void rosServerInit(ros_t *p_ros)
 {
@@ -148,7 +145,9 @@ void rosServerInit(ros_t *p_ros)
 	rosAddService(p_ros, rosBTSetConfigMode);
 	rosAddService(p_ros, rosBTClearConfigMode);
 	rosAddService(p_ros, rosBTWrite);
-	rosAddService(p_ros, rosBTPrintf);
+	rosAddService(p_ros, rosSuctionRun);
+	rosAddService(p_ros, rosSuctionStop);
+	rosAddService(p_ros, rosWriteServo);
 	
 	rosOpen(p_ros, _DEF_ROS0, 38400);
 }
@@ -181,12 +180,14 @@ void rosRunMotor(uint8_t *params)
 
 void rosSetLeftSpeed(uint8_t *params)
 {
-	motorSetLeftSpeed((uint16_t)params[0]);
+	left_goal = params[0];
+	//motorSetLeftSpeed((uint16_t)params[0]);
 }
 
 void rosSetRightSpeed(uint8_t *params)
 {
-	motorSetRightSpeed((uint16_t)params[0]);
+	right_goal = params[0];
+	//motorSetRightSpeed((uint16_t)params[0]);
 }
 
 void rosSetLeftDirection(uint8_t *params)
@@ -214,10 +215,38 @@ void rosBTWrite(uint8_t *params)
 	hc05Write(&params[1], params[0]);
 }
 
-void rosBTPrintf(uint8_t *params)
+void rosSuctionRun(uint8_t *params)
 {
-	hc05Printf(params);
+	suctionMotorSetSpeed(100);
+	suctionMotorRun();
 }
+
+void rosSuctionStop(uint8_t *params)
+{
+	suctionMotorSetSpeed(10);
+	suctionMotorRun();
+}
+
+void rosWriteServo(uint8_t *params)
+{
+	switch(params[0])
+	{
+		case 0:
+			servoWrite(_DEF_SERVO_1, params[1]);
+		break;
+		case 1:
+			servoWrite(_DEF_SERVO_2, params[1]);
+		break;
+	}
+}
+
+/*---------------------------------ROS_END---------------------------------*/
+
+
+
+
+/*---------------------------------PID_CONTROL---------------------------------*/
+#define ALPHA	0.98
 
 void calculatePID(pid_t *p_pid_variables)
 {
@@ -225,26 +254,29 @@ void calculatePID(pid_t *p_pid_variables)
 	float R_rpm = 0;
 	L_rpm = 60 * encoder_pulse.L_edge / 254.4 / p_pid_variables->dt; // 0.000026s
 	R_rpm = 60 * encoder_pulse.R_edge / 254.4 / p_pid_variables->dt; // 0.000026s
-	//uartPrintf(_DEF_UART0, "L_rpm: %d, R_rpm: %d\n", L_rpm, R_rpm);
-	//uartPrintf(_DEF_UART0, "%d\n", dt);
+
 	encoder_pulse.L_edge = 0; // 0.0000005s
 	encoder_pulse.R_edge = 0; // 0.0000005s
 	
+	p_pid_variables->Left_rpm_goal = left_goal;
+	p_pid_variables->Right_rpm_goal = right_goal;
+	
 	//R_rpm = L_rpm;
 	//L_rpm = R_rpm;
+	
 	
 	if (p_pid_variables->prev_Lrpm - L_rpm > 0)
 	{
 		if ((p_pid_variables->prev_Lrpm - L_rpm) > 15)
 		{
-			L_rpm = p_pid_variables->prev_Lrpm * 0.98 + L_rpm * 0.02;
+			L_rpm = p_pid_variables->prev_Lrpm * ALPHA + L_rpm * (1-ALPHA);
 		}
 	}
 	else
 	{
 		if (-(p_pid_variables->prev_Lrpm - L_rpm) > 15)
 		{
-			L_rpm = p_pid_variables->prev_Lrpm * 0.02 + L_rpm * 0.98;
+			L_rpm = p_pid_variables->prev_Lrpm * (1-ALPHA) + L_rpm * ALPHA;
 		}
 	}
 	
@@ -252,14 +284,14 @@ void calculatePID(pid_t *p_pid_variables)
 	{
 		if ((p_pid_variables->prev_Rrpm - R_rpm) > 15)
 		{
-			R_rpm = p_pid_variables->prev_Rrpm * 0.98 + R_rpm * 0.02;
+			R_rpm = p_pid_variables->prev_Rrpm * ALPHA + R_rpm * (1-ALPHA);
 		}
 	}
 	else
 	{
 		if (-(p_pid_variables->prev_Rrpm - R_rpm) > 15)
 		{
-			R_rpm = p_pid_variables->prev_Rrpm * 0.02 + R_rpm * 0.98;
+			R_rpm = p_pid_variables->prev_Rrpm * (1-ALPHA) + R_rpm * ALPHA;
 		}
 	}
 	
@@ -270,7 +302,7 @@ void calculatePID(pid_t *p_pid_variables)
 	
 	p_pid_variables->ep_LeftTerm = p_pid_variables->Left_rpm_goal - L_rpm; // 0.000021875s
 	p_pid_variables->ep_RightTerm = p_pid_variables->Right_rpm_goal - R_rpm; // 0.000021875s
-	
+	/*
 	if (p_pid_variables->ei_LeftTerm < 100 && p_pid_variables->ei_LeftTerm > -100) // 0.000017s
 	{
 		p_pid_variables->ei_LeftTerm += p_pid_variables->ep_LeftTerm * p_pid_variables->dt; //0.00003375s
@@ -280,9 +312,31 @@ void calculatePID(pid_t *p_pid_variables)
 	{
 		p_pid_variables->ei_RightTerm += p_pid_variables->ep_RightTerm * p_pid_variables->dt; //0.00003375s
 	}
+	*/
 	
-	p_pid_variables->ed_LeftTerm = -(p_pid_variables->ep_LeftTerm - p_pid_variables->prevLeftError) * p_pid_variables->dt; //0.000032625s
-	p_pid_variables->ed_RightTerm = -(p_pid_variables->ep_RightTerm - p_pid_variables->prevRightError) * p_pid_variables->dt; //0.000032625s
+	p_pid_variables->ei_LeftTerm += p_pid_variables->ep_LeftTerm * p_pid_variables->dt; //0.00003375s
+	p_pid_variables->ei_RightTerm += p_pid_variables->ep_RightTerm * p_pid_variables->dt; //0.00003375s
+	
+	p_pid_variables->ed_LeftTerm = -(p_pid_variables->ep_LeftTerm - p_pid_variables->prevLeftError) / p_pid_variables->dt; //0.000032625s
+	p_pid_variables->ed_RightTerm = -(p_pid_variables->ep_RightTerm - p_pid_variables->prevRightError) / p_pid_variables->dt; //0.000032625s
+	
+	if (p_pid_variables->ed_LeftTerm > 50)
+	{
+		p_pid_variables->ed_LeftTerm = 50;
+	}
+	else if(p_pid_variables->ed_LeftTerm < -50)
+	{
+		p_pid_variables->ed_LeftTerm = -50;
+	}
+	
+	if (p_pid_variables->ed_RightTerm > 50)
+	{
+		p_pid_variables->ed_RightTerm= 50;
+	}
+	else if(p_pid_variables->ed_RightTerm < -50)
+	{
+		p_pid_variables->ed_RightTerm = -50;
+	}
 	
 	//uartPrintf(_DEF_UART0, "ep_l: %d, ep_r: %d, ei_l: %d, ei_r: %d, ed_l: %d, ed_r: %d\n", ep_LeftTerm, ep_RightTerm, ei_LeftTerm, ei_RightTerm, ed_LeftTerm, ed_RightTerm);
 	
@@ -293,11 +347,11 @@ void calculatePID(pid_t *p_pid_variables)
 	float Right_duty = (P_GAIN * p_pid_variables->ep_RightTerm + I_GAIN * p_pid_variables->ei_RightTerm + D_GAIN * p_pid_variables->ed_RightTerm) / 100; //0.00014725s
 	//uartPrintf(_DEF_UART0, "goal: %d, Left rpm: %d, Right rpm: %d, Left duty: %d, Right duty: %d\n", rpm_goal, L_rpm, R_rpm, Left_duty, Right_duty);
 	
-	//uartPrintf(_DEF_UART0, "goal: %d, Left rpm: %d, Right rpm: %d, ep_l: %d, ep_r: %d, ei_l: %d, ei_r: %d, ed_l: %d, ed_r: %d, time: %lu\n", rpm_goal, (int)L_rpm, (int)R_rpm, (int)ep_LeftTerm, (int)ep_RightTerm, (int)ei_LeftTerm, (int)ei_RightTerm, (int)ed_LeftTerm, (int)ed_RightTerm, millis());
+	//uartPrintf(_DEF_UART0, "goal: %d, Left rpm: %d, Right rpm: %d, ep_l: %d, ep_r: %d, ei_l: %d, ei_r: %d, ed_l: %d, ed_r: %d, time: %lu\n", p_pid_variables->Left_rpm_goal, (int)L_rpm, (int)R_rpm, (int)(P_GAIN * p_pid_variables->ep_LeftTerm / 100), (int)(P_GAIN * p_pid_variables->ep_RightTerm / 100), (int)(I_GAIN * p_pid_variables->ei_LeftTerm / 100), (int)(I_GAIN * p_pid_variables->ei_RightTerm / 100), (int)(D_GAIN * p_pid_variables->ed_LeftTerm / 100), (int)(D_GAIN * p_pid_variables->ed_RightTerm / 100), millis());
 	
 	
-	int duty_L = 50 + (int)(Left_duty + 0.5); // 0.000027125s
-	int duty_R = 50 + (int)(Right_duty + 0.5); // 0.000027125s
+	int duty_L = p_pid_variables->Left_rpm_goal + (int)(Left_duty + 0.5); // 0.000027125s
+	int duty_R = p_pid_variables->Right_rpm_goal + (int)(Right_duty + 0.5); // 0.000027125s
 	
 	//uartPrintf(_DEF_UART0, "goal: %d, Left rpm: %d, Right rpm: %d, Left duty: %d, Right duty: %d\n", rpm_goal, L_rpm, R_rpm, duty_L, duty_R);
 	
@@ -325,7 +379,13 @@ void calculatePID(pid_t *p_pid_variables)
 	p_pid_variables->prev_Rrpm = R_rpm;
 }
 
-	
+
+void rosPublishRPM(ros_t *p_ros, pid_t *p_pid_variables)
+{
+	uint8_t msg[] = {((uint16_t)p_pid_variables->prev_Lrpm) & 0xFF, ((uint16_t)p_pid_variables->prev_Lrpm >> 8) & 0xFF, ((uint16_t)p_pid_variables->prev_Rrpm) & 0xFF, ((uint16_t)p_pid_variables->prev_Rrpm >> 8) & 0xFF};
+	rosSendInst(p_ros, 0, 0, &msg[0], 4);
+}
+
 
 
 void INT5_Callback(void)
@@ -344,3 +404,6 @@ void INT6_Callback(void)
 	//R_starttick = (double)millis();
 	//uartPrintf(_DEF_UART0, "R_INT\n");//, %ld\n", millis());
 }
+
+
+/*---------------------------------PID_CONTROL_END---------------------------------*/
