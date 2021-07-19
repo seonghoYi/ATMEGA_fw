@@ -5,6 +5,7 @@
 
 #define HAL_MODULE_ENABLED
 #define HAL_GPIO_MODULE_ENABLED
+#define HAL_EXTI_MODULE_ENABLED
 #define HAL_UART_MODULE_ENABLED
 #define HAL_I2C_MODULE_ENABLED
 #define HAL_TIMER_MODULE_ENABLED
@@ -12,6 +13,10 @@
 
 #ifdef HAL_GPIO_MODULE_ENABLED
 #include "atmega128_hal_gpio.h"
+#endif
+
+#ifdef HAL_EXTI_MODULE_ENABLED
+#include "atmega128_hal_exti.h"
 #endif
 
 #ifdef HAL_UART_MODULE_ENABLED

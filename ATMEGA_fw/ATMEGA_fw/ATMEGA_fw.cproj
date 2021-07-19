@@ -142,6 +142,11 @@
       <Value>../src/lib/Device/Inc</Value>
       <Value>../src/lib/Drivers/Inc</Value>
       <Value>../src/lib/Drivers/Src</Value>
+<<<<<<< HEAD
+=======
+      <Value>../src/common/hw/include/steppermotor</Value>
+      <Value>../src/hw/driver/steppermotor</Value>
+>>>>>>> hal_128
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -172,10 +177,14 @@
     <Folder Include="src\common\hw" />
     <Folder Include="src\common\hw\include" />
     <Folder Include="src\common\hw\include\drivemotor" />
+    <Folder Include="src\common\hw\include\servo" />
+    <Folder Include="src\common\hw\include\suctionmotor" />
     <Folder Include="src\common\hw\include\ros" />
     <Folder Include="src\hw" />
     <Folder Include="src\hw\driver" />
     <Folder Include="src\hw\driver\drivemotor" />
+    <Folder Include="src\hw\driver\servo" />
+    <Folder Include="src\hw\driver\suctionmotor" />
     <Folder Include="src\hw\driver\ros" />
     <Folder Include="src\lib" />
     <Folder Include="src\lib\Device" />
@@ -195,9 +204,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\bsp\atmega128_it.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\bsp\atmega128_it.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\bsp\bsp.c">
@@ -224,19 +230,46 @@
     <Compile Include="src\common\hw\include\drivemotor\a4988.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\common\hw\include\drivemotor\dmc16.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\exti.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\common\hw\include\gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\hc05.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\line_led.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\pwm.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\common\hw\include\ros\ros.h">
+    <Compile Include="src\common\hw\include\ros.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\ros\ros_uart.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\ros_server.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\run_led.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\servo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\servo\sg90.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\suctionmotor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\common\hw\include\suctionmotor\xiaomi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\uart.h">
@@ -251,19 +284,46 @@
     <Compile Include="src\hw\driver\drivemotor\a4988.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\hw\driver\drivemotor\dmc16.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\exti.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\hw\driver\gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\hc05.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\line_led.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\pwm.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\hw\driver\ros.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\hw\driver\ros_server.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\hw\driver\ros\ros.c">
+    <Compile Include="src\hw\driver\ros\ros_uart.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\hw\driver\ros\ros_uart.c">
+    <Compile Include="src\hw\driver\run_led.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\servo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\servo\sg90.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\suctionmotor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\hw\driver\suctionmotor\xiaomi.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\uart.c">
@@ -287,6 +347,9 @@
     <Compile Include="src\lib\Drivers\Inc\atmega128_hal_def.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\lib\Drivers\Inc\atmega128_hal_exti.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\lib\Drivers\Inc\atmega128_hal_gpio.h">
       <SubType>compile</SubType>
     </Compile>
@@ -297,6 +360,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\lib\Drivers\Src\atmega128_hal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\lib\Drivers\Src\atmega128_hal_exti.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\lib\Drivers\Src\atmega128_hal_gpio.c">

@@ -8,15 +8,15 @@
 
 typedef struct drivemotor_driver_t
 {
-	bool	(*init)			(uint8_t ch_);
-	bool	(*startMotor)	(uint8_t ch_);
-	bool	(*stopMotor)	(uint8_t ch_);
-	bool	(*breakMotor)	(uint8_t ch_);
-	bool	(*setSpeed)		(uint8_t ch_, uint8_t speed_);
-	uint8_t	(*getSpeed)		(uint8_t ch_);
-	bool	(*setDirection)	(uint8_t ch_, bool dir_);
-	bool	(*getDirection)	(uint8_t ch_);
-	void	(*setCallBack)	(uint8_t ch_, void (*p_func)(void));
+	bool		(*init)			(uint8_t ch_);
+	bool		(*startMotor)	(uint8_t ch_);
+	bool		(*stopMotor)	(uint8_t ch_);
+	bool		(*breakMotor)	(uint8_t ch_);
+	bool		(*setSpeed)		(uint8_t ch_, uint16_t speed_);
+	uint16_t	(*getSpeed)		(uint8_t ch_);
+	bool		(*setDirection)	(uint8_t ch_, bool dir_);
+	bool		(*getDirection)	(uint8_t ch_);
+	void		(*setCallBack)	(uint8_t ch_, void (*p_func)(void));
 	
 		
 } drivemotor_driver_t;
@@ -27,10 +27,12 @@ bool		motorIsInit(void);
 void		motorRun(void);
 void		motorStop(void);
 void		motorBreak(void);
-void		motorSetSpeed(uint8_t speed_); // 0 ~ 100%
-void		motorSetLeftSpeed(uint8_t speed_);
-void		motorSetRightSpeed(uint8_t speed_);
-uint8_t*	motorGetSpeed(void);
+void		motorSetSpeed(uint16_t speed_);
+void		motorSetLeftSpeed(uint16_t speed_);
+void		motorSetRightSpeed(uint16_t speed_);
+uint16_t*	motorGetSpeed(void);
+uint16_t	motorGetLeftSpeed(void);
+uint16_t	motorGetRightSpeed(void);
 void		motorSetLeftDirection(bool dir);
 void		motorSetRightDirection(bool dir);
 void		motorSetMotionState(uint8_t motion_); // 0: forward, 1: rotate ccw, 2: backward, 3: rotate cw 

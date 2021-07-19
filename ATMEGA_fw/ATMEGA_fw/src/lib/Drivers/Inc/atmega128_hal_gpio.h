@@ -29,8 +29,8 @@ typedef enum
 #define GPIO_PIN7			0x07
 
 
-#define GPIO_MODE_INPUT		0x00
-#define GPIO_MODE_OUTPUT	0x01
+#define GPIO_MODE_INPUT			0x00
+#define GPIO_MODE_OUTPUT		0x01
 
 
 void GPIO_Init(uint8_t port, GPIO_InitTypeDef *GPIO_Init);

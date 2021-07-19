@@ -1,5 +1,4 @@
 ﻿#include "main.h"
-#include "atmega128_it.h"
 
 
 #ifdef _USE_HW_UART
@@ -51,7 +50,14 @@ ISR(TIMER0_COMP_vect)
 #ifdef _USE_HW_SYSTICK
 ISR(TIMER0_COMP_vect)
 {
+	static volatile uint16_t count = 0;
 	HAL_IncTick();
+	if (count > 1000)
+	{
+		runLedCallback();
+		count = 0;
+	}
+	count++;
 }
 #endif
 
@@ -113,5 +119,45 @@ ISR(TIMER3_COMPC_vect)
 ISR(TIMER3_CAPT_vect)
 {
 	
+}
+
+ISR(INT0_vect)
+{
+	INT0_Callback();
+}
+
+ISR(INT1_vect)
+{
+	INT1_Callback();
+}
+
+ISR(INT2_vect)
+{
+	INT2_Callback();
+}
+
+ISR(INT3_vect)
+{
+	INT3_Callback();
+}
+
+ISR(INT4_vect)
+{
+	INT4_Callback();
+}
+
+ISR(INT5_vect)
+{
+	INT5_Callback();
+}
+
+ISR(INT6_vect)
+{
+	INT6_Callback();
+}
+
+ISR(INT7_vect)
+{
+	INT7_Callback();
 }
 #endif

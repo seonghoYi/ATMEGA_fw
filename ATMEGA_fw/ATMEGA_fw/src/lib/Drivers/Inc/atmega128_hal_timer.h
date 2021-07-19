@@ -87,7 +87,7 @@ typedef struct
 	uint8_t TIMn;
 	
 	TIM8_Base_InitTypeDef Init;
-	TIM8_TypeDef *Regs;
+	TIM8_TypeDef Regs;
 	
 	uint8_t	ErrorCode;
 	
@@ -98,7 +98,7 @@ typedef struct
 	uint8_t TIMn;
 	
 	TIM16_Base_InitTypeDef Init;
-	TIM16_TypeDef *Regs;
+	TIM16_TypeDef Regs;
 	
 	uint8_t	ErrorCode;
 	
@@ -138,7 +138,7 @@ typedef struct
 
 #define TIM16_CHANNEL_A				1
 #define TIM16_CHANNEL_B				2
-#define TIM16_CHANNEL_C				3				
+#define TIM16_CHANNEL_C				4				
 
 #define TIM16_OC_NORMALOUT			0
 #define TIM16_OC_FORCEDOUT			1

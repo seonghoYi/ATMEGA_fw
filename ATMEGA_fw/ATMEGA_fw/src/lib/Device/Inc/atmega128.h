@@ -1,7 +1,7 @@
 ﻿#ifndef ATMEGA128_H_
 #define ATMEGA128_H_
 
-#define F_CPU 16000000UL
+#define F_CPU 8000000UL
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
@@ -12,7 +12,10 @@
 #define CLRB(PORT, BIT)		(PORT &= ~(1 << BIT))
 #define READB(PORT, BIT)	(PORT & (1 << BIT))
 #define TGLB(PORT, BIT)		(PORT ^= (1 << BIT)) // toggle
-
+#define CLEAR_REG(REG)							(REG = 0x00)
+#define WRITE_REG(REG, VAL)						(REG = VAL)
+#define READ_REG(REG)							(REG)
+#define MODIFY_REG(REG, CLEARMASK, SETMASK)		WRITE_REG((REG), (READ_REG(REG) & (~(CLEARMASK))) | (SETMASK))
 
 
 typedef struct
@@ -95,14 +98,11 @@ typedef struct
 	volatile uint8_t *TCCRnA;
 	volatile uint8_t *TCCRnB;
 	volatile uint8_t *TCCRnC;
-	volatile uint8_t *TCNTnL;
-	volatile uint8_t *TCNTnH;
-	volatile uint8_t *OCRnAL;
-	volatile uint8_t *OCRnAH;
-	volatile uint8_t *OCRnBL;
-	volatile uint8_t *OCRnBH;
-	volatile uint8_t *ICRnL;
-	volatile uint8_t *ICRnH;
+	volatile uint16_t *TCNTn;
+	volatile uint16_t *OCRnA;
+	volatile uint16_t *OCRnB;
+	volatile uint16_t *OCRnC;
+	volatile uint16_t *ICRn;
 } TIM16_TypeDef;
 
 

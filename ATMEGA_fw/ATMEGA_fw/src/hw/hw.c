@@ -4,11 +4,17 @@ void hwInit(void)
 {
 	bspInit();
 	gpioInit();
+	extiInit();
 	uartInit();
-	//timerInit();
-	//a4988Init();
 	//ctcInit();
-	//pwmInit();
-	//motorInit();
+	pwmInit();
+	hc05Init();
+	suctionMotorInit();
+	motorInit();
 	//rosServerInit();
+	
+	runLedInit();
+	//lineLedInit();
+	
+	servoInit();
 }

@@ -6,23 +6,40 @@
 #include "drivemotor/a4988.h"
 #endif
 
+#ifdef _USE_HW_DMC16
+#include "drivemotor/dmc16.h"
+#endif
+
 
 static drivemotor_driver_t motor;
 static bool is_init = false;
 
 
 void motorBreak(void);
-void motorSetSpeed(uint8_t speed_);
+void motorSetSpeed(uint16_t speed_);
 void motorSetMotionState(uint8_t motion_);
 
 bool motorInit(void)
 {
+#ifdef _USE_HW_DMC16
+	if (dmc16Init(_DEF_DMC16_0) && dmc16Init(_DEF_DMC16_1))
+	{
+		is_init = dmc16DriverInit(&motor);
+	}
+	motorSetMotionState(0);
+	motorSetSpeed(0);
+	motorBreak();
+	motorStop();
+	return true;
+	
+#endif
+
 #ifdef _USE_HW_A4988
 	if(a4988Init(_DEF_A4988_0) && a4988Init(_DEF_A4988_1))
 	{
 		is_init = a4988DriverInit(&motor);
 	}
-#endif
+
 
 	motor.setCallBack(_DEF_A4988_0, NULL);
 	motor.setCallBack(_DEF_A4988_1, NULL);
@@ -31,6 +48,7 @@ bool motorInit(void)
 	motorBreak();
 	motorStop();
 	return true;
+#endif
 }
 
 bool motorIsInit(void)
@@ -40,6 +58,11 @@ bool motorIsInit(void)
 
 void motorRun(void)
 {
+#ifdef _USE_HW_DMC16
+	motor.startMotor(_DEF_DMC16_0);
+	motor.startMotor(_DEF_DMC16_1);
+#endif
+	
 #ifdef _USE_HW_A4988
 	motor.startMotor(_DEF_A4988_0);
 	motor.startMotor(_DEF_A4988_1);
@@ -48,6 +71,11 @@ void motorRun(void)
 
 void motorStop(void)
 {
+#ifdef _USE_HW_DMC16
+	motor.stopMotor(_DEF_DMC16_0);
+	motor.stopMotor(_DEF_DMC16_1);
+#endif
+
 #ifdef _USE_HW_A4988
 	motor.stopMotor(_DEF_A4988_0);
 	motor.stopMotor(_DEF_A4988_1);
@@ -56,13 +84,18 @@ void motorStop(void)
 
 void motorBreak(void)
 {
+#ifdef _USE_HW_DMC16
+	motor.breakMotor(_DEF_DMC16_0);
+	motor.breakMotor(_DEF_DMC16_1);
+#endif
+
 #ifdef _USE_HW_A4988
 	motor.breakMotor(_DEF_A4988_0);
 	motor.breakMotor(_DEF_A4988_1);
 #endif	
 }
 
-void motorSetSpeed(uint8_t speed_)
+void motorSetSpeed(uint16_t speed_)
 {
 	// max: 726.74Hz, 109.01rpm, 0.376m/s min: 122.07Hz, 18.31rpm, 0.063m/s
 	
@@ -77,6 +110,10 @@ void motorSetSpeed(uint8_t speed_)
 		return;
 	}
 	*/
+#ifdef _USE_HW_DMC16
+	motor.setSpeed(_DEF_DMC16_0, speed_);
+	motor.setSpeed(_DEF_DMC16_1, speed_);
+#endif
 	
 #ifdef _USE_HW_A4988
 	motor.setSpeed(_DEF_A4988_0, speed_);
@@ -84,7 +121,7 @@ void motorSetSpeed(uint8_t speed_)
 #endif
 }
 
-void motorSetLeftSpeed(uint8_t speed_)
+void motorSetLeftSpeed(uint16_t speed_)
 {
 	/*
 	const uint8_t power_max = 255;
@@ -96,13 +133,16 @@ void motorSetLeftSpeed(uint8_t speed_)
 		return;
 	}
 	*/
+#ifdef _USE_HW_DMC16
+	motor.setSpeed(_DEF_DMC16_0, speed_);
+#endif
 	
-	#ifdef _USE_HW_A4988
+#ifdef _USE_HW_A4988
 	motor.setSpeed(_DEF_A4988_0, speed_);
-	#endif
+#endif
 }
 
-void motorSetRightSpeed(uint8_t speed_)
+void motorSetRightSpeed(uint16_t speed_)
 {
 	/*
 	const uint8_t power_max = 255;
@@ -114,18 +154,25 @@ void motorSetRightSpeed(uint8_t speed_)
 		return;
 	}
 	*/
+#ifdef _USE_HW_DMC16
+	motor.setSpeed(_DEF_DMC16_1, speed_);
+#endif
 	
-	#ifdef _USE_HW_A4988
+#ifdef _USE_HW_A4988
 	motor.setSpeed(_DEF_A4988_1, speed_);
-	#endif
+#endif
 }
 
-uint8_t* motorGetSpeed(void)
+uint16_t* motorGetSpeed(void)
 {
 	//const uint8_t power_max = 255;
 	//const uint8_t scale_limit = 20;
-	static uint8_t speed_[2] = {0};
+	static uint16_t speed_[2] = {0};
 	//static uint8_t power_[2] = {0};
+#ifdef _USE_HW_DMC16
+	speed_[0] = motor.getSpeed(_DEF_DMC16_0);
+	speed_[1] = motor.getSpeed(_DEF_DMC16_1);
+#endif
 	
 #ifdef _USE_HW_A4988
 	speed_[0] = motor.getSpeed(_DEF_A4988_0);
@@ -133,18 +180,46 @@ uint8_t* motorGetSpeed(void)
 	//power_[0] = power_max - (uint8_t)((speed_[0] / power_max) * (100 + scale_limit));
 	//power_[1] = power_max - (uint8_t)((speed_[1] / power_max) * (100 + scale_limit));
 	//return power_;
-	return speed_;
 #endif
+	return speed_;
+
+}
+
+
+uint16_t motorGetLeftSpeed(void)
+{
+	uint16_t ret = 0;
+	ret = motor.getSpeed(_DEF_DMC16_0);
+	return ret;
+}
+
+uint16_t motorGetRightSpeed(void)
+{
+	uint16_t ret = 0;
+	ret = motor.getSpeed(_DEF_DMC16_1);
+	return ret;
 }
 
 void motorSetLeftDirection(bool dir)
 {
+#ifdef _USE_HW_DMC16
+	motor.setDirection(_DEF_DMC16_0, dir);
+#endif
+
+#ifdef _USE_HW_A4988
 	motor.setDirection(_DEF_A4988_0, dir);
+#endif
 }
 
 void motorSetRightDirection(bool dir)
 {
+#ifdef _USE_HW_DMC16
+	motor.setDirection(_DEF_DMC16_1, dir);
+#endif
+
+#ifdef _USE_HW_A4988
 	motor.setDirection(_DEF_A4988_1, dir);
+#endif
 }
 
 void motorSetMotionState(uint8_t motion_)
@@ -232,6 +307,7 @@ void motorSpin(bool spinwise_)
 
 void motorSteering(int8_t steering_degrees_)
 {
+	/*
 	const uint8_t power_max = 255;
 	const uint8_t scale_limit = 20;
 	uint8_t steering_bias_proportion = abs(steering_degrees_);
@@ -241,6 +317,7 @@ void motorSteering(int8_t steering_degrees_)
 	{
 		return;
 	}
+	*/
 #ifdef _USE_HW_A4988
 	power_proportion = motorGetSpeed();
 
