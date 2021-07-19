@@ -109,7 +109,7 @@ bool pwmBegin(uint8_t ch_)
 		p_pwm->h_tim8_pwm				= &htim2_pwm;
 		
 		p_pwm->h_tim8->TIMn				= TIM2;
-		p_pwm->h_tim8->Init.Prescaler	= TIM_CLK_PRESCALER_1; // Phase correct PWM f=31.372KHz (F_CPU = 16MHz) (in 8MHz case, set timer as same then will be f=15.686KHz)
+		p_pwm->h_tim8->Init.Prescaler	= TIM_CLK_PRESCALER_1; // FastPWM PWM f=62.5KHz (F_CPU = 16MHz) (in 8MHz case, set timer as same then will be f=31.25KHz)
 		p_pwm->h_tim8->Init.Source		= TIM_INTCLK_SOURCE;
 		
 		if (TIM8_Base_Init(p_pwm->h_tim8) != HAL_OK)
@@ -122,7 +122,7 @@ bool pwmBegin(uint8_t ch_)
 			p_pwm->is_open = true;
 		}
 		
-		p_pwm->h_tim8_pwm->PWMMode		= TIM8_PWM_MOD_PCPWM;
+		p_pwm->h_tim8_pwm->PWMMode		= TIM8_PWM_MOD_FASTPWM;
 		p_pwm->h_tim8_pwm->PWMWave_COM	= TIM8_PWM_COM_NONINV;
 		p_pwm->h_tim8_pwm->Tcnt			= 0;
 		p_pwm->h_tim8_pwm->Ocr			= 0;
