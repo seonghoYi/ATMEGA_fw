@@ -100,8 +100,13 @@ bool xiaomiSetSpeed(uint8_t ch_, uint16_t speed_)
 
 	xiaomigen1st_t *p_xiaomi = &xiaomigen1st_tbl[ch_];
 	
-	p_xiaomi->h_xiaomi->speed = speed_;
+	if (speed_ < 0 || speed_ > 100)
+	{
+		return ret;
+	}
 	
+	p_xiaomi->h_xiaomi->speed = 255 * speed_ / 100;
+
 	if (p_xiaomi->h_xiaomi->Init.pwm == TIM0 || p_xiaomi->h_xiaomi->Init.pwm == TIM2)
 	{
 		ret = pwmSetOcr(p_xiaomi->h_xiaomi->Init.pwm, p_xiaomi->h_xiaomi->speed, _DEF_CH_NONE);
