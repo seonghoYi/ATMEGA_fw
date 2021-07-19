@@ -185,6 +185,21 @@ uint16_t* motorGetSpeed(void)
 
 }
 
+
+uint16_t motorGetLeftSpeed(void)
+{
+	uint16_t ret = 0;
+	ret = motor.getSpeed(_DEF_DMC16_0);
+	return ret;
+}
+
+uint16_t motorGetRightSpeed(void)
+{
+	uint16_t ret = 0;
+	ret = motor.getSpeed(_DEF_DMC16_1);
+	return ret;
+}
+
 void motorSetLeftDirection(bool dir)
 {
 #ifdef _USE_HW_DMC16

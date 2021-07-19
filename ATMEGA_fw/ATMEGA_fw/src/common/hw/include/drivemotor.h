@@ -31,6 +31,8 @@ void		motorSetSpeed(uint16_t speed_);
 void		motorSetLeftSpeed(uint16_t speed_);
 void		motorSetRightSpeed(uint16_t speed_);
 uint16_t*	motorGetSpeed(void);
+uint16_t	motorGetLeftSpeed(void);
+uint16_t	motorGetRightSpeed(void);
 void		motorSetLeftDirection(bool dir);
 void		motorSetRightDirection(bool dir);
 void		motorSetMotionState(uint8_t motion_); // 0: forward, 1: rotate ccw, 2: backward, 3: rotate cw 
