@@ -11,6 +11,7 @@ void hwInit(void)
 	hc05Init();
 	suctionMotorInit();
 	motorInit();
+	rosInit();
 	//rosServerInit();
 	
 	runLedInit();
