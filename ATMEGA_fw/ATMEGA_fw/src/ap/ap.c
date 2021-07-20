@@ -1,8 +1,8 @@
 ﻿#include "ap.h"
 
 #define P_GAIN	50 //50
-#define I_GAIN	43 //30
-#define D_GAIN	7 //30
+#define I_GAIN	43 //43
+#define D_GAIN	7 //7
 
 /*
 volatile double L_interval_time;
@@ -87,7 +87,10 @@ void apMain(void)
 	//motorRun();
 	//motorSetSpeed(40);
 	
+	motorStop();
+	
 	int starttick = millis();
+	ros_handle.pre_time = (uint32_t)starttick;
 	
 	while(true)
 	{
@@ -107,9 +110,10 @@ void apMain(void)
 			pid_variables.dt = (float)dt/1000; // 0.000066625s
 			
 			calculatePID(&pid_variables);
-			rosServerRun(&ros_handle);
 			rosPublishRPM(&ros_handle, &pid_variables);
 		}
+		
+		rosServerRun(&ros_handle);
 	}
 }
 
@@ -133,7 +137,7 @@ void rosWriteServo(uint8_t *params);
 
 void rosServerInit(ros_t *p_ros)
 {
-	rosInit();
+	rosOpen(p_ros, p_ros->ch, 38400);
 	rosLoadDriver(p_ros);
 	
 	rosAddService(p_ros, rosStopMotor);
@@ -149,7 +153,6 @@ void rosServerInit(ros_t *p_ros)
 	rosAddService(p_ros, rosSuctionStop);
 	rosAddService(p_ros, rosWriteServo);
 	
-	rosOpen(p_ros, _DEF_ROS0, 38400);
 }
 
 
@@ -159,11 +162,13 @@ void rosServerRun(ros_t *p_ros)
 	if (rosReceivePacket(p_ros))
 	{
 		service_id = p_ros->packet.inst;
+		
 		if ((service_id < 0 || service_id >= ROS_MAX_SERVICE))
 		{
 			return;
 		}
-		//ros_handle.driver.write(ros_handle.ch, (uint8_t*)&(ros_handle.packet.msgs[0]), 1);
+		//p_ros->driver.write(p_ros->ch, (uint8_t *)&service_id, 1);
+		//p_ros->driver.write(p_ros->ch, (uint8_t*)&(p_ros->packet.msgs[0]), 1);
 		rosCallService(p_ros, service_id, &(p_ros->packet.msgs[0]));
 	}
 }
@@ -175,6 +180,8 @@ void rosStopMotor(uint8_t *params)
 
 void rosRunMotor(uint8_t *params)
 {
+	uint8_t i = 1;
+	uartWrite(_DEF_UART1, &i, 1);
 	motorRun();
 }
 
