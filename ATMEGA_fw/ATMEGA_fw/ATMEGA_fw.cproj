@@ -142,11 +142,8 @@
       <Value>../src/lib/Device/Inc</Value>
       <Value>../src/lib/Drivers/Inc</Value>
       <Value>../src/lib/Drivers/Src</Value>
-<<<<<<< HEAD
-=======
       <Value>../src/common/hw/include/steppermotor</Value>
       <Value>../src/hw/driver/steppermotor</Value>
->>>>>>> hal_128
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
