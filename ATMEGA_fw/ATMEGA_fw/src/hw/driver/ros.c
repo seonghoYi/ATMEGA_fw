@@ -153,11 +153,13 @@ bool rosReceivePacket(ros_t *p_ros)
 		return false;
 	}
 	
-	if (millis() - p_ros->pre_time >= 100)
+	if (millis() - p_ros->pre_time >= 500)
 	{
 		p_ros->state = ROS_STATE_SYNC1;
 	}
 	p_ros->pre_time = millis();
+	
+	//p_ros->driver.write(p_ros->ch, &p_ros->state, 1);
 
 	switch(p_ros->state)
 	{
@@ -165,11 +167,11 @@ bool rosReceivePacket(ros_t *p_ros)
 			if (rx_data == 0xFF)
 			{
 				p_ros->packet_buf[ROS_PKT_SYNC1] = rx_data;
-				p_ros->state = ROS_STATE_SYNC2;	
+				p_ros->state = ROS_STATE_SYNC2;
 			}
 			else
 			{
-				p_ros->state = ROS_STATE_SYNC1;	
+				p_ros->state = ROS_STATE_SYNC1;
 			}
 			break;
 		case ROS_STATE_SYNC2:
@@ -186,6 +188,7 @@ bool rosReceivePacket(ros_t *p_ros)
 		case ROS_STATE_LEN1:
 			p_ros->packet_buf[ROS_PKT_LEN1] = rx_data;
 			p_ros->state = ROS_STATE_LEN2;
+			//p_ros->driver.write(p_ros->ch, &p_ros->state, 1);
 			break;
 		case ROS_STATE_LEN2:
 			p_ros->packet_buf[ROS_PKT_LEN2] = rx_data;
@@ -205,9 +208,8 @@ bool rosReceivePacket(ros_t *p_ros)
 			{
 				p_ros->state = ROS_STATE_SYNC1;
 			}
-			p_ros->packet.msg_len =	(p_ros->packet_buf[ROS_PKT_LEN1] >> 0) & 0xFF;
-			p_ros->packet.msg_len |= (p_ros->packet_buf[ROS_PKT_LEN2] >> 8) & 0xFF;
-			
+			p_ros->packet.msg_len =	(p_ros->packet_buf[ROS_PKT_LEN1] << 0) & 0x00FF;
+			p_ros->packet.msg_len |= (p_ros->packet_buf[ROS_PKT_LEN2] << 8) & 0xFF00;
 			break;
 		case ROS_STATE_ID1:
 			p_ros->packet_buf[ROS_STATE_ID1] = rx_data;
@@ -268,6 +270,8 @@ bool rosReceivePacket(ros_t *p_ros)
 	{
 		p_ros->packet.id = p_ros->packet_buf[ROS_PKT_ID2];
 		p_ros->packet.inst = p_ros->packet_buf[ROS_PKT_ID1];
+		//p_ros->driver.write(p_ros->ch, &p_ros->packet.id, 1);
+		//p_ros->driver.write(p_ros->ch, &p_ros->packet.inst, 1);
 	}
 	
 	return ret;
