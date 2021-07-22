@@ -1,6 +1,6 @@
 ﻿#include "ros.h"
 #include "ros/ros_uart.h"
-
+#include "uart.h"
 
 #ifdef _USE_HW_ROS
 
@@ -60,6 +60,8 @@ bool rosOpen(ros_t *p_ros, uint8_t ros_ch_, uint32_t baud_)
 		return false;
 	}
 	
+	uartOpen(_DEF_UART0, 38400);
+	
 	p_ros->ch = ros_ch_;
 	p_ros->baud = baud_;
 	p_ros->index = 0;
@@ -95,7 +97,8 @@ bool rosSendInst(ros_t *p_ros, uint8_t id_, uint8_t inst_, uint8_t *p_msg_, uint
 	//uint8_t packet_len;
 	uint8_t index;
 	uint32_t checksum = 0;
-	
+	uint8_t packet_buf[ROS_PACKET_BUF_MAX];
+
 	if (p_ros->is_open != true)
 	{
 		return false;
@@ -103,28 +106,26 @@ bool rosSendInst(ros_t *p_ros, uint8_t id_, uint8_t inst_, uint8_t *p_msg_, uint
 	
 	//packet_len = msg_len_ + 7;
 	
-	p_ros->packet_buf[ROS_PKT_SYNC1] = 0xFF;
-	p_ros->packet_buf[ROS_PKT_SYNC2] = 0xFF;
-	p_ros->packet_buf[ROS_PKT_LEN1]	= (msg_len_ >> 0) & 0xFF;
-	p_ros->packet_buf[ROS_PKT_LEN2]	= (msg_len_ >> 8) & 0xFF;
-	p_ros->packet_buf[ROS_PKT_LENCHECK] = 255 - (p_ros->packet_buf[ROS_PKT_LEN1] + p_ros->packet_buf[ROS_PKT_LEN2]) % 256;
-	p_ros->packet_buf[ROS_PKT_ID1] = inst_;
-	p_ros->packet_buf[ROS_PKT_ID2] = id_;
+	packet_buf[ROS_PKT_SYNC1]		= 0xFF;
+	packet_buf[ROS_PKT_SYNC2]		= 0xFF;
+	packet_buf[ROS_PKT_LEN1]		= (msg_len_ >> 0) & 0xFF;
+	packet_buf[ROS_PKT_LEN2]		= (msg_len_ >> 8) & 0xFF;
+	packet_buf[ROS_PKT_LENCHECK]	= (uint8_t)(255 - (packet_buf[ROS_PKT_LEN1] + packet_buf[ROS_PKT_LEN2]) % 256);
+	packet_buf[ROS_PKT_ID1]			= inst_;
+	packet_buf[ROS_PKT_ID2]			= id_;
 	
 	index = 7;
 	
-	p_ros->packet.msgs = &p_ros->packet_buf[7];
-	
 	for (int i = 0; i < msg_len_; i++)
 	{
-		p_ros->packet_buf[index++] = p_msg_[i];
+		packet_buf[index++] = p_msg_[i];
 		checksum += p_msg_[i];
 	}
 	
-	p_ros->packet_buf[index++] = 255 - (uint8_t)(checksum % 256);
-	
-	p_ros->driver.write(p_ros->ch, p_ros->packet_buf, index);
-	
+	packet_buf[index++] = 255 - (uint8_t)(checksum % 256);
+	//uartPrintf(_DEF_UART0, "%X\n", packet_buf[index]);
+	p_ros->driver.write(p_ros->ch, &packet_buf[0], index);
+	//uartWrite(_DEF_UART0, packet_buf, index);
 	return ret;
 }
 
@@ -147,6 +148,7 @@ bool rosReceivePacket(ros_t *p_ros)
 		//p_ros->driver.write(p_ros->ch, &rx_data, 1);
 		rx_data = p_ros->driver.read(p_ros->ch);
 		//p_ros->driver.write(p_ros->ch, &rx_data, 1);
+		//uartPrintf(_DEF_UART0, "%X\n", rx_data);
 	}
 	else
 	{
@@ -159,8 +161,6 @@ bool rosReceivePacket(ros_t *p_ros)
 	}
 	p_ros->pre_time = millis();
 	
-	//p_ros->driver.write(p_ros->ch, &p_ros->state, 1);
-
 	switch(p_ros->state)
 	{
 		case ROS_STATE_SYNC1:
@@ -188,7 +188,6 @@ bool rosReceivePacket(ros_t *p_ros)
 		case ROS_STATE_LEN1:
 			p_ros->packet_buf[ROS_PKT_LEN1] = rx_data;
 			p_ros->state = ROS_STATE_LEN2;
-			//p_ros->driver.write(p_ros->ch, &p_ros->state, 1);
 			break;
 		case ROS_STATE_LEN2:
 			p_ros->packet_buf[ROS_PKT_LEN2] = rx_data;
@@ -197,7 +196,7 @@ bool rosReceivePacket(ros_t *p_ros)
 		case ROS_STATE_LENCHECK:
 			p_ros->packet_buf[ROS_STATE_LENCHECK] = rx_data;
 			
-			buf = p_ros->packet_buf[ROS_PKT_LEN1] + p_ros->packet_buf[ROS_PKT_LEN2];
+			buf = p_ros->packet_buf[ROS_PKT_LEN2] + p_ros->packet_buf[ROS_PKT_LEN1];
 			p_ros->packet.msg_len_checksum = 255 - (uint8_t)(buf % 256);
 			
 			if (p_ros->packet.msg_len_checksum == p_ros->packet_buf[ROS_PKT_LENCHECK])
@@ -208,7 +207,9 @@ bool rosReceivePacket(ros_t *p_ros)
 			{
 				p_ros->state = ROS_STATE_SYNC1;
 			}
+			
 			p_ros->packet.msg_len =	(p_ros->packet_buf[ROS_PKT_LEN1] << 0) & 0x00FF;
+			
 			p_ros->packet.msg_len |= (p_ros->packet_buf[ROS_PKT_LEN2] << 8) & 0xFF00;
 			break;
 		case ROS_STATE_ID1:
@@ -233,7 +234,6 @@ bool rosReceivePacket(ros_t *p_ros)
 			index = p_ros->index;
 			p_ros->index++;
 			p_ros->packet_buf[index] = rx_data;
-			
 			if (p_ros->index >= p_ros->packet.msg_len + 7)
 			{
 				p_ros->state = ROS_STATE_CS;
@@ -254,10 +254,14 @@ bool rosReceivePacket(ros_t *p_ros)
 				buf += p_ros->packet_buf[7 + i];
 			}
 			p_ros->packet.checksum = 255 - (uint8_t)(buf % 256);
-			//p_ros->driver.write(p_ros->ch, (uint8_t *)&(p_ros->packet.checksum), 1);
 			if (p_ros->packet_buf[index] == p_ros->packet.checksum)
 			{
 				ret = true;
+				p_ros->state = ROS_STATE_SYNC1;
+			}
+			else
+			{
+				ret = false;
 				p_ros->state = ROS_STATE_SYNC1;
 			}
 			
@@ -270,8 +274,6 @@ bool rosReceivePacket(ros_t *p_ros)
 	{
 		p_ros->packet.id = p_ros->packet_buf[ROS_PKT_ID2];
 		p_ros->packet.inst = p_ros->packet_buf[ROS_PKT_ID1];
-		//p_ros->driver.write(p_ros->ch, &p_ros->packet.id, 1);
-		//p_ros->driver.write(p_ros->ch, &p_ros->packet.inst, 1);
 	}
 	
 	return ret;
