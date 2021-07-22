@@ -71,10 +71,13 @@ bool sg90Write(uint8_t ch_, uint8_t angle)
 	pwmStart(p_sg90_t->h_sg90->Init.pwm);
 	
 	int range = pwmGetIcr(sg90_tbl[ch_].h_sg90->Init.pwm) / 10;
-	float unit = range / 180;
+
+	angle = map(angle, 0, 180, range/2, range);
 	
-	pwmSetOcr(p_sg90_t->h_sg90->Init.pwm, (range / 2) + (uint16_t)(p_sg90_t->h_sg90->angle * unit), p_sg90_t->h_sg90->Init.pwm_ch);
+	pwmSetOcr(p_sg90_t->h_sg90->Init.pwm, angle, p_sg90_t->h_sg90->Init.pwm_ch);
 	
+	delay(100);
+	pwmStop(p_sg90_t->h_sg90->Init.pwm);
 	
 	return true;
 }
