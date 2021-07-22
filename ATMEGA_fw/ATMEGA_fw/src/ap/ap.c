@@ -53,7 +53,8 @@ void apInit(void)
 	uartPrintf(_DEF_UART1, "yes\n");
 	*/
 	
-	uartOpen(_DEF_UART0, 38400);
+	//uartOpen(_DEF_UART1, 38400);
+	hc05Open(_DEF_UART0, 38400);
 	sei();
 }
 
@@ -65,7 +66,7 @@ void rosPublishRPM(ros_t *p_ros, pid_t *p_pid_variables);
 
 void apMain(void)
 {	
-	pid_t pid_variables;
+	static pid_t pid_variables;
 	pid_variables.Left_rpm_goal = 0;
 	pid_variables.Right_rpm_goal = 0;
 	pid_variables.ep_LeftTerm = 0;
@@ -79,7 +80,7 @@ void apMain(void)
 	pid_variables.prevLeftError = 0;
 	pid_variables.prevRightError = 0;
 	
-	ros_t ros_handle;
+	static ros_t ros_handle;
 	rosServerInit(&ros_handle);
 	
 	//motorSetLeftDirection(true);
@@ -87,7 +88,8 @@ void apMain(void)
 	//motorRun();
 	//motorSetSpeed(40);
 	
-	motorStop();
+	//motorStop();
+
 	
 	int starttick = millis();
 	ros_handle.pre_time = (uint32_t)starttick;
@@ -106,14 +108,17 @@ void apMain(void)
 		int dt = millis() - starttick;
 		if (dt >= 100)
 		{
+			//uartPrintf(_DEF_UART0, "%lu\n", millis());
 			starttick = millis(); // 0.000007s
 			pid_variables.dt = (float)dt/1000; // 0.000066625s
 			
 			calculatePID(&pid_variables);
 			rosPublishRPM(&ros_handle, &pid_variables);
+			
 		}
 		
 		rosServerRun(&ros_handle);
+		//uartPrintf(_DEF_UART1, "ok\n");
 	}
 }
 
@@ -137,9 +142,9 @@ void rosWriteServo(uint8_t *params);
 
 void rosServerInit(ros_t *p_ros)
 {
-	rosOpen(p_ros, p_ros->ch, 38400);
 	rosLoadDriver(p_ros);
-	
+	rosOpen(p_ros, _DEF_ROS0, 38400);
+		
 	rosAddService(p_ros, rosStopMotor);
 	rosAddService(p_ros, rosRunMotor);
 	rosAddService(p_ros, rosSetLeftSpeed);
@@ -153,16 +158,23 @@ void rosServerInit(ros_t *p_ros)
 	rosAddService(p_ros, rosSuctionStop);
 	rosAddService(p_ros, rosWriteServo);
 	
+	
+	
+	//left_goal = 20;
+	//right_goal = 20;
 }
 
 
 void rosServerRun(ros_t *p_ros)
 {
 	uint8_t service_id;
+	//p_ros->driver.write(p_ros->ch, &service_id, 1);
+	//uartPrintf(_DEF_UART1, "ok\n");
 	if (rosReceivePacket(p_ros))
 	{
 		service_id = p_ros->packet.inst;
-		
+		//p_ros->driver.write(p_ros->ch, &service_id, 1);
+		hc05Printf("Call service: %X\n", service_id);
 		if ((service_id < 0 || service_id >= ROS_MAX_SERVICE))
 		{
 			return;
@@ -180,8 +192,6 @@ void rosStopMotor(uint8_t *params)
 
 void rosRunMotor(uint8_t *params)
 {
-	uint8_t i = 1;
-	uartWrite(_DEF_UART1, &i, 1);
 	motorRun();
 }
 
@@ -326,7 +336,7 @@ void calculatePID(pid_t *p_pid_variables)
 	
 	p_pid_variables->ed_LeftTerm = -(p_pid_variables->ep_LeftTerm - p_pid_variables->prevLeftError) / p_pid_variables->dt; //0.000032625s
 	p_pid_variables->ed_RightTerm = -(p_pid_variables->ep_RightTerm - p_pid_variables->prevRightError) / p_pid_variables->dt; //0.000032625s
-	
+	/*
 	if (p_pid_variables->ed_LeftTerm > 50)
 	{
 		p_pid_variables->ed_LeftTerm = 50;
@@ -344,7 +354,9 @@ void calculatePID(pid_t *p_pid_variables)
 	{
 		p_pid_variables->ed_RightTerm = -50;
 	}
-	
+	*/
+	p_pid_variables->ed_LeftTerm = constrain(p_pid_variables->ed_LeftTerm, -50, 50);
+	p_pid_variables->ed_RightTerm = constrain(p_pid_variables->ed_RightTerm, -50, 50);
 	//uartPrintf(_DEF_UART0, "ep_l: %d, ep_r: %d, ei_l: %d, ei_r: %d, ed_l: %d, ed_r: %d\n", ep_LeftTerm, ep_RightTerm, ei_LeftTerm, ei_RightTerm, ed_LeftTerm, ed_RightTerm);
 	
 	p_pid_variables->prevLeftError = p_pid_variables->ep_LeftTerm; // 0.00000325s
@@ -390,7 +402,8 @@ void calculatePID(pid_t *p_pid_variables)
 void rosPublishRPM(ros_t *p_ros, pid_t *p_pid_variables)
 {
 	uint8_t msg[] = {((uint16_t)p_pid_variables->prev_Lrpm) & 0xFF, ((uint16_t)p_pid_variables->prev_Lrpm >> 8) & 0xFF, ((uint16_t)p_pid_variables->prev_Rrpm) & 0xFF, ((uint16_t)p_pid_variables->prev_Rrpm >> 8) & 0xFF};
-	rosSendInst(p_ros, 0, 0, &msg[0], 4);
+	rosSendInst(p_ros, 2, 0, &msg[0], 4);	
+	//hc05Printf("L_rpm: %d, R_rpm: %d\n", (int)p_pid_variables->prev_Lrpm, (int)p_pid_variables->prev_Rrpm);
 }
 
 
