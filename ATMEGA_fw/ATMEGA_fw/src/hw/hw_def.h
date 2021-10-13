@@ -8,7 +8,7 @@
 #define _USE_HW_SYSTICK
 
 #define _USE_HW_GPIO
-#define		 HW_GPIO_MAX_CH					12
+#define		 HW_GPIO_MAX_CH					13
 
 #define _USE_HW_EXTI
 #define		 HW_EXTI_MAX_CH					3
@@ -59,8 +59,8 @@
 #define _USE_HW_DRIVEMOTOR
 #define      HW_DRIVEMOTOR_MAX_CH			2
 
-#define _REVERSE_ROTATION					0
-#define _NORMAL_ROTATION					1
+#define _REVERSE_ROTATION					1
+#define _NORMAL_ROTATION					0
 
 #define _USE_HW_HC05
 #define		 HW_HC05_MAX_CH					1
