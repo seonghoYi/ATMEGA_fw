@@ -1,4 +1,5 @@
 ﻿#include "suctionmotor.h"
+#include "gpio.h"
 
 #ifdef _USE_HW_SUCTION_MT
 
@@ -31,6 +32,7 @@ void suctionMotorRun(void)
 {
 #ifdef _USE_HW_SUCTION_MT
 	motor.startMotor(_DEF_SUCTION_0);
+	gpioPinWrite(_DEF_GPIO_SUCTION_RELAY, true);
 #endif
 }
 
@@ -38,6 +40,7 @@ void suctionMotorStop(void)
 {
 #ifdef _USE_HW_SUCTION_MT
 	motor.stopMotor(_DEF_SUCTION_0);
+	gpioPinWrite(_DEF_GPIO_SUCTION_RELAY, false);
 #endif
 }
 
