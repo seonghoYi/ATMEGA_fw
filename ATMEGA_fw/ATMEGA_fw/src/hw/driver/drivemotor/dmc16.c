@@ -37,9 +37,9 @@ bool dmc16Init(uint8_t ch_)
 		p_dmc16->reverse_rotate			= _DEF_CW;
 		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_0;
 		p_dmc16->h_dmc16->Init.pwm		= TIM1;
-		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_B;
+		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_A;
 		p_dmc16->h_dmc16->enable		= false;
-		p_dmc16->h_dmc16->direction		= _REVERSE_ROTATION;
+		p_dmc16->h_dmc16->direction		= _NORMAL_ROTATION;
 		p_dmc16->h_dmc16->speed			= 0;
 		
 		break;
@@ -50,7 +50,7 @@ bool dmc16Init(uint8_t ch_)
 		p_dmc16->reverse_rotate			= _DEF_CCW;
 		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_1;
 		p_dmc16->h_dmc16->Init.pwm		= TIM1;
-		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_A;
+		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_B;
 		p_dmc16->h_dmc16->enable		= false;
 		p_dmc16->h_dmc16->direction		= _NORMAL_ROTATION;
 		p_dmc16->h_dmc16->speed			= 0;
@@ -70,6 +70,9 @@ bool dmc16Init(uint8_t ch_)
 		p_dmc16->is_open = true;
 		ret = true;
 	}
+	
+	dmc16SetDirection(_DEF_DMC16_0, p_dmc16->h_dmc16->direction);
+	dmc16SetDirection(_DEF_DMC16_1, p_dmc16->h_dmc16->direction);
 	
 	return ret;
 }
@@ -108,9 +111,9 @@ bool dmc16Start(uint8_t ch_)
 
 bool dmc16Stop(uint8_t ch_)
 {
-	bool ret = false;
+	bool ret = true;
 	dmc16_t *p_dmc16 = &dmc16_tbl[ch_];
-	
+	/*
 	if (pwmStop(p_dmc16->h_dmc16->Init.pwm) != true)
 	{
 		ret = false;
@@ -119,6 +122,9 @@ bool dmc16Stop(uint8_t ch_)
 	{
 		ret = true;
 	}
+	*/
+	dmc16SetSpeed(p_dmc16->h_dmc16->Init.ch, 0);
+	//delay(1);
 	dmc16Disable();
 	return ret;	
 }
@@ -165,11 +171,11 @@ bool dmc16SetDirection(uint8_t ch_, bool dir_)
 	
 	if (p_dmc16->h_dmc16->direction)
 	{
-		gpioPinWrite(side, p_dmc16->normal_rotate);
+		gpioPinWrite(side, p_dmc16->reverse_rotate);
 	}
 	else
 	{
-		gpioPinWrite(side, p_dmc16->reverse_rotate);
+		gpioPinWrite(side, p_dmc16->normal_rotate);
 	}
 	return ret;
 }
