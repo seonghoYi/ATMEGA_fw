@@ -3,8 +3,10 @@
 
 void qbufferInit(void)
 {
-
+	//사용하지 않음. 일관성을 위한 구조.
 }
+
+//qbuffer 에 대한 동작방식은 qbuffer 또는 ring buffer 등의 키워드로 검색하여 공부하길 바람. 
 
 bool qbufferCreate(qbuffer_t *p_node, uint8_t *p_buf, uint32_t length)
 {
