@@ -40,6 +40,7 @@ bool sg90Init(uint8_t ch_)
 		p_sg90_t->h_sg90->angle = 0;
 		break;
 	}
+	DDRE |= 0x18;
 	
 	if (pwmBegin(p_sg90_t->h_sg90->Init.pwm) && pwm16ChannelConfig(p_sg90_t->h_sg90->Init.pwm, p_sg90_t->h_sg90->Init.pwm_ch) != true)
 	{
@@ -70,14 +71,23 @@ bool sg90Write(uint8_t ch_, uint8_t angle)
 	p_sg90_t->h_sg90->angle = angle;
 	pwmStart(p_sg90_t->h_sg90->Init.pwm);
 	
-	int range = pwmGetIcr(sg90_tbl[ch_].h_sg90->Init.pwm) / 10;
+	// T=20ms 1ms~2ms
+	//int range = pwmGetIcr(sg90_tbl[ch_].h_sg90->Init.pwm) / 10;
+	//uint16_t duty = map((uint16_t)angle, (uint16_t)0, (uint16_t)180, (uint16_t)range/2, (uint16_t)range);
+	
+	
+	// T=20ms 0.5ms~2.5ms
+	int range = pwmGetIcr(sg90_tbl[ch_].h_sg90->Init.pwm) / 8;
+	uint16_t duty = map((uint16_t)angle, (uint16_t)0, (uint16_t)180, (uint16_t)range/5, (uint16_t)range);
 
-	angle = map(angle, 0, 180, range/2, range);
+	pwmSetOcr(p_sg90_t->h_sg90->Init.pwm, duty, p_sg90_t->h_sg90->Init.pwm_ch);
+	/*
+	float unit = range / 180;
 	
-	pwmSetOcr(p_sg90_t->h_sg90->Init.pwm, angle, p_sg90_t->h_sg90->Init.pwm_ch);
-	
-	delay(100);
-	pwmStop(p_sg90_t->h_sg90->Init.pwm);
+	pwmSetOcr(p_sg90_t->h_sg90->Init.pwm, (range / 2) + (uint16_t)(p_sg90_t->h_sg90->angle * unit), p_sg90_t->h_sg90->Init.pwm_ch);
+	*/
+	//delay(100);
+	//pwmStop(p_sg90_t->h_sg90->Init.pwm);
 	
 	return true;
 }
