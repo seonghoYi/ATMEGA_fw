@@ -20,7 +20,7 @@
 #define _DEF_GPIO_SUCTION_PWM	9
 #define _DEF_GPIO_SERVO_L		10
 #define _DEF_GPIO_SERVO_R		11
-
+#define	_DEF_GPIO_SUCTION_RELAY 12
 
 #define _DEF_INPUT		0
 #define _DEF_OUTPUT		1
