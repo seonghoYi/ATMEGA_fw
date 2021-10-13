@@ -59,8 +59,7 @@ bool rosOpen(ros_t *p_ros, uint8_t ros_ch_, uint32_t baud_)
 	{
 		return false;
 	}
-	
-	uartOpen(_DEF_UART0, 38400);
+
 	
 	p_ros->ch = ros_ch_;
 	p_ros->baud = baud_;
