@@ -18,8 +18,8 @@ bool servoInit(void)
 		is_init = sg90DriverInit(&servo);
 	}
 	
-	servo.setAngle(_DEF_SG90_1, 0);
-	servo.setAngle(_DEF_SG90_2, 180);
+	servo.setAngle(_DEF_SG90_1, 30);
+	servo.setAngle(_DEF_SG90_2, 150);
 	delay(100);
 	//sg90Write(_DEF_SG90_1, 0);
 	//sg90Write(_DEF_SG90_2, 0);

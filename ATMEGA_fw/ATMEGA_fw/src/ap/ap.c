@@ -1,10 +1,11 @@
 ﻿#include "ap.h"
 
-#define P_GAIN	1.1f //50 최적값
-#define I_GAIN	0.9f //43 최적값
-#define D_GAIN	0.12f //7 최적값
+#define P_GAIN	1.1f //1.1f
+#define I_GAIN	0.9f //0.9f
+#define D_GAIN	0.12f //0.12f 
 
 //ziegler-nichols method Kcr=2.0 Pcr=0.4 Kp=1.2, Ki=0.6, Kd=0.15 dt=0.1
+//ziegler-nichols method Kcr=2.0 Pcr=0.3 Kp=1.5, Ki=0.9, Kd=0.06 dt=0.1
 
 
 typedef struct
@@ -39,7 +40,7 @@ static encoder_pulse_t	encoder_pulse;
 
 void apInit(void)
 {
-	hc05Open(_DEF_UART0, 38400);
+	hc05Open(_DEF_UART0, 9600);
 	sei();
 }
 
@@ -102,6 +103,7 @@ void apMain(void)
 			calculatePID(&pid_variables);
 			rosPublishRPM(&ros_handle, &pid_variables);
 		}
+		
 		
 		rosServerRun(&ros_handle);
 		rosBTCallback(&ros_handle);
@@ -430,7 +432,7 @@ void rosPublishRPM(ros_t *p_ros, pid_t *p_pid_variables)
 {
 	uint8_t msg[] = {(uint8_t)left_dir, (uint8_t)right_dir, ((uint16_t)p_pid_variables->prev_Lrpm) & 0xFF, ((uint16_t)p_pid_variables->prev_Lrpm >> 8) & 0xFF, ((uint16_t)p_pid_variables->prev_Rrpm) & 0xFF, ((uint16_t)p_pid_variables->prev_Rrpm >> 8) & 0xFF};
 	rosSendInst(p_ros, 2, 0, &msg[0], 6); // Little endian 방식으로 전송
-	hc05Printf("L_rpm: %d, R_rpm: %d\n", left_dir ? -(int)p_pid_variables->prev_Lrpm : (int)p_pid_variables->prev_Lrpm, right_dir ? -(int)p_pid_variables->prev_Rrpm : (int)p_pid_variables->prev_Rrpm);
+	hc05Printf("goal: %d, L_rpm: %d, R_rpm: %d, time:%lu\n", (int)p_pid_variables->Right_rpm_goal, left_dir ? -(int)p_pid_variables->prev_Lrpm : (int)p_pid_variables->prev_Lrpm, right_dir ? -(int)p_pid_variables->prev_Rrpm : (int)p_pid_variables->prev_Rrpm, (uint32_t)millis());
 }
 
 
