@@ -13,12 +13,12 @@ static bool is_init = false;
 bool suctionMotorInit(void)
 {
 #ifdef _USE_HW_SUCTION_MT
-	if (xiaomiInit(_DEF_SUCTION_0))
+	if (xiaomiInit(_DEF_SUCTION_1))
 	{
 		is_init = xiaomiDriverInit(&motor);
 	}
-	motor.setSpeed(_DEF_SUCTION_0, 0);
-	motor.stopMotor(_DEF_SUCTION_0);
+	motor.setSpeed(_DEF_SUCTION_1, 0);
+	motor.stopMotor(_DEF_SUCTION_1);
 	return true;
 	
 #endif
@@ -31,7 +31,7 @@ bool suctionMotorIsInit(void)
 void suctionMotorRun(void)
 {
 #ifdef _USE_HW_SUCTION_MT
-	motor.startMotor(_DEF_SUCTION_0);
+	motor.startMotor(_DEF_SUCTION_1);
 	gpioPinWrite(_DEF_GPIO_SUCTION_RELAY, true);
 #endif
 }
@@ -39,7 +39,7 @@ void suctionMotorRun(void)
 void suctionMotorStop(void)
 {
 #ifdef _USE_HW_SUCTION_MT
-	motor.stopMotor(_DEF_SUCTION_0);
+	motor.stopMotor(_DEF_SUCTION_1);
 	gpioPinWrite(_DEF_GPIO_SUCTION_RELAY, false);
 #endif
 }
@@ -47,7 +47,7 @@ void suctionMotorStop(void)
 void suctionMotorSetSpeed(uint16_t speed_)
 {
 #ifdef _USE_HW_SUCTION_MT
-	motor.setSpeed(_DEF_SUCTION_0, speed_);
+	motor.setSpeed(_DEF_SUCTION_1, speed_);
 #endif
 }
 
@@ -55,7 +55,7 @@ uint16_t* suctionMotorGetSpeed(void)
 {
 	static uint16_t ret[SUCTION_MT_MAX_CH];
 #ifdef _USE_HW_SUCTION_MT
-	ret[_DEF_SUCTION_0] = motor.getSpeed(_DEF_SUCTION_0);
+	ret[_DEF_SUCTION_1] = motor.getSpeed(_DEF_SUCTION_1);
 #endif
 	return &ret[0];
 }
