@@ -2,7 +2,13 @@
 #define BSP_H_
 
 #include "def.h"
-#include "atmega128_hal.h"
+
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+
+
 
 void bspInit(void);
 
