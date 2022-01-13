@@ -5,7 +5,7 @@
 
 void runLedInit(void)
 {
-	SETB(TIMSK, OCIE0);
+
 }
 
 void runLedCallback(void)
