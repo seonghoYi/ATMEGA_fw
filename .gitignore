@@ -24,6 +24,6 @@
 *.srec
 
 #User Specific Files
-*.atsuo
+ATMEGA_fw/.vs/ATMEGA_fw/v14/.atsuo
 
 # End of https://www.toptal.com/developers/gitignore/api/atmelstudio
