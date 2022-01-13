@@ -18,34 +18,38 @@ xiaomigen1st_HandlerTypeDef h_xiaomi_1;
 
 bool xiaomiInit(uint8_t ch_)
 {
-	bool ret = false;
+	bool ret = true;
 	
 	xiaomigen1st_t *p_xiaomi = &xiaomigen1st_tbl[ch_];
 
 	switch(ch_)
 	{
-		case _DEF_XIAOMI_0:
+		case _DEF_XIAOMI_1:
 		p_xiaomi->h_xiaomi				= &h_xiaomi_1;
 		
-		p_xiaomi->h_xiaomi->Init.ch		= _DEF_XIAOMI_0;
-		p_xiaomi->h_xiaomi->Init.pwm	= TIM2;
-		p_xiaomi->h_xiaomi->Init.pwm_ch	= _DEF_CH_NONE;
+		p_xiaomi->h_xiaomi->Init.ch		= _DEF_XIAOMI_1;
 		p_xiaomi->h_xiaomi->speed		= 0;
 		
 		break;
 		default:
 		break;
 	}
+
+	p_xiaomi->is_open = true;
+
+	DDRB |= (1<<PIN7);
 	
-	if (pwmBegin(p_xiaomi->h_xiaomi->Init.pwm) != true)
-	{
-		ret = false;
-	}
-	else
-	{
-		p_xiaomi->is_open = true;
-		ret = true;
-	}
+	TCCR2 |= (1<<WGM20) | (1<<WGM21); //Fast PWM
+	
+	TCCR2 |= (1<<COM21);
+	TCCR2 &= ~(1<<COM20); //Fast PWM Non inverting mode
+	
+	TCCR2 |= (1<<CS20);
+	TCCR2 &= ~((1<<CS21) | (1<<CS22)); //Prescaler 1 -> 62.5KHz PWM in 16MHz system clock
+	
+	TCCR2 &= ~((1<<COM20) | (1<<COM21)); //Off PWM wave output
+	
+	PORTB &= ~(1<<PIN7); //Output pull low  //Port 모드가 normal 일 경우 low 상태로 유지되게 하기 위함
 	
 	return ret;
 }
@@ -62,34 +66,19 @@ bool xiaomiDriverInit(suctionmotor_driver_t *p_driver)
 
 bool xiaomiStart(uint8_t ch_)
 {
-	bool ret = false;
-	xiaomigen1st_t *p_xiaomi = &xiaomigen1st_tbl[ch_];
+	bool ret = true;
 	
-	if (pwmStart(p_xiaomi->h_xiaomi->Init.pwm) != true)
-	{
-		ret = false;
-	}
-	else
-	{
-		ret = true;
-	}
-	
+	TCCR2 |= (1<<COM21);
+	TCCR2 &= ~(1<<COM20); //Fast PWM Non inverting mode
+
 	return ret;
 }
 
 bool xiaomiStop(uint8_t ch_)
 {
-	bool ret = false;
-	xiaomigen1st_t *p_xiaomi = &xiaomigen1st_tbl[ch_];
+	bool ret = true;
 	
-	if (pwmStop(p_xiaomi->h_xiaomi->Init.pwm) != true)
-	{
-		ret = false;
-	}
-	else
-	{
-		ret = true;
-	}
+	TCCR2 &= ~((1<<COM20) | (1<<COM21)); //Off PWM wave output
 
 	return ret;
 }
@@ -107,14 +96,9 @@ bool xiaomiSetSpeed(uint8_t ch_, uint16_t speed_)
 	
 	p_xiaomi->h_xiaomi->speed = 255 * speed_ / 100;
 
-	if (p_xiaomi->h_xiaomi->Init.pwm == TIM0 || p_xiaomi->h_xiaomi->Init.pwm == TIM2)
-	{
-		ret = pwmSetOcr(p_xiaomi->h_xiaomi->Init.pwm, p_xiaomi->h_xiaomi->speed, _DEF_CH_NONE);
-	}
-	else if (p_xiaomi->h_xiaomi->Init.pwm == TIM1 || p_xiaomi->h_xiaomi->Init.pwm == TIM3)
-	{
-		ret = pwmSetOcr(p_xiaomi->h_xiaomi->Init.pwm, p_xiaomi->h_xiaomi->speed, p_xiaomi->h_xiaomi->Init.pwm_ch);
-	}
+	OCR2 = p_xiaomi->h_xiaomi->speed;
+	
+	ret = true;
 	return ret;
 }
 

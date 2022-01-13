@@ -1,5 +1,5 @@
 ﻿#include "drivemotor/dmc16.h"
-#include "pwm.h"
+//#include "pwm.h"
 #include "gpio.h"
 
 #ifdef _USE_HW_DMC16
@@ -30,27 +30,25 @@ bool dmc16Init(uint8_t ch_)
 
 	switch(ch_)
 	{
-		case _DEF_DMC16_0:
+		case _DEF_DMC16_1:
 		p_dmc16->h_dmc16				= &h_dmc16_1;
 		
 		p_dmc16->normal_rotate			= _DEF_CCW;
 		p_dmc16->reverse_rotate			= _DEF_CW;
-		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_0;
-		p_dmc16->h_dmc16->Init.pwm		= TIM1;
-		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_A;
+		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_1;
+		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_TIM_CH_A;
 		p_dmc16->h_dmc16->enable		= false;
 		p_dmc16->h_dmc16->direction		= _NORMAL_ROTATION;
 		p_dmc16->h_dmc16->speed			= 0;
 		
 		break;
-		case _DEF_DMC16_1:
+		case _DEF_DMC16_2:
 		p_dmc16->h_dmc16				= &h_dmc16_2;
 		
 		p_dmc16->normal_rotate			= _DEF_CW;
 		p_dmc16->reverse_rotate			= _DEF_CCW;
-		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_1;
-		p_dmc16->h_dmc16->Init.pwm		= TIM1;
-		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_CH_B;
+		p_dmc16->h_dmc16->Init.ch		= _DEF_DMC16_2;
+		p_dmc16->h_dmc16->Init.pwm_ch	= _DEF_TIM_CH_B;
 		p_dmc16->h_dmc16->enable		= false;
 		p_dmc16->h_dmc16->direction		= _NORMAL_ROTATION;
 		p_dmc16->h_dmc16->speed			= 0;
@@ -60,19 +58,29 @@ bool dmc16Init(uint8_t ch_)
 		break;
 	}
 	
+	p_dmc16->is_open = true;
 	
-	if (pwmBegin(p_dmc16->h_dmc16->Init.pwm) && pwm16ChannelConfig(p_dmc16->h_dmc16->Init.pwm, p_dmc16->h_dmc16->Init.pwm_ch) != true)
-	{
-		ret = false;
-	}
-	else
-	{
-		p_dmc16->is_open = true;
-		ret = true;
-	}
 	
-	dmc16SetDirection(_DEF_DMC16_0, p_dmc16->h_dmc16->direction);
+	DDRB |= (1<<PIN5) | (1<<PIN6); //Output enable
+	
+	TCCR1A |= (1<<COM1A1) | (1<<COM1B1);
+	TCCR1A &= ~((1<<COM1A0) | (1<<COM1B0)); //Fast PWM channel-A,B Non inverting mode
+	
+	TCCR1A |= (1<<WGM10) | (1<<WGM11);
+	TCCR1B |= (1<<WGM12);
+	TCCR1B &= ~(1<<WGM13); //Fast PWM 10-bit mode
+	
+	TCCR1B |= (1<<CS11);
+	TCCR1B &= ~((1<<CS10) | (1<<CS12)); //Prescaler 8 -> 1.953KHz PWM in 16MHz system clock
+	
+	
+	TCCR1A &= ~((1<<COM1A0) | (1<<COM1A1) | (1<<COM1B0) | (1<<COM1B1)); //Off PWM wave output
+	PORTB &= ~((1<<PIN5) | (1<<PIN6)); //Output pull low  //Port 모드가 normal 일 경우 low 상태로 유지되게 하기 위함
+	
+	ret = true;
+	
 	dmc16SetDirection(_DEF_DMC16_1, p_dmc16->h_dmc16->direction);
+	dmc16SetDirection(_DEF_DMC16_2, p_dmc16->h_dmc16->direction);
 	
 	return ret;
 }
@@ -96,14 +104,17 @@ bool dmc16Start(uint8_t ch_)
 	bool ret = false;
 	dmc16_t *p_dmc16 = &dmc16_tbl[ch_];
 	
-	if (pwmStart(p_dmc16->h_dmc16->Init.pwm) != true)
+	if(p_dmc16->h_dmc16->Init.pwm_ch == _DEF_TIM_CH_A)
 	{
-		ret = false;
+		TCCR1A |= (1<<COM1A1);
+		TCCR1A &= ~(1<<COM1A0); //Fast PWM channel-A Non inverting mode
 	}
-	else
+	else if(p_dmc16->h_dmc16->Init.pwm_ch == _DEF_TIM_CH_B)
 	{
-		ret = true;
+		TCCR1B |= (1<<COM1B1);
+		TCCR1B &= ~(1<<COM1B0); //Fast PWM channel-B Non inverting mode	
 	}
+	
 	dmc16Enable();
 	
 	return ret;
@@ -113,18 +124,18 @@ bool dmc16Stop(uint8_t ch_)
 {
 	bool ret = true;
 	dmc16_t *p_dmc16 = &dmc16_tbl[ch_];
-	/*
-	if (pwmStop(p_dmc16->h_dmc16->Init.pwm) != true)
-	{
-		ret = false;
-	}
-	else
-	{
-		ret = true;
-	}
-	*/
+
 	dmc16SetSpeed(p_dmc16->h_dmc16->Init.ch, 0);
-	//delay(1);
+	
+	if(p_dmc16->h_dmc16->Init.pwm_ch == _DEF_TIM_CH_A)
+	{
+		TCCR1A &= ~((1<<COM1A0) | (1<<COM1A1)); //Off PWM OCA output
+	}
+	else if(p_dmc16->h_dmc16->Init.pwm_ch == _DEF_TIM_CH_B)
+	{
+		TCCR1B &= ~((1<<COM1B0) | (1<<COM1B1)); //Off PWM OCB output
+	}
+
 	dmc16Disable();
 	return ret;	
 }
@@ -159,10 +170,10 @@ bool dmc16SetDirection(uint8_t ch_, bool dir_)
 	
 	switch(ch_)
 	{
-		case _DEF_DMC16_0:
+		case _DEF_DMC16_1:
 		side = _PIN_GPIO_DMC16_LDIR;
 		break;
-		case _DEF_DMC16_1:
+		case _DEF_DMC16_2:
 		side = _PIN_GPIO_DMC16_RDIR;
 		break;
 		default:
@@ -210,14 +221,17 @@ bool dmc16SetSpeed(uint8_t ch_, uint16_t speed_)
 	
 	p_dmc16->h_dmc16->speed = 511 * speed_ / 100;
 	
-	if (p_dmc16->h_dmc16->Init.pwm == TIM0 || p_dmc16->h_dmc16->Init.pwm == TIM2)
+	if(p_dmc16->h_dmc16->Init.pwm_ch == _DEF_TIM_CH_A)
 	{
-		ret = pwmSetOcr(p_dmc16->h_dmc16->Init.pwm, p_dmc16->h_dmc16->speed, _DEF_CH_NONE);
+		OCR1A = p_dmc16->h_dmc16->speed;
 	}
-	else if (p_dmc16->h_dmc16->Init.pwm == TIM1 || p_dmc16->h_dmc16->Init.pwm == TIM3)
+	else if(p_dmc16->h_dmc16->Init.pwm_ch == _DEF_TIM_CH_B)
 	{
-		ret = pwmSetOcr(p_dmc16->h_dmc16->Init.pwm, p_dmc16->h_dmc16->speed, p_dmc16->h_dmc16->Init.pwm_ch);
+		OCR1B = p_dmc16->h_dmc16->speed;
 	}
+	
+	ret = true;
+	
 	return ret;
 }
 

@@ -28,31 +28,39 @@ bool sg90Init(uint8_t ch_)
 		case _DEF_SG90_1:
 		p_sg90_t->h_sg90 = &h_sg90_1;
 		p_sg90_t->h_sg90->Init.ch = _DEF_SG90_1;
-		p_sg90_t->h_sg90->Init.pwm = TIM3;
-		p_sg90_t->h_sg90->Init.pwm_ch = _DEF_CH_A;
+		p_sg90_t->h_sg90->Init.pwm_ch = _DEF_TIM_CH_A;
 		p_sg90_t->h_sg90->angle = 0;
 		
 		break;
 		case _DEF_SG90_2:
 		p_sg90_t->h_sg90 = &h_sg90_2;
 		p_sg90_t->h_sg90->Init.ch = _DEF_SG90_2;
-		p_sg90_t->h_sg90->Init.pwm = TIM3;
-		p_sg90_t->h_sg90->Init.pwm_ch = _DEF_CH_B;
+		p_sg90_t->h_sg90->Init.pwm_ch = _DEF_TIM_CH_B;
 		p_sg90_t->h_sg90->angle = 0;
 		break;
 	}
-	DDRE |= 0x18;
+
+	p_sg90_t->is_open = true;
+	ret = true;
 	
-	if (pwmBegin(p_sg90_t->h_sg90->Init.pwm) && pwm16ChannelConfig(p_sg90_t->h_sg90->Init.pwm, p_sg90_t->h_sg90->Init.pwm_ch) != true)
-	{
-		p_sg90_t->is_open = false;
-		ret = false;
-	}
-	else
-	{
-		p_sg90_t->is_open = true;
-		ret = true;
-	}
+	
+	DDRE |= (1<<PIN3) | (1<<PIN4); //Output enable
+	
+	TCCR3A |= (1<<COM3A1) | (1<<COM3B1);
+	TCCR3A &= ~((1<<COM3A0) | (1<<COM3B0)); //Fast PWM channel-A,B Non inverting mode
+	
+	TCCR3A |= (1<<WGM31);
+	TCCR3B |= (1<<WGM32) | (1<<WGM33); 
+	TCCR3A &= ~(1<<WGM30); //Fast PWM ICR TOP mode
+	
+	TCCR3B |= (1<<CS30) | (1<<CS31);
+	TCCR3B &= ~(1<<CS32); 
+	ICR3 = 4999; //Prescaler 64 -> 50Hz PWM in 16MHz system clock
+	
+	
+	TCCR3A &= ~((1<<COM3A0) | (1<<COM3A1) | (1<<COM3B0) | (1<<COM3B1)); //Off PWM wave output
+	PORTE &= ~((1<<PIN3) | (1<<PIN4)); //Output pull low  //Port 모드가 normal 일 경우 low 상태로 유지되게 하기 위함
+
 	return ret;
 }
 
@@ -67,38 +75,38 @@ bool sg90DriverInit(servo_driver_t *p_driver)
 
 bool sg90Write(uint8_t ch_, uint8_t angle)
 {
-	sg90_t *p_sg90_t = &sg90_tbl[ch_];
+	sg90_t *p_sg90 = &sg90_tbl[ch_];
 	
-	p_sg90_t->h_sg90->angle = angle;
-	pwmStart(p_sg90_t->h_sg90->Init.pwm);
-	
-	/*
-	// T=20ms 1ms~2ms
-	int range = pwmGetIcr(sg90_tbl[ch_].h_sg90->Init.pwm) / 10;
-	uint16_t duty = map((uint16_t)angle, (uint16_t)0, (uint16_t)180, (uint16_t)range/2, (uint16_t)range);
-	*/
+	p_sg90->h_sg90->angle = angle;
 	
 	// T=20ms 0.5ms~2.5ms
-	int range = pwmGetIcr(sg90_tbl[ch_].h_sg90->Init.pwm) / 8;
-	long duty = map((long)angle, (long)0, (long)180, (long)(range/5), (long)range);
+	int range = ICR3 / 8;
+	int32_t duty = map(angle, 0, 180, range/5, range); //0.5ms와 2.5ms 를 0도~180도의 범위로 사상
 	
-	pwmSetOcr(p_sg90_t->h_sg90->Init.pwm, (uint16_t)duty, p_sg90_t->h_sg90->Init.pwm_ch);
-	/*
-	float unit = range / 180;
-	
-	pwmSetOcr(p_sg90_t->h_sg90->Init.pwm, (range / 2) + (uint16_t)(p_sg90_t->h_sg90->angle * unit), p_sg90_t->h_sg90->Init.pwm_ch);
-	*/
-	delay(200);
-	pwmStop(p_sg90_t->h_sg90->Init.pwm);
-	
-	if(ch_)
+	if(p_sg90->h_sg90->Init.pwm_ch == _DEF_TIM_CH_A)
 	{
-		gpioPinWrite(_DEF_GPIO_SERVO_L, false);
+		TCCR3A |= (1<<COM3A1);
+		TCCR3A &= ~(1<<COM3A0); //Fast PWM channel-A Non inverting mode
+		OCR3A = duty;
 	}
-	else
+	else if(p_sg90->h_sg90->Init.pwm_ch == _DEF_TIM_CH_B)
 	{
-		gpioPinWrite(_DEF_GPIO_SERVO_R, false);
+		TCCR3A |= (1<<COM3B1);
+		TCCR3A &= ~(1<<COM3B0); //Fast PWM channel-B Non inverting mode
+		OCR3B = duty;
 	}
+	
+	delay(200); //바로 응답할 수 없으므로 200ms 대기
+	
+	if(p_sg90->h_sg90->Init.pwm_ch == _DEF_TIM_CH_A)
+	{
+		TCCR3A &= ~((1<<COM3A0) | (1<<COM3A1)); //Off PWM OCA output
+	}
+	else if(p_sg90->h_sg90->Init.pwm_ch == _DEF_TIM_CH_B)
+	{
+		TCCR3B &= ~((1<<COM3B0) | (1<<COM3B1)); //Off PWM OCB output
+	}
+
 	
 	return true;
 }
