@@ -4,7 +4,7 @@
 #ifdef _USE_HW_ROS
 
 
-static const uint8_t ros_ch_tbl[] = {_DEF_UART1, }; //_DEF_ROS0
+static const uint8_t ros_ch_tbl[] = {_DEF_UART1, }; //_DEF_ROS1
 
 
 
@@ -36,7 +36,7 @@ bool open(uint8_t ros_ch_, uint32_t baud_)
 	bool ret = false;
 	switch(ros_ch_)
 	{
-		case _DEF_ROS0:
+		case _DEF_ROS1:
 		ret = uartOpen(ros_ch_tbl[ros_ch_], baud_);
 		break;
 		default:
@@ -57,7 +57,7 @@ uint32_t available(uint8_t ros_ch_)
 	uint32_t ret = 0;
 	switch(ros_ch_)
 	{
-		case _DEF_ROS0:
+		case _DEF_ROS1:
 		ret = uartAvailable(ros_ch_tbl[ros_ch_]);
 		break;
 		default:
@@ -71,7 +71,7 @@ uint32_t write(uint8_t ros_ch_, uint8_t *p_data, uint32_t length)
 	uint32_t ret = 0;
 	switch(ros_ch_)
 	{
-		case _DEF_ROS0:
+		case _DEF_ROS1:
 		ret = uartWrite(ros_ch_tbl[ros_ch_], p_data, length);
 		break;
 		default:
@@ -85,7 +85,7 @@ uint8_t read(uint8_t ros_ch_)
 	uint8_t ret = 0;
 	switch(ros_ch_)
 	{
-		case _DEF_ROS0:
+		case _DEF_ROS1:
 		ret = uartRead(ros_ch_tbl[ros_ch_]);
 		break;
 		default:
@@ -100,7 +100,7 @@ bool flush(uint8_t ros_ch_)
 	bool ret = true;
 	switch(ros_ch_)
 	{
-		case _DEF_ROS0:
+		case _DEF_ROS1:
 		ret = uartFlush(ros_ch_tbl[ros_ch_]);
 		break;
 		default:
