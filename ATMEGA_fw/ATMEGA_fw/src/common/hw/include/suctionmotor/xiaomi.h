@@ -10,8 +10,6 @@
 typedef struct
 {
 	uint8_t ch;
-	uint8_t pwm;
-	uint8_t pwm_ch;
 } xiaomigen1st_InitTypeDef;
 
 typedef struct

@@ -10,7 +10,6 @@
 typedef struct
 {
 	uint8_t ch;
-	uint8_t pwm;
 	uint8_t pwm_ch;
 } sg90_InitTypeDef;
 
@@ -19,6 +18,7 @@ typedef struct
 	sg90_InitTypeDef	Init;
 	uint16_t			angle;
 } sg90_HandlerTypeDef;
+
 
 
 bool		sg90Init(uint8_t ch_);

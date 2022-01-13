@@ -10,7 +10,6 @@
 typedef struct
 {
 	uint8_t ch;
-	uint8_t pwm;
 	uint8_t pwm_ch;
 } dmc16_InitTypeDef;
 
