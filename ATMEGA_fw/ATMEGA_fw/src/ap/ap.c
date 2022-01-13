@@ -40,7 +40,7 @@ static encoder_pulse_t	encoder_pulse;
 
 void apInit(void)
 {
-	hc05Open(_DEF_UART0, 9600);
+	hc05Open(_DEF_UART1, 9600);
 	sei();
 }
 
@@ -134,7 +134,7 @@ void rosWriteServo(uint8_t *params);
 void rosServerInit(ros_t *p_ros)
 {
 	rosLoadDriver(p_ros);
-	rosOpen(p_ros, _DEF_ROS0, 38400);
+	rosOpen(p_ros, _DEF_ROS1, 38400);
 		
 	rosAddService(p_ros, rosStopMotor);
 	rosAddService(p_ros, rosRunMotor);
