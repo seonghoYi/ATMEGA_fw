@@ -206,9 +206,6 @@
     <Compile Include="src\common\def.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\common\hw\include\ctc.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\common\hw\include\drivemotor.h">
       <SubType>compile</SubType>
     </Compile>
@@ -225,9 +222,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\line_led.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\common\hw\include\pwm.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\ros.h">
@@ -257,9 +251,6 @@
     <Compile Include="src\common\hw\include\uart.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\hw\driver\ctc.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\hw\driver\drivemotor.c">
       <SubType>compile</SubType>
     </Compile>
@@ -276,9 +267,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\line_led.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\hw\driver\pwm.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\ros.c">
