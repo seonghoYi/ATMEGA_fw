@@ -221,16 +221,10 @@
     <Compile Include="src\common\hw\include\hc05.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\common\hw\include\line_led.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\common\hw\include\ros.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\ros\ros_uart.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\common\hw\include\ros_server.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\common\hw\include\run_led.h">
@@ -264,9 +258,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\hc05.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\hw\driver\line_led.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\hw\driver\ros.c">

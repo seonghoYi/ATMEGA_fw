@@ -9,9 +9,7 @@
 #include "suctionmotor.h"
 #include "drivemotor.h"
 #include "ros.h"
-//#include "ros_server.h"
 #include "run_led.h"
-//#include "line_led.h"
 #include "servo.h"
 
 void hwInit(void);
