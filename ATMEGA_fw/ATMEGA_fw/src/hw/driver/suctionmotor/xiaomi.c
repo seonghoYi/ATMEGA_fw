@@ -1,5 +1,4 @@
 ﻿#include "suctionmotor/xiaomi.h"
-#include "pwm.h"
 
 #ifdef _USE_HW_XIAOMI_GEN_1ST
 
